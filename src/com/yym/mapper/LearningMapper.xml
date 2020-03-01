@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yym.dao.LearningDao">
+	<select id="selWords" parameterType="map" resultType="com.yym.entity.Words" >
+		select * from ${table_name} where wid between #{start} and #{end}
+	</select>
+	<select id="selTableName" parameterType="String" resultType="String">
+		select tableName from wordbooks where bookName=#{bookName}
+	</select>
+</mapper>

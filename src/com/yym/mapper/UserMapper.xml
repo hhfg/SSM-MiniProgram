@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yym.dao.UserDao">
+   <!-- 将用户存进数据库  -->
+	<insert id="insUser">
+		insert into user(username,profileUrl) values (#{username},#{profileUrl})
+	</insert>
+	<select id="selUserId" parameterType="String">
+		select id from user where username=#{username}
+	</select>
+	<!-- 更新用户选择的单词书的id -->
+	<update id="setMyBookId">
+		update user set bookid=#{bookid} where username=#{username}
+	</update>
+	<!-- 获取用户选择的单词书的信息 -->
+	<select id="selBookByUser" parameterType="java.lang.String" resultType="com.yym.entity.WordBooks">
+		select * from wordbooks where id=(select bookid from user where username=#{username})
+	</select>
+ 	<insert id="insPersonalData">
+		insert into personal_data(uid,learningDay,completedNum,haveToLearn,haveToReview,endTime)
+		values(#{uid},#{learningDay},#{completedNum},#{haveToLearn},#{haveToReview},#{endTime})
+	</insert>
+</mapper>
