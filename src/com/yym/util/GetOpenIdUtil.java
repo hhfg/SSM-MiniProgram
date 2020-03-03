@@ -16,7 +16,10 @@ public class GetOpenIdUtil {
 	        String url="https://api.weixin.qq.com/sns/jscode2session?appid="
 	        +appid+"&secret="+secret+"&js_code="+code+"&grant_type=authorization_code";
 	        try {  
-				URL weChatUrl = new URL(url);  
+				URL weChatUrl = new URL(url); 
+				if("https".equalsIgnoreCase(weChatUrl.getProtocol())){
+				   SslUtils.ignoreSsl();
+				}
 	            // 打开和URL之间的连接  
 	            URLConnection connection = weChatUrl.openConnection();  
 	            // 设置通用的请求属性  

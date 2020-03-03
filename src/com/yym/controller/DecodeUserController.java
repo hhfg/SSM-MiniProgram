@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yym.util.GetOpenIdUtil;
-import com.yym.util.HttpRequest;
 
 import net.sf.json.JSONObject;
 @Controller
