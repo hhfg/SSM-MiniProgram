@@ -12,7 +12,7 @@
         http://www.springframework.org/schema/aop  
         http://www.springframework.org/schema/aop/spring-aop-3.2.xsd  
         http://www.springframework.org/schema/context  
-        http://www.springframework.org/schema/context/spring-context-3.2.xsd  
+        http://www.springframework.org/schema/context/spring-context-3.1.xsd  
         http://www.springframework.org/schema/mvc  
         http://www.springframework.org/schema/mvc/spring-mvc.xsd">
    <!-- 1.配置适配器与映射器 -->
