@@ -3,13 +3,23 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yym.dao.UserDao">
-   <!-- 将用户存进数据库  -->
-	<insert id="insUser">
-		insert into user(username,profileUrl) values (#{username},#{profileUrl})
+    <!-- 将用户存进数据库  -->
+	<insert id="insUser" parameterType="com.yym.entity.User">
+		insert into user(openid,nickName,avatarUrl,gender,province,city) 
+		values (#{openid},#{nickName},#{avatarUrl},#{gender},#{province},#{city})
 	</insert>
-	<select id="selUserId" parameterType="String">
+	<!-- 通过openid查找用户的id -->
+<!-- 	<select id="getUserId" parameterType="String">
+		select id from user where openid=#{openid}
+	</select> -->
+	<!-- 在personal_data表中新增用户  -->
+<!-- 	<insert id="insPersonalData" parameterType="Integer">
+		insert into personal_data(uid) values (#{uid})
+	</insert> -->
+
+<!-- 	<select id="selUserId" parameterType="String">
 		select id from user where username=#{username}
-	</select>
+	</select> -->
 	<!-- 更新用户选择的单词书的id -->
 	<update id="setMyBookId">
 		update user set bookid=#{bookid} where username=#{username}

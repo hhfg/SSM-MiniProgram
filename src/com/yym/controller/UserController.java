@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yym.entity.PersonalData;
+import com.yym.entity.User;
 import com.yym.entity.WordBooks;
 import com.yym.service.UserService;
 
@@ -24,19 +25,28 @@ public class UserController {
 	
 	@ResponseBody
 	@RequestMapping("/login.do")
-	public void login(String username,String profileUrl,HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+	public int login(String openid,String nickName,String avatarUrl,int gender,String province,String city,
+			String profileUrl,HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		response.setContentType("text/html;charset=utf-8");          
-        /* 设置响应头允许ajax跨域访问 */  
-       response.setHeader("Access-Control-Allow-Origin", "*");  
-        /* 星号表示所有的异域请求都可以接受， */  
+        response.setHeader("Access-Control-Allow-Origin", "*");  
         response.setHeader("Access-Control-Allow-Methods", "GET,POST");  	
-        int result=userService.insUser(username, profileUrl);
-        System.out.println(result);
-        
-//        //返回值给微信小程序
-//        Writer out = response.getWriter(); 
-//        out.write("登录成功");
-//        out.flush();   
+        User user=new User();
+        user.setOpenid(openid);
+        user.setNickName(nickName);
+        user.setAvatarUrl(avatarUrl);
+        user.setGender(gender);
+        user.setProvince(province);
+        user.setCity(city);
+        //插入用户 
+        int result=userService.insUser(user);
+//        int uid=userService.getUserId(openid);
+        //如果插入成功，在personal_data表中新增用户相关信息
+//        if(result==1) {
+//        	int t=userService.insPersonalData(uid);
+//        }else {
+//        	System.out.println("插入失败");
+//        }
+        return result; 
 	}
 	@ResponseBody
 	@RequestMapping("/setMyBook.do")
@@ -66,21 +76,6 @@ public class UserController {
 		int result=userService.insPersonalData(uid,learningDay,completedNum,haveToLearn,haveToReview,endTime);
 		return result;
 	}
-	/*
-	 * @ResponseBody
-	 * 
-	 * @RequestMapping("/insertUser.do") public int insertUser(String openid,String
-	 * nickName,String avatarUrl,String province,String city, HttpServletRequest
-	 * request,HttpServletResponse response) throws ServletException,IOException{
-	 * int result=userService.insertUser(openid, nickName, avatarUrl, province,
-	 * city); return result; }
-	 * 
-	 * @ResponseBody
-	 * 
-	 * @RequestMapping("/queryUser.do") public MiniUser queryUser(String
-	 * openid,HttpServletRequest request,HttpServletResponse response) throws
-	 * ServletException,IOException{ MiniUser u=userService.queryUser(openid);
-	 * return u; }
-	 */
+
 	
 }
