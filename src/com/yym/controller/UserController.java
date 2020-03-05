@@ -17,19 +17,25 @@ import com.yym.entity.PersonalData;
 import com.yym.entity.User;
 import com.yym.entity.WordBooks;
 import com.yym.service.UserService;
+import com.yym.util.DecodeUserUtil;
+import com.yym.util.GetOpenIdUtil;
+
+import net.sf.json.JSONObject;
 
 @Controller
 public class UserController {
 	@Autowired
 	private UserService userService;
 	
-	@ResponseBody
 	@RequestMapping("/login.do")
-	public int login(String openid,String nickName,String avatarUrl,int gender,String province,String city,
+	public String login(String code,String nickName,String avatarUrl,int gender,String province,String city,
 			String profileUrl,HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		response.setContentType("text/html;charset=utf-8");          
         response.setHeader("Access-Control-Allow-Origin", "*");  
         response.setHeader("Access-Control-Allow-Methods", "GET,POST");  	
+        DecodeUserUtil decode=new DecodeUserUtil();
+        String openid=decode.decodeUser(code);
+        System.out.println(openid);
         User user=new User();
         user.setOpenid(openid);
         user.setNickName(nickName);
@@ -39,15 +45,30 @@ public class UserController {
         user.setCity(city);
         //插入用户 
         int result=userService.insUser(user);
-//        int uid=userService.getUserId(openid);
-        //如果插入成功，在personal_data表中新增用户相关信息
-//        if(result==1) {
-//        	int t=userService.insPersonalData(uid);
-//        }else {
-//        	System.out.println("插入失败");
-//        }
-        return result; 
+        return "redirect:/getUserId.do?openid="+openid; 
 	}
+	@RequestMapping("/getUserId.do")
+	public String getUserId(String openid,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
+		int id=userService.getUserId(openid);
+		return "redirect:/insPersonalData.do?id="+id;
+	}
+	@ResponseBody
+	@RequestMapping("/insPersonalData.do")
+	public int insPersonalData(int id,HttpServletRequest request,HttpServletResponse response) throws ServletException,IOException {
+		int learningDays=1;
+		int result=userService.insPersonalData(id,learningDays);
+		return result;
+	}
+	@ResponseBody
+	@RequestMapping("/selPersonalData.do")
+	public PersonalData selPersonalData(String nickName,HttpServletRequest request,HttpServletResponse response) throws ServletException,IOException {
+		System.out.println(nickName);
+		int uid=userService.selUserId(nickName);
+		System.out.println(uid);
+		PersonalData p=userService.selPersonalData(uid);
+		return p;
+	}
+	
 	@ResponseBody
 	@RequestMapping("/setMyBook.do")
 	public int setMyBook(String username,int bookid,HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
@@ -64,18 +85,5 @@ public class UserController {
 		return wordBook;
 	}
 	
-	@ResponseBody
-	@RequestMapping("/insPersonalData.do")
-	public int insPersonalData(HttpServletRequest request,HttpServletResponse response) throws ServletException,IOException{
-		int uid=5;
-		int learningDay=1;
-		int completedNum=0;
-		int haveToLearn=10;
-		int haveToReview=0;
-		String endTime="2020-04-10";
-		int result=userService.insPersonalData(uid,learningDay,completedNum,haveToLearn,haveToReview,endTime);
-		return result;
-	}
-
 	
 }

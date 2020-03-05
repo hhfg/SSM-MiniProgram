@@ -9,17 +9,23 @@
 		values (#{openid},#{nickName},#{avatarUrl},#{gender},#{province},#{city})
 	</insert>
 	<!-- 通过openid查找用户的id -->
-<!-- 	<select id="getUserId" parameterType="String">
+ 	<select id="getUserId" parameterType="String" resultType="int">
 		select id from user where openid=#{openid}
-	</select> -->
+	</select> 
+	
 	<!-- 在personal_data表中新增用户  -->
-<!-- 	<insert id="insPersonalData" parameterType="Integer">
-		insert into personal_data(uid) values (#{uid})
-	</insert> -->
-
-<!-- 	<select id="selUserId" parameterType="String">
-		select id from user where username=#{username}
-	</select> -->
+	<insert id="insPersonalData" parameterType="Integer">
+		insert into personal_data(uid,learningDays) values (#{uid},#{learningDays})
+	</insert>
+	<!-- 通过用户名查找用户的id -->
+ 	<select id="selUserId" parameterType="String" resultType="int">
+		select id from user where nickName=#{nickName}
+	</select> 
+	<!--通过用户的id在personal_data表中查找用户信息 -->
+	<select id="selPersonalData" parameterType="int" resultType="com.yym.entity.PersonalData">
+		select * from personal_data where uid=#{uid}
+	</select>
+	
 	<!-- 更新用户选择的单词书的id -->
 	<update id="setMyBookId">
 		update user set bookid=#{bookid} where username=#{username}
@@ -28,8 +34,8 @@
 	<select id="selBookByUser" parameterType="java.lang.String" resultType="com.yym.entity.WordBooks">
 		select * from wordbooks where id=(select bookid from user where username=#{username})
 	</select>
- 	<insert id="insPersonalData">
+<!--  	<insert id="insPersonalData">
 		insert into personal_data(uid,learningDay,completedNum,haveToLearn,haveToReview,endTime)
 		values(#{uid},#{learningDay},#{completedNum},#{haveToLearn},#{haveToReview},#{endTime})
-	</insert>
+	</insert> -->
 </mapper>

@@ -18,19 +18,24 @@ public class UserServiceImpl implements UserService{
 		int result=userDao.insUser(user);
 		return result;
 	}
-//	@Override
-//	public int getUserId(String openid) {
-//		// TODO Auto-generated method stub
-//		int result=userDao.getUserId(openid);
-//		return result;
-//	}
-//	@Override
-//	public int insPersonalData(int uid) {
-//		// TODO Auto-generated method stub
-//		int result=userDao.insPersonalData(uid);
-//		return result;
-//	}
-
+	@Override
+	public int getUserId(String openid) {
+		// TODO Auto-generated method stub
+		int id=userDao.getUserId(openid);
+		return id;
+	}
+	@Override
+	public int insPersonalData(int uid,int learningDays) {
+		// TODO Auto-generated method stub
+		int result=userDao.insPersonalData(uid,learningDays);
+		return result;
+	}
+	@Override
+	public int selUserId(String nickName) {
+		// TODO Auto-generated method stub
+		int result=userDao.selUserId(nickName);
+		return result;
+	}
 
 	@Override
 	public int setMyBookId(String username, int bookid) {
@@ -45,12 +50,11 @@ public class UserServiceImpl implements UserService{
 		return wordBook;
 	}
 	@Override
-	public int insPersonalData(int uid,int learningDay,int completedNum,int haveToLearn,int haveToReview,String endTime) {
+	public PersonalData selPersonalData(int uid) {
 		// TODO Auto-generated method stub
-		int result=userDao.insPersonalData(uid,learningDay,completedNum,haveToLearn,haveToReview,endTime);
-		return result;
+		PersonalData p=userDao.selPersonalData(uid);
+		return p;
 	}
-
 
 
 }
