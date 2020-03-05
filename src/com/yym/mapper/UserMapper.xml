@@ -18,22 +18,29 @@
 		insert into personal_data(uid,learningDays) values (#{uid},#{learningDays})
 	</insert>
 	<!-- 通过用户名查找用户的id -->
- 	<select id="selUserId" parameterType="String" resultType="int">
+ 	<select id="getUserIdByName" parameterType="String" resultType="int">
 		select id from user where nickName=#{nickName}
 	</select> 
 	<!--通过用户的id在personal_data表中查找用户信息 -->
 	<select id="selPersonalData" parameterType="int" resultType="com.yym.entity.PersonalData">
 		select * from personal_data where uid=#{uid}
 	</select>
-	
+	<update id="setMyBook">
+		update personal_data set bookid=#{bookid} where uid=#{uid}
+	</update>
 	<!-- 更新用户选择的单词书的id -->
 	<update id="setMyBookId">
 		update user set bookid=#{bookid} where username=#{username}
 	</update>
+	
+	<!-- 更新用户需要学习的单词和学习计划截至日期 -->
+	<update id="updPersonalData">
+	 	update personal_data set havaToLearn=#{haveToLearn},endTime=#{endTime}
+	</update>
 	<!-- 获取用户选择的单词书的信息 -->
-	<select id="selBookByUser" parameterType="java.lang.String" resultType="com.yym.entity.WordBooks">
+<!-- 	<select id="selBookByUser" parameterType="java.lang.String" resultType="com.yym.entity.WordBooks">
 		select * from wordbooks where id=(select bookid from user where username=#{username})
-	</select>
+	</select> -->
 <!--  	<insert id="insPersonalData">
 		insert into personal_data(uid,learningDay,completedNum,haveToLearn,haveToReview,endTime)
 		values(#{uid},#{learningDay},#{completedNum},#{haveToLearn},#{haveToReview},#{endTime})

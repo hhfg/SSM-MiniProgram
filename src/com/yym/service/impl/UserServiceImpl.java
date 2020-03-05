@@ -31,29 +31,29 @@ public class UserServiceImpl implements UserService{
 		return result;
 	}
 	@Override
-	public int selUserId(String nickName) {
+	public int getUserIdByName(String nickName) {
 		// TODO Auto-generated method stub
-		int result=userDao.selUserId(nickName);
+		int result=userDao.getUserIdByName(nickName);
 		return result;
 	}
 
-	@Override
-	public int setMyBookId(String username, int bookid) {
-		// TODO Auto-generated method stub
-		int result=userDao.setMyBookId(username, bookid);
-		return result;
-	}
-	@Override
-	public WordBooks selBookByUser(String username) {
-		// TODO Auto-generated method stub
-		WordBooks wordBook=userDao.selBookByUser(username);
-		return wordBook;
-	}
 	@Override
 	public PersonalData selPersonalData(int uid) {
 		// TODO Auto-generated method stub
 		PersonalData p=userDao.selPersonalData(uid);
 		return p;
+	}
+	@Override
+	public int setMyBook(int bookid, int uid) {
+		// TODO Auto-generated method stub
+		int result=userDao.setMyBook(bookid,uid);
+		return result;
+	}
+	@Override
+	public int updPersonalData(int haveToLearn, String endTime) {
+		// TODO Auto-generated method stub
+		int result=userDao.updPersonalData(haveToLearn, endTime);
+		return result;
 	}
 
 

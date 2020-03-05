@@ -1,9 +1,18 @@
 package com.yym.entity;
 
+import java.util.List;
+
 public class BooksType {
 	private int id;
 	private String typename;
 	private String typecode;
+	private List<WordBooks> wordBooks;
+	public List<WordBooks> getWordBooks() {
+		return wordBooks;
+	}
+	public void setWordBooks(List<WordBooks> wordBooks) {
+		this.wordBooks = wordBooks;
+	}
 	public int getId() {
 		return id;
 	}
@@ -24,7 +33,8 @@ public class BooksType {
 	}
 	@Override
 	public String toString() {
-		return "BooksType [id=" + id + ", typename=" + typename + ", typecode=" + typecode + "]";
+		return "BooksType [id=" + id + ", typename=" + typename + ", typecode=" + typecode + ", wordBooks=" + wordBooks
+				+ "]";
 	}
 	
 	

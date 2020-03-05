@@ -1,7 +1,9 @@
 package com.yym.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -23,8 +25,11 @@ public class BooksController {
 	@ResponseBody
 	@RequestMapping("/selAllType.do")
 	public List<BooksType> selAllType(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
-		List<BooksType> list=booksService.selAllType();
-		return list;
+		List<BooksType> booksType=booksService.selAllType();
+		for(BooksType s:booksType) {
+			s.setWordBooks(booksService.selByType(s.getTypecode()));
+		}		
+		return booksType;
 	}
 	@ResponseBody
 	@RequestMapping("/selByType.do")

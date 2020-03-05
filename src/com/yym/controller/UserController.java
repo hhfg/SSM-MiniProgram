@@ -35,7 +35,7 @@ public class UserController {
         response.setHeader("Access-Control-Allow-Methods", "GET,POST");  	
         DecodeUserUtil decode=new DecodeUserUtil();
         String openid=decode.decodeUser(code);
-        System.out.println(openid);
+       
         User user=new User();
         user.setOpenid(openid);
         user.setNickName(nickName);
@@ -63,27 +63,27 @@ public class UserController {
 	@RequestMapping("/selPersonalData.do")
 	public PersonalData selPersonalData(String nickName,HttpServletRequest request,HttpServletResponse response) throws ServletException,IOException {
 		System.out.println(nickName);
-		int uid=userService.selUserId(nickName);
-		System.out.println(uid);
+		int uid=userService.getUserIdByName(nickName);
 		PersonalData p=userService.selPersonalData(uid);
 		return p;
 	}
 	
 	@ResponseBody
 	@RequestMapping("/setMyBook.do")
-	public int setMyBook(String username,int bookid,HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+	public int setMyBook(String nickName,int bookid,HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		response.setContentType("text/html;charset=utf-8");          
         response.setHeader("Access-Control-Allow-Origin", "*");  
-        response.setHeader("Access-Control-Allow-Methods", "GET,POST");  	
-		int result=userService.setMyBookId(username, bookid);
+        response.setHeader("Access-Control-Allow-Methods", "GET,POST"); 
+        int uid=userService.getUserIdByName(nickName);
+		int result=userService.setMyBook(bookid,uid);
 		return result;
 	}
+
 	@ResponseBody
-	@RequestMapping("/selBookByUser.do")
-	public WordBooks selBookByUser(String username,HttpServletRequest request,HttpServletResponse response) throws ServletException,IOException{
-		WordBooks wordBook=userService.selBookByUser(username);
-		return wordBook;
+	@RequestMapping("/updPersonalData.do")
+	public int updPersonalData(int haveToLearn,String endTime,HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		int result=userService.updPersonalData(haveToLearn, endTime);
+		return result;
 	}
-	
 	
 }
