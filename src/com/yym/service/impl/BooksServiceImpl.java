@@ -26,6 +26,12 @@ public class BooksServiceImpl implements BooksService{
 		List<WordBooks> list=booksDao.selByType(bid);
 		return list;
 	}
+	@Override
+	public WordBooks selBookById(int id) {
+		// TODO Auto-generated method stub
+		WordBooks w=booksDao.selBookById(id);
+		return w;
+	}
 
 
 }

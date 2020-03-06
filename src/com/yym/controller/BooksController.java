@@ -31,4 +31,10 @@ public class BooksController {
 		}		
 		return booksType;
 	}	
+	@ResponseBody
+	@RequestMapping("/selBookById.do")
+	public WordBooks selBookById(int id,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
+		WordBooks s=booksService.selBookById(id);
+		return s;
+	}
 }

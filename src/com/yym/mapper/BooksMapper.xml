@@ -3,12 +3,15 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yym.dao.BooksDao">
-	<select id="selByType" resultType="com.yym.entity.WordBooks">
-		select * from wordbooks where bid=#{bid}	
-	</select>
+    <!-- 查找所有单词书的类型 -->
 	<select id="selAllType" resultType="com.yym.entity.BooksType">
 		select * from books_type
 	</select>
+	<!-- 按单词书所属的类型查找单词书 -->
+	<select id="selByType" resultType="com.yym.entity.WordBooks">
+		select * from wordbooks where bid=#{bid}	
+	</select>
+	<!--按id查找单词书  -->
 	<select id="selBookById" resultType="com.yym.entity.WordBooks">
 		select * from wordbooks where id=#{id}
 	</select>

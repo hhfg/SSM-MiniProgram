@@ -12,5 +12,7 @@ public interface BooksDao {
 	List<BooksType> selAllType();
 //	按类型查找单词书名
 	List<WordBooks> selByType(@Param("bid")int bid);
+	//通过id查找单词书
+	WordBooks selBookById(@Param("id")int id);
 
 }
