@@ -62,7 +62,6 @@ public class UserController {
 	@ResponseBody
 	@RequestMapping("/selPersonalData.do")
 	public PersonalData selPersonalData(String nickName,HttpServletRequest request,HttpServletResponse response) throws ServletException,IOException {
-		System.out.println(nickName);
 		int uid=userService.getUserIdByName(nickName);
 		PersonalData p=userService.selPersonalData(uid);
 		return p;

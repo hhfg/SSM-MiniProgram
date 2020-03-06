@@ -21,9 +21,9 @@ public class BooksServiceImpl implements BooksService{
 		return list;
 	}
 	@Override
-	public List<WordBooks> selByType(String type) {
+	public List<WordBooks> selByType(int bid) {
 		// TODO Auto-generated method stub
-		List<WordBooks> list=booksDao.selByType(type);
+		List<WordBooks> list=booksDao.selByType(bid);
 		return list;
 	}
 

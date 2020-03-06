@@ -35,7 +35,7 @@
 	
 	<!-- 更新用户需要学习的单词和学习计划截至日期 -->
 	<update id="updPersonalData">
-	 	update personal_data set havaToLearn=#{haveToLearn},endTime=#{endTime}
+	 	update personal_data set haveToLearn=#{haveToLearn},endTime=#{endTime}
 	</update>
 	<!-- 获取用户选择的单词书的信息 -->
 <!-- 	<select id="selBookByUser" parameterType="java.lang.String" resultType="com.yym.entity.WordBooks">

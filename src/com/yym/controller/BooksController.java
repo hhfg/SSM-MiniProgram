@@ -27,16 +27,8 @@ public class BooksController {
 	public List<BooksType> selAllType(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
 		List<BooksType> booksType=booksService.selAllType();
 		for(BooksType s:booksType) {
-			s.setWordBooks(booksService.selByType(s.getTypecode()));
+			s.setWordBooks(booksService.selByType(s.getId()));
 		}		
 		return booksType;
-	}
-	@ResponseBody
-	@RequestMapping("/selByType.do")
-	public List<WordBooks> selByType(String type,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
-//		String type="cet4";
-		List<WordBooks> list=booksService.selByType(type);
-		return list;
-	}
-	
+	}	
 }

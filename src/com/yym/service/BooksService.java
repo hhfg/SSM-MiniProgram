@@ -9,5 +9,5 @@ public interface BooksService {
 //	查找单词书的所有类型
 	List<BooksType> selAllType();
 //	按类型查找单词书名
-	List<WordBooks> selByType(String type);
+	List<WordBooks> selByType(int bid);
 }

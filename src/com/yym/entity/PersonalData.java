@@ -3,6 +3,7 @@ package com.yym.entity;
 public class PersonalData {
 	private int id;
 	private int uid;          //用户的id
+	private int bookid;       //用户选择的单词书的id
 	private int learningDays; //已学习的天数
 	private int completedNums;//已学习的单词量
 	private int haveToLearn;  //每天需要学习的单词数
@@ -19,6 +20,12 @@ public class PersonalData {
 	}
 	public void setUid(int uid) {
 		this.uid = uid;
+	}
+	public int getBookid() {
+		return bookid;
+	}
+	public void setBookid(int bookid) {
+		this.bookid = bookid;
 	}
 	public int getLearningDays() {
 		return learningDays;

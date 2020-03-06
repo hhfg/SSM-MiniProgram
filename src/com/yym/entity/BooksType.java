@@ -5,7 +5,6 @@ import java.util.List;
 public class BooksType {
 	private int id;
 	private String typename;
-	private String typecode;
 	private List<WordBooks> wordBooks;
 	public List<WordBooks> getWordBooks() {
 		return wordBooks;
@@ -25,15 +24,10 @@ public class BooksType {
 	public void setTypename(String typename) {
 		this.typename = typename;
 	}
-	public String getTypecode() {
-		return typecode;
-	}
-	public void setTypecode(String typecode) {
-		this.typecode = typecode;
-	}
+
 	@Override
 	public String toString() {
-		return "BooksType [id=" + id + ", typename=" + typename + ", typecode=" + typecode + ", wordBooks=" + wordBooks
+		return "BooksType [id=" + id + ", typename=" + typename + ", wordBooks=" + wordBooks
 				+ "]";
 	}
 	
