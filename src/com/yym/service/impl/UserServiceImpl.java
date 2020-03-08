@@ -25,9 +25,9 @@ public class UserServiceImpl implements UserService{
 		return id;
 	}
 	@Override
-	public int insPersonalData(int uid,int learningDays) {
+	public int insPersonalData(int uid,int clockInDay) {
 		// TODO Auto-generated method stub
-		int result=userDao.insPersonalData(uid,learningDays);
+		int result=userDao.insPersonalData(uid,clockInDay);
 		return result;
 	}
 	@Override
@@ -50,11 +50,18 @@ public class UserServiceImpl implements UserService{
 		return result;
 	}
 	@Override
-	public int updPersonalData(int haveToLearn, String endTime) {
+	public int updPersonalData(int haveToLearn, String endTime,int learningDay) {
 		// TODO Auto-generated method stub
-		int result=userDao.updPersonalData(haveToLearn, endTime);
+		int result=userDao.updPersonalData(haveToLearn, endTime,learningDay);
 		return result;
 	}
+	@Override
+	public int createUserWordTable(String tableName) {
+		// TODO Auto-generated method stub
+		int result=userDao.createUserWordTable(tableName);
+		return result;
+	}
+	
 
 
 }

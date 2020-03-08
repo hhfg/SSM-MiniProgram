@@ -15,7 +15,7 @@
 	
 	<!-- 在personal_data表中新增用户  -->
 	<insert id="insPersonalData" parameterType="Integer">
-		insert into personal_data(uid,learningDays) values (#{uid},#{learningDays})
+		insert into personal_data(uid,clockInDay) values (#{uid},#{clockInDay})
 	</insert>
 	<!-- 通过用户名查找用户的id -->
  	<select id="getUserIdByName" parameterType="String" resultType="int">
@@ -35,7 +35,29 @@
 	
 	<!-- 更新用户需要学习的单词和学习计划截至日期 -->
 	<update id="updPersonalData">
-	 	update personal_data set haveToLearn=#{haveToLearn},endTime=#{endTime}
+	 	update personal_data set haveToLearn=#{haveToLearn},endTime=#{endTime},learningDay=#{learningDay}
+	</update>
+	
+	<update id="createUserWordTable" parameterType="string">
+		create table ${tableName} (
+			id int(11) not null auto_increment,
+			word varchar(255) not null,
+			us_pron varchar(255) default null,
+			uk_pron varchar(255) default null,
+			us_mp3 varchar(255) default null,
+			uk_mp3 varchar(255) default null,
+			explanation varchar(255) default null,
+			val_ex1 varchar(255) default null,
+			bil_ex1 varchar(255) default null,
+			val_ex2 varchar(255) default null,
+			bil_ex2 varchar(255) default null,
+			val_ex3 varchar(255) default null,
+			bil_ex3 varchar(255) default null,
+			collocation varchar(255) default null,
+			completed int(2) default null,
+			dates date default null,
+			primary key(id)
+		)engine=InnoDB default charset=utf8
 	</update>
 	<!-- 获取用户选择的单词书的信息 -->
 <!-- 	<select id="selBookByUser" parameterType="java.lang.String" resultType="com.yym.entity.WordBooks">

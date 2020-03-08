@@ -14,7 +14,7 @@ public interface UserService {
 	int getUserId(String openid);
 	
 	//在personal_data表中新增用户
-	int insPersonalData(int uid,int learningDays);
+	int insPersonalData(int uid,int clockInDay);
 	
 	//  查找用户在表中的id
 	int getUserIdByName(String nickName);
@@ -26,7 +26,9 @@ public interface UserService {
 	int setMyBook(int bookid,int uid);
 	
 	//更新用户需要学习的单词和学习计划截至日期
-	int updPersonalData(@Param("haveToLearn")int haveToLearn,@Param("endTime")String endTime);
+	int updPersonalData(int haveToLearn,String endTime,int learningDay);
+	//创建用户的单词表
+	int createUserWordTable(String tableName);
     //  更新用户选择的单词书的id
 	//int setMyBookId(String username,int bookid);
     //  获取用户选择的单词书的信息

@@ -45,18 +45,23 @@ public class UserController {
         user.setCity(city);
         //≤Â»Î”√ªß 
         int result=userService.insUser(user);
-        return "redirect:/getUserId.do?openid="+openid; 
+        return "redirect:/createUserWordTable.do?nickName="+nickName;
 	}
-	@RequestMapping("/getUserId.do")
-	public String getUserId(String openid,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
-		int id=userService.getUserId(openid);
+	@RequestMapping("/createUserWordTable.do")
+	public String createUserWordTable(String nickName,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
+		int result=userService.createUserWordTable(nickName+"_word");
+		return "redirect:/getUserIdByName.do?nickName="+nickName;
+	}
+	@RequestMapping("/getUserIdByName.do")
+	public String getUserId(String nickName,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
+		int id=userService.getUserIdByName(nickName);
 		return "redirect:/insPersonalData.do?id="+id;
 	}
 	@ResponseBody
 	@RequestMapping("/insPersonalData.do")
 	public int insPersonalData(int id,HttpServletRequest request,HttpServletResponse response) throws ServletException,IOException {
-		int learningDays=1;
-		int result=userService.insPersonalData(id,learningDays);
+		int clockInDay=1;
+		int result=userService.insPersonalData(id,clockInDay);
 		return result;
 	}
 	@ResponseBody
@@ -80,9 +85,8 @@ public class UserController {
 
 	@ResponseBody
 	@RequestMapping("/updPersonalData.do")
-	public int updPersonalData(int haveToLearn,String endTime,HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		int result=userService.updPersonalData(haveToLearn, endTime);
+	public int updPersonalData(int haveToLearn,String endTime,int learningDay,HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		int result=userService.updPersonalData(haveToLearn, endTime,learningDay);
 		return result;
 	}
-	
 }
