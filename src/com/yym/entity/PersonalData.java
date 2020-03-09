@@ -10,6 +10,13 @@ public class PersonalData {
 	private int haveToReview; //需要复习的单词数
 	private String endTime;   //预计完成的日期
 	private int learningDay;  //预计学习的天数
+	private int lastWordId;   //最后背诵的一个id
+	public int getLastWordId() {
+		return lastWordId;
+	}
+	public void setLastWordId(int lastWordId) {
+		this.lastWordId = lastWordId;
+	}
 	public int getId() {
 		return id;
 	}
@@ -68,8 +75,9 @@ public class PersonalData {
 	public String toString() {
 		return "PersonalData [id=" + id + ", uid=" + uid + ", bookid=" + bookid + ", clockInDay=" + clockInDay
 				+ ", completedNums=" + completedNums + ", haveToLearn=" + haveToLearn + ", haveToReview=" + haveToReview
-				+ ", endTime=" + endTime + ", learningDay=" + learningDay + "]";
+				+ ", endTime=" + endTime + ", learningDay=" + learningDay + ", lastWordId=" + lastWordId + "]";
 	}
+
 	
 
 }
