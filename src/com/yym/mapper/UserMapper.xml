@@ -34,8 +34,38 @@
 	</update>
 	
 	<!-- 更新用户需要学习的单词和学习计划截至日期 -->
-	<update id="updPersonalData">
-	 	update personal_data set haveToLearn=#{haveToLearn},endTime=#{endTime},learningDay=#{learningDay}
+	<update id="updPersonalData" parameterType="com.yym.entity.PersonalData">
+<!-- 	 	update personal_data set 
+	 	haveToLearn=#{haveToLearn},endTime=#{endTime},learningDay=#{learningDay}
+	 	where uid=#{uid} -->
+	 	update personal_data
+	 	<trim prefix="set" suffixOverrides=",">
+	 		<if test="bookid!=null and bookid!=''">
+	 			bookid=#{bookid},
+	 		</if>
+	 		<if test="clockInDay!=null and clockInDay!=''">
+	 			clockInDay=#{clockInDay},
+	 		</if>
+	 		<if test="completedNum!=null and completedNum!=''">
+	 			completedNum=#{completedNum},
+	 		</if>
+	 		<if test="haveToLearn!=null and haveToLearn!=''">
+	 			haveToLearn=#{haveToLearn},
+	 		</if>
+	 		<if test="haveToReview!=null and haveToReview!=''">
+	 			haveToReview=#{haveToReview},
+	 		</if>
+	 		<if test="endTime!=null and endTime!=''">
+	 			endTime=#{endTime},
+	 		</if>
+	 		<if test="learningDay!=null and learningDay!=''">
+	 			learningDay=#{learningDay},
+	 		</if>
+	 		<if test="lastWordId!=null and lastWordId!=''">
+	 			lastWordId=#{lastWordId},
+	 		</if>
+	 	</trim>
+	 	where uid=#{uid}
 	</update>
 	
 	<update id="createUserWordTable" parameterType="string">

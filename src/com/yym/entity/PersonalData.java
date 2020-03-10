@@ -1,11 +1,13 @@
 package com.yym.entity;
 
+import java.util.Date;
+
 public class PersonalData {
 	private int id;
 	private int uid;          //用户的id
 	private int bookid;       //用户选择的单词书的id
 	private int clockInDay;   //打卡天数
-	private int completedNums;//已学习的单词量
+	private int completedNum;//已学习的单词量
 	private int haveToLearn;  //每天需要学习的单词数
 	private int haveToReview; //需要复习的单词数
 	private String endTime;   //预计完成的日期
@@ -41,11 +43,11 @@ public class PersonalData {
 	public void setClockInDay(int clockInDay) {
 		this.clockInDay = clockInDay;
 	}
-	public int getCompletedNums() {
-		return completedNums;
+	public int getCompletedNum() {
+		return completedNum;
 	}
-	public void setCompletedNums(int completedNums) {
-		this.completedNums = completedNums;
+	public void setCompletedNum(int completedNum) {
+		this.completedNum = completedNum;
 	}
 	public int getHaveToLearn() {
 		return haveToLearn;
@@ -74,7 +76,7 @@ public class PersonalData {
 	@Override
 	public String toString() {
 		return "PersonalData [id=" + id + ", uid=" + uid + ", bookid=" + bookid + ", clockInDay=" + clockInDay
-				+ ", completedNums=" + completedNums + ", haveToLearn=" + haveToLearn + ", haveToReview=" + haveToReview
+				+ ", completedNum=" + completedNum + ", haveToLearn=" + haveToLearn + ", haveToReview=" + haveToReview
 				+ ", endTime=" + endTime + ", learningDay=" + learningDay + ", lastWordId=" + lastWordId + "]";
 	}
 

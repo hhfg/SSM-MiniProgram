@@ -2,6 +2,9 @@ package com.yym.controller;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -66,9 +69,14 @@ public class UserController {
 	}
 	@ResponseBody
 	@RequestMapping("/selPersonalData.do")
-	public PersonalData selPersonalData(String nickName,HttpServletRequest request,HttpServletResponse response) throws ServletException,IOException {
+	public PersonalData selPersonalData(String nickName,HttpServletRequest request,HttpServletResponse response) throws ServletException,IOException, ParseException {
 		int uid=userService.getUserIdByName(nickName);
 		PersonalData p=userService.selPersonalData(uid);
+		//获取当天日期
+		SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
+		Date todayDate = new Date(System.currentTimeMillis());
+		Date endDate=formatter.parse(p.getEndTime());
+		long betweenDate=(endDate.getTime()-todayDate.getTime())/(60*60*24*1000);
 		return p;
 	}
 	
@@ -79,14 +87,24 @@ public class UserController {
         response.setHeader("Access-Control-Allow-Origin", "*");  
         response.setHeader("Access-Control-Allow-Methods", "GET,POST"); 
         int uid=userService.getUserIdByName(nickName);
-		int result=userService.setMyBook(bookid,uid);
+		//int result=userService.setMyBook(bookid,uid);
+        PersonalData p=new PersonalData();
+        p.setBookid(bookid);
+        p.setUid(uid);
+        int result=userService.updPersonalData(p);
 		return result;
 	}
 
 	@ResponseBody
 	@RequestMapping("/updPersonalData.do")
-	public int updPersonalData(int haveToLearn,String endTime,int learningDay,HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		int result=userService.updPersonalData(haveToLearn, endTime,learningDay);
+	public int updPersonalData(String nickName,int haveToLearn,String endTime,int learningDay,HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		int uid=userService.getUserIdByName(nickName);
+		PersonalData p=new PersonalData();
+		p.setHaveToLearn(haveToLearn);
+		p.setEndTime(endTime);
+		p.setLearningDay(learningDay);
+		p.setUid(uid);
+		int result=userService.updPersonalData(p);
 		return result;
 	}
 }

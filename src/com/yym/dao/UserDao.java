@@ -25,8 +25,7 @@ public interface UserDao {
 	//设置用于选择的单词书的id
 	int setMyBook(@Param("bookid")int bookid,@Param("uid")int uid);
 	//更新用户需要学习的单词和学习计划截至日期
-	int updPersonalData(@Param("haveToLearn")int haveToLearn,
-			@Param("endTime")String endTime,@Param("learningDay")int learningDay);
+	int updPersonalData(PersonalData personalData);
 	//创建用户的单词表
 	int createUserWordTable(@Param("tableName")String tableName);
 	//  更新用户选择的单词书的id

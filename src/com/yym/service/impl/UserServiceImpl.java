@@ -49,10 +49,11 @@ public class UserServiceImpl implements UserService{
 		int result=userDao.setMyBook(bookid,uid);
 		return result;
 	}
+	
 	@Override
-	public int updPersonalData(int haveToLearn, String endTime,int learningDay) {
+	public int updPersonalData(PersonalData personalData) {
 		// TODO Auto-generated method stub
-		int result=userDao.updPersonalData(haveToLearn, endTime,learningDay);
+		int result=userDao.updPersonalData(personalData);
 		return result;
 	}
 	@Override
@@ -61,6 +62,9 @@ public class UserServiceImpl implements UserService{
 		int result=userDao.createUserWordTable(tableName);
 		return result;
 	}
+	
+
+
 	
 
 
