@@ -64,7 +64,11 @@ public class UserController {
 	@RequestMapping("/insPersonalData.do")
 	public int insPersonalData(int id,HttpServletRequest request,HttpServletResponse response) throws ServletException,IOException {
 		int clockInDay=1;
-		int result=userService.insPersonalData(id,clockInDay);
+		SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
+		//获取当天日期
+		Date todayDate = new Date(System.currentTimeMillis());
+		String startTime=formatter.format(todayDate);
+		int result=userService.insPersonalData(id,clockInDay,startTime);
 		return result;
 	}
 	@ResponseBody
@@ -72,11 +76,23 @@ public class UserController {
 	public PersonalData selPersonalData(String nickName,HttpServletRequest request,HttpServletResponse response) throws ServletException,IOException, ParseException {
 		int uid=userService.getUserIdByName(nickName);
 		PersonalData p=userService.selPersonalData(uid);
-		//获取当天日期
 		SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
-		Date todayDate = new Date(System.currentTimeMillis());
-		Date endDate=formatter.parse(p.getEndTime());
-		long betweenDate=(endDate.getTime()-todayDate.getTime())/(60*60*24*1000);
+		Date todayDate=new Date(System.currentTimeMillis());
+		System.out.println(formatter.format(todayDate));
+		System.out.println(p.getStartTime());
+		//如果还未设置预计完成时间且开始时间不等于当天日期
+		if(p.getEndTime()!=null&&!p.getStartTime().equals(formatter.format(todayDate))) {
+			//转换预计完成时间
+			Date endDate=formatter.parse(p.getEndTime());
+			//计算剩余天数
+			int betweenDate=(int) ((endDate.getTime()-todayDate.getTime())/(60*60*24*1000));
+			PersonalData p1=new PersonalData();
+			p1.setClockInDay(p.getClockInDay()+1);
+			p1.setLearningDay(betweenDate);
+			p1.setUid(uid);
+			int result=userService.updPersonalData(p1);
+			p=userService.selPersonalData(uid);
+		}	
 		return p;
 	}
 	
@@ -87,7 +103,6 @@ public class UserController {
         response.setHeader("Access-Control-Allow-Origin", "*");  
         response.setHeader("Access-Control-Allow-Methods", "GET,POST"); 
         int uid=userService.getUserIdByName(nickName);
-		//int result=userService.setMyBook(bookid,uid);
         PersonalData p=new PersonalData();
         p.setBookid(bookid);
         p.setUid(uid);

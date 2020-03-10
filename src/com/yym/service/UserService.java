@@ -14,7 +14,7 @@ public interface UserService {
 	int getUserId(String openid);
 	
 	//在personal_data表中新增用户
-	int insPersonalData(int uid,int clockInDay);
+	int insPersonalData(int uid,int clockInDay,String startTime);
 	
 	//  查找用户在表中的id
 	int getUserIdByName(String nickName);

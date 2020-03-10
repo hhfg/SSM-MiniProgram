@@ -11,6 +11,7 @@ public class PersonalData {
 	private int haveToLearn;  //每天需要学习的单词数
 	private int haveToReview; //需要复习的单词数
 	private String endTime;   //预计完成的日期
+	private String startTime; //开始使用小程序的日期
 	private int learningDay;  //预计学习的天数
 	private int lastWordId;   //最后背诵的一个id
 	public int getLastWordId() {
@@ -73,13 +74,19 @@ public class PersonalData {
 	public void setLearningDay(int learningDay) {
 		this.learningDay = learningDay;
 	}
+	
+	public String getStartTime() {
+		return startTime;
+	}
+	public void setStartTime(String startTime) {
+		this.startTime = startTime;
+	}
 	@Override
 	public String toString() {
 		return "PersonalData [id=" + id + ", uid=" + uid + ", bookid=" + bookid + ", clockInDay=" + clockInDay
 				+ ", completedNum=" + completedNum + ", haveToLearn=" + haveToLearn + ", haveToReview=" + haveToReview
-				+ ", endTime=" + endTime + ", learningDay=" + learningDay + ", lastWordId=" + lastWordId + "]";
+				+ ", endTime=" + endTime + ", startTime=" + startTime + ", learningDay=" + learningDay + ", lastWordId="
+				+ lastWordId + "]";
 	}
-
-	
 
 }
