@@ -10,8 +10,8 @@ public class PersonalData {
 	private int completedNum;//已学习的单词量
 	private int haveToLearn;  //每天需要学习的单词数
 	private int haveToReview; //需要复习的单词数
-	private String endTime;   //预计完成的日期
-	private String startTime; //开始使用小程序的日期
+	private Date endTime;   //预计完成的日期
+	private Date startTime; //开始使用小程序的日期
 	private int learningDay;  //预计学习的天数
 	private int lastWordId;   //最后背诵的一个id
 	public int getLastWordId() {
@@ -62,10 +62,10 @@ public class PersonalData {
 	public void setHaveToReview(int haveToReview) {
 		this.haveToReview = haveToReview;
 	}
-	public String getEndTime() {
+	public Date getEndTime() {
 		return endTime;
 	}
-	public void setEndTime(String endTime) {
+	public void setEndTime(Date endTime) {
 		this.endTime = endTime;
 	}
 	public int getLearningDay() {
@@ -75,10 +75,10 @@ public class PersonalData {
 		this.learningDay = learningDay;
 	}
 	
-	public String getStartTime() {
+	public Date getStartTime() {
 		return startTime;
 	}
-	public void setStartTime(String startTime) {
+	public void setStartTime(Date startTime) {
 		this.startTime = startTime;
 	}
 	@Override

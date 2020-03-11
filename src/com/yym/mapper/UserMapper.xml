@@ -15,7 +15,7 @@
 	
 	<!-- 在personal_data表中新增用户  -->
 	<insert id="insPersonalData">
-		insert into personal_data(uid,clockInDay,startTime) values (#{uid},#{clockInDay},#{startTime})
+		insert into personal_data(uid,clockInDay) values (#{uid},#{clockInDay})
 	</insert>
 	<!-- 通过用户名查找用户的id -->
  	<select id="getUserIdByName" parameterType="String" resultType="int">
@@ -55,10 +55,13 @@
 	 		<if test="haveToReview!=null and haveToReview!=''">
 	 			haveToReview=#{haveToReview},
 	 		</if>
-	 		<if test="endTime!=null and endTime!=''">
+	 		<if test="endTime!=null">
 	 			endTime=#{endTime},
 	 		</if>
-	 		<if test="learningDay!=null and learningDay!=''">
+	 		<if test="startTime!=null">
+	 			startTime=#{startTime},
+	 		</if>
+	 		<if test="learningDay!=null">
 	 			learningDay=#{learningDay},
 	 		</if>
 	 		<if test="lastWordId!=null and lastWordId!=''">

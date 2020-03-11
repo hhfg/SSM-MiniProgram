@@ -17,7 +17,7 @@ public class UserWords {
 	private String val_ex3;
 	private String bil_ex3;
 	private String collocation;
-	private int completed;
+	private int status;
 	private Date dates;
 	public int getId() {
 		return id;
@@ -104,10 +104,10 @@ public class UserWords {
 		this.collocation = collocation;
 	}
 	public int getCompleted() {
-		return completed;
+		return status;
 	}
-	public void setCompleted(int completed) {
-		this.completed = completed;
+	public void setCompleted(int status) {
+		this.status = status;
 	}
 
 	public Date getDates() {
@@ -121,7 +121,7 @@ public class UserWords {
 		return "UserWords [id=" + id + ", word=" + word + ", us_pron=" + us_pron + ", uk_pron=" + uk_pron + ", us_mp3="
 				+ us_mp3 + ", uk_mp3=" + uk_mp3 + ", explanation=" + explanation + ", val_ex1=" + val_ex1 + ", bil_ex1="
 				+ bil_ex1 + ", val_ex2=" + val_ex2 + ", bil_ex2=" + bil_ex2 + ", val_ex3=" + val_ex3 + ", bil_ex3="
-				+ bil_ex3 + ", collocation=" + collocation + ", completed=" + completed + ", dates=" + dates + "]";
+				+ bil_ex3 + ", collocation=" + collocation + ", status=" + status + ", dates=" + dates + "]";
 	}
 	
 }

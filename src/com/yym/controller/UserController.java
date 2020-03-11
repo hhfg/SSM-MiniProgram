@@ -64,11 +64,8 @@ public class UserController {
 	@RequestMapping("/insPersonalData.do")
 	public int insPersonalData(int id,HttpServletRequest request,HttpServletResponse response) throws ServletException,IOException {
 		int clockInDay=1;
-		SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
-		//获取当天日期
-		Date todayDate = new Date(System.currentTimeMillis());
-		String startTime=formatter.format(todayDate);
-		int result=userService.insPersonalData(id,clockInDay,startTime);
+
+		int result=userService.insPersonalData(id,clockInDay);
 		return result;
 	}
 	@ResponseBody
@@ -78,12 +75,10 @@ public class UserController {
 		PersonalData p=userService.selPersonalData(uid);
 		SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
 		Date todayDate=new Date(System.currentTimeMillis());
-		System.out.println(formatter.format(todayDate));
-		System.out.println(p.getStartTime());
 		//如果还未设置预计完成时间且开始时间不等于当天日期
-		if(p.getEndTime()!=null&&!p.getStartTime().equals(formatter.format(todayDate))) {
+		if(p.getEndTime()!=null&&!p.getStartTime().equals(todayDate)) {
 			//转换预计完成时间
-			Date endDate=formatter.parse(p.getEndTime());
+			Date endDate=p.getEndTime();
 			//计算剩余天数
 			int betweenDate=(int) ((endDate.getTime()-todayDate.getTime())/(60*60*24*1000));
 			PersonalData p1=new PersonalData();
@@ -112,13 +107,20 @@ public class UserController {
 
 	@ResponseBody
 	@RequestMapping("/updPersonalData.do")
-	public int updPersonalData(String nickName,int haveToLearn,String endTime,int learningDay,HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+	public int updPersonalData(String nickName,int haveToLearn,String endTime,int learningDay,HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ParseException{
 		int uid=userService.getUserIdByName(nickName);
 		PersonalData p=new PersonalData();
+		SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
+		Date date=formatter.parse(endTime);
+		//获取当天日期
+		Date todayDate = new Date(System.currentTimeMillis());
+		String today=formatter.format(todayDate);
+		Date startTime=formatter.parse(today);
 		p.setHaveToLearn(haveToLearn);
-		p.setEndTime(endTime);
 		p.setLearningDay(learningDay);
 		p.setUid(uid);
+		p.setEndTime(date);
+		p.setStartTime(startTime);
 		int result=userService.updPersonalData(p);
 		return result;
 	}
