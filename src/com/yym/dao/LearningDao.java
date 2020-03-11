@@ -21,5 +21,8 @@ public interface LearningDao {
 			@Param("dates")Date dates);
 	//获取用户单词表的count，用来判断是否有数据 -
 	int getCount(@Param("table_name")String table_name);
+	//从单词表中获取status=0即未学的单词 
 	List<UserWords> getWords(@Param("table_name")String table_name);
+	//设置单词为已学status=0
+	int updStatus(@Param("table_name")String table_name,@Param("id")int id);
 }

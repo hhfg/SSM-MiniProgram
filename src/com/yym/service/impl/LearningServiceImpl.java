@@ -53,6 +53,14 @@ public class LearningServiceImpl implements LearningService{
 		return list;
 	}
 
+	@Override
+	public int updStatus(String table_name, int id) {
+		// TODO Auto-generated method stub
+		int result=learningDao.updStatus(table_name, id);
+		return result;
+	}
+	
+
 
 
 }
