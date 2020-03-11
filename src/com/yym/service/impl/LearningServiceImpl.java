@@ -2,6 +2,7 @@ package com.yym.service.impl;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,9 +48,9 @@ public class LearningServiceImpl implements LearningService{
 	}
 
 	@Override
-	public List<UserWords> getWords(String table_name) {
+	public List<UserWords> getWords(String table_name,int status) {
 		// TODO Auto-generated method stub
-		List<UserWords> list=learningDao.getWords(table_name);
+		List<UserWords> list=learningDao.getWords(table_name,status);
 		return list;
 	}
 
@@ -58,6 +59,13 @@ public class LearningServiceImpl implements LearningService{
 		// TODO Auto-generated method stub
 		int result=learningDao.updStatus(table_name, id);
 		return result;
+	}
+
+	@Override
+	public Set<String> selExplanation() {
+		// TODO Auto-generated method stub
+		Set<String> set=learningDao.selExplanation();
+		return set;
 	}
 	
 

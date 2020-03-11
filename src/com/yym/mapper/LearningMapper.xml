@@ -19,12 +19,16 @@
 	<select id="getCount" parameterType="string" resultType="int">
 		select count(*) from ${table_name}
 	</select>
-	<!-- 从单词表中获取status=0即未学的单词 -->
+	<!-- 从单词表中获取单词，参数为status -->
 	<select id="getWords" resultType="com.yym.entity.UserWords">
-		select * from ${table_name} where status=0
+		select * from ${table_name} where status=#{status}
 	</select>
 	<!-- 设置单词为已学status=0 -->
 	<update id="updStatus">
 		update ${table_name} set status=1 where id=#{id}
 	</update>
+	<!-- 随机从数据库取三条记录 -->
+	<select id="selExplanation" resultType="string">
+		SELECT explanation FROM cet4word  WHERE wid >= ((SELECT MAX(wid) FROM cet4word )-(SELECT MIN(wid) FROM user )) * RAND() + (SELECT MIN(wid) FROM cet4word )  LIMIT 3
+	</select>
 </mapper>

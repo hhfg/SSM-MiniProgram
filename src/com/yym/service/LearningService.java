@@ -2,6 +2,7 @@ package com.yym.service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -20,7 +21,9 @@ public interface LearningService {
 	 //获取用户单词表的count，用来判断是否有数据 
 	int getCount(String table_name);
 	//从用户单词表中查询status为0的数据(0表示还未学习
-	List<UserWords> getWords(String table_name);
+	List<UserWords> getWords(String table_name,int status);
 	//设置单词为已学status=0
 	int updStatus(String table_name,int id);
+	
+	Set<String> selExplanation();
 }
