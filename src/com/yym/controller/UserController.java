@@ -10,6 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.httpclient.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -75,8 +76,9 @@ public class UserController {
 		PersonalData p=userService.selPersonalData(uid);
 		SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
 		Date todayDate=new Date(System.currentTimeMillis());
+		System.out.println(todayDate);
 		//如果还未设置预计完成时间且开始时间不等于当天日期
-		if(p.getEndTime()!=null&&!p.getStartTime().equals(todayDate)) {
+		if(p.getEndTime()!=null&&!formatter.format(todayDate).equals(formatter.format(p.getStartTime()))) {
 			//转换预计完成时间
 			Date endDate=p.getEndTime();
 			//计算剩余天数
