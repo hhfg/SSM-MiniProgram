@@ -87,7 +87,7 @@
 			val_ex3 varchar(255) default null,
 			bil_ex3 varchar(255) default null,
 			collocation varchar(255) default null,
-			completed int(2) default null,
+			status int(2) default null,
 			dates date default null,
 			primary key(id)
 		)engine=InnoDB default charset=utf8

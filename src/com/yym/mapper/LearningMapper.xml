@@ -15,4 +15,11 @@
 		#{us_pron},#{uk_pron},#{us_mp3},#{uk_mp3},#{explanation},#{val_ex1},#{bil_ex1},#{val_ex2},#{bil_ex2},
 		#{val_ex3},#{bil_ex3},#{collocation},#{completed},#{dates})
 	</insert>
+	<!-- 获取用户单词表的count，用来判断是否有数据 -->
+	<select id="getCount" parameterType="string" resultType="int">
+		select count(*) from ${table_name}
+	</select>
+	<select id="getWords" resultType="com.yym.entity.UserWords">
+		select * from ${table_name} where status=0
+	</select>
 </mapper>

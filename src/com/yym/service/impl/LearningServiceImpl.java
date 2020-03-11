@@ -39,6 +39,20 @@ public class LearningServiceImpl implements LearningService{
 		return 0;
 	}
 
+	@Override
+	public int getCount(String table_name) {
+		// TODO Auto-generated method stub
+		int count=learningDao.getCount(table_name);
+		return count;
+	}
+
+	@Override
+	public List<UserWords> getWords(String table_name) {
+		// TODO Auto-generated method stub
+		List<UserWords> list=learningDao.getWords(table_name);
+		return list;
+	}
+
 
 
 }
