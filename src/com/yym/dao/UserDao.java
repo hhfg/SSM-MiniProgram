@@ -1,5 +1,7 @@
 package com.yym.dao;
 
+import java.util.Date;
+
 import org.apache.ibatis.annotations.Param;
 
 import com.yym.entity.PersonalData;
@@ -14,7 +16,7 @@ public interface UserDao {
 	int getUserId(@Param("openid")String openid);
 	
 	//在personal_data表中新增用户
-	int insPersonalData(@Param("uid")int uid,@Param("clockInDay")int clockInDay);
+	int insPersonalData(@Param("uid")int uid,@Param("clockInDay")int clockInDay,@Param("startUseDate")Date startUseDate);;
 
 	//  通过用户名查找用户在表中的id
 	int getUserIdByName(@Param("nickName")String nickName);

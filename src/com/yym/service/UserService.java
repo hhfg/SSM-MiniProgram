@@ -1,5 +1,7 @@
 package com.yym.service;
 
+import java.util.Date;
+
 import org.apache.ibatis.annotations.Param;
 
 import com.yym.entity.PersonalData;
@@ -14,7 +16,7 @@ public interface UserService {
 	int getUserId(String openid);
 	
 	//在personal_data表中新增用户
-	int insPersonalData(int uid,int clockInDay);
+	int insPersonalData(int uid,int clockInDay,Date startUseDate);
 	
 	//  查找用户在表中的id
 	int getUserIdByName(String nickName);

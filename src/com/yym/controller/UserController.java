@@ -65,7 +65,9 @@ public class UserController {
 	@RequestMapping("/insPersonalData.do")
 	public int insPersonalData(int id,HttpServletRequest request,HttpServletResponse response) throws ServletException,IOException {
 		int clockInDay=1;
-		int result=userService.insPersonalData(id,clockInDay);
+		SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
+		Date startUseDate=new Date(System.currentTimeMillis());
+		int result=userService.insPersonalData(id,clockInDay,startUseDate);
 		return result;
 	}
 	@ResponseBody
@@ -76,13 +78,14 @@ public class UserController {
 		SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
 		Date todayDate=new Date(System.currentTimeMillis());
 		//如果还未设置预计完成时间且开始时间不等于当天日期
-		if(p.getEndTime()!=null&&!formatter.format(todayDate).equals(formatter.format(p.getStartTime()))) {
+		if(p.getEndTime()!=null&&!formatter.format(todayDate).equals(formatter.format(p.getStartUseDate()))) {
 			//转换预计完成时间
 			Date endDate=p.getEndTime();
 			//计算剩余天数
 			int betweenDate=(int) ((endDate.getTime()-todayDate.getTime())/(60*60*24*1000));
+			int clockInDay=(int) ((todayDate.getTime()-p.getStartUseDate().getTime())/(60*60*24*1000));
 			PersonalData p1=new PersonalData();
-			p1.setClockInDay(p.getClockInDay()+1);
+			p1.setClockInDay(clockInDay+1);
 			p1.setLearningDay(betweenDate);
 			p1.setUid(uid);
 			int result=userService.updPersonalData(p1);

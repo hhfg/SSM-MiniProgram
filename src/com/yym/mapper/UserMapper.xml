@@ -15,7 +15,7 @@
 	
 	<!-- 在personal_data表中新增用户  -->
 	<insert id="insPersonalData">
-		insert into personal_data(uid,clockInDay) values (#{uid},#{clockInDay})
+		insert into personal_data(uid,clockInDay,startUseDate) values (#{uid},#{clockInDay},#{startUseDate})
 	</insert>
 	<!-- 通过用户名查找用户的id -->
  	<select id="getUserIdByName" parameterType="String" resultType="int">
