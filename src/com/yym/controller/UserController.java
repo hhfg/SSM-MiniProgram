@@ -34,22 +34,24 @@ public class UserController {
 	@RequestMapping("/login.do")
 	public String login(String code,String nickName,String avatarUrl,int gender,String province,String city,
 			String profileUrl,HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		response.setContentType("text/html;charset=utf-8");          
-        response.setHeader("Access-Control-Allow-Origin", "*");  
-        response.setHeader("Access-Control-Allow-Methods", "GET,POST");  	
         DecodeUserUtil decode=new DecodeUserUtil();
         String openid=decode.decodeUser(code);
-       
-        User user=new User();
-        user.setOpenid(openid);
-        user.setNickName(nickName);
-        user.setAvatarUrl(avatarUrl);
-        user.setGender(gender);
-        user.setProvince(province);
-        user.setCity(city);
-        //插入用户 
-        int result=userService.insUser(user);
-        return "redirect:/createUserWordTable.do?nickName="+nickName;
+        User u=userService.selUser(openid);
+        if(u!=null) {
+        	return "redirect:/selPersonalData.do?nickName="+nickName;
+        }
+        else {
+            User user=new User();
+            user.setOpenid(openid);
+            user.setNickName(nickName);
+            user.setAvatarUrl(avatarUrl);
+            user.setGender(gender);
+            user.setProvince(province);
+            user.setCity(city);
+            //插入用户 
+            int result=userService.insUser(user);
+            return "redirect:/createUserWordTable.do?nickName="+nickName;
+        }
 	}
 	@RequestMapping("/createUserWordTable.do")
 	public String createUserWordTable(String nickName,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{

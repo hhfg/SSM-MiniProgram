@@ -9,6 +9,7 @@ import com.yym.entity.User;
 import com.yym.entity.WordBooks;
 
 public interface UserService {
+	User selUser(String openid);
     //	≤Â»Î”√ªß
 	int insUser(User user);
 	

@@ -9,6 +9,8 @@ import com.yym.entity.User;
 import com.yym.entity.WordBooks;
 
 public interface UserDao {
+	//根据openid判断是否有用户
+	User selUser(@Param("openid")String openid);
     //	插入用户
 	int insUser(User user);
 	

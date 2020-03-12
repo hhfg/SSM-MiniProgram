@@ -14,6 +14,12 @@ import com.yym.service.UserService;
 public class UserServiceImpl implements UserService{
 	@Autowired
 	private UserDao userDao;
+	
+	@Override
+	public User selUser(String openid) {
+		// TODO Auto-generated method stub
+		return userDao.selUser(openid);
+	}
 	@Override
 	public int insUser(User user) {
 		// TODO Auto-generated method stub
@@ -64,10 +70,6 @@ public class UserServiceImpl implements UserService{
 		int result=userDao.createUserWordTable(tableName);
 		return result;
 	}
-	
-
-
-	
 
 
 }
