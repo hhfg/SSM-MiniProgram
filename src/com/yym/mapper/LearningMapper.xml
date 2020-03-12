@@ -6,14 +6,16 @@
 	<select id="selTableName" parameterType="String" resultType="String">
 		select tableName from wordbooks where bookName=#{bookName}
 	</select>
+	<!-- 从单词书中选取单词 -->
 	<select id="selWords" parameterType="map" resultType="com.yym.entity.Words" >
 		select * from ${table_name} where wid between #{start} and #{end}
 	</select>
+	<!-- 将单词插入到用户单词表 -->
 	<insert id="insWords" parameterType="map">
 		insert into ${table_name}(word,us_pron,uk_pron,us_mp3,uk_mp3,explanation,val_ex1,bil_ex1,
-		val_ex2,bil_ex2,val_ex3,bil_ex3,collocation,completed,dates) values(#{word},
+		val_ex2,bil_ex2,val_ex3,bil_ex3,collocation,status,dates) values(#{word},
 		#{us_pron},#{uk_pron},#{us_mp3},#{uk_mp3},#{explanation},#{val_ex1},#{bil_ex1},#{val_ex2},#{bil_ex2},
-		#{val_ex3},#{bil_ex3},#{collocation},#{completed},#{dates})
+		#{val_ex3},#{bil_ex3},#{collocation},#{status},#{dates})
 	</insert>
 	<!-- 获取用户单词表的count，用来判断是否有数据 -->
 	<select id="getCount" parameterType="string" resultType="int">
@@ -30,5 +32,9 @@
 	<!-- 随机从数据库取三条记录 -->
 	<select id="selExplanation" resultType="string">
 		SELECT explanation FROM cet4word  WHERE wid >= ((SELECT MAX(wid) FROM cet4word )-(SELECT MIN(wid) FROM user )) * RAND() + (SELECT MIN(wid) FROM cet4word )  LIMIT 3
+	</select>
+	<!-- 从用户单词表中获取当前status=0的个数 -->
+	<select id="selLearningCount" resultType="int">
+		select count(*) from ${table_name} where status=0
 	</select>
 </mapper>

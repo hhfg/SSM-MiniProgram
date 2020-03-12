@@ -35,26 +35,31 @@ public class LearningController {
 	@RequestMapping("/selWords.do")
 	public List<UserWords> selWords(String nickName,String bookName,int num,int start,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
 		String userTableName=nickName+"_word";
-		int count=learningService.getCount(userTableName);
-		//如果用户单词表中已有数据，先获取表中status=0(表示还未学习的单词)		
+		//获取用户单词表中记录的个数
+		int count=learningService.getCount(userTableName);				
 		List<UserWords> list=new ArrayList<UserWords>();
-		
+		//如果有记录
 		if(count>0) {
+			//如果用户单词表中已有数据，先获取表中status=0(表示还未学习的单词)
 			list=learningService.getWords(userTableName,0);
 			return list;
 		}
-		return list;
-		//      获取单词书在数据库的表名
-//		String tableName=learningService.selTableName(bookName);
-//		List<Words> list=learningService.selWords(tableName,start,(start+num));
-//		List<UserWords> words=new ArrayList<UserWords>();
-//		UserWords u=new UserWords();
-//		SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
-//		Date date = new Date(System.currentTimeMillis());
-//		for(Words w:list) {
-//			learningService.insWords("yonney_word", w.getWord(), w.getUs_pron(), w.getUk_pron(), w.getUs_mp3(), w.getUk_mp3(), w.getExplanation(), w.getVal_ex1(), w.getBil_ex1(), w.getVal_ex2(), w.getBil_ex2(), w.getVal_ex3(), w.getBil_ex3(), w.getCollocation(), 0, date);
-//		}
-//		return list;
+		//如果没有，表示用户是第一次学习，先从单词书表中获取数据
+		else {
+			//获取单词书在数据库的表名
+			String tableName=learningService.selTableName(bookName);
+			//从单词书中获取数据
+			List<Words> words=learningService.selWords(tableName, start, (start+num));
+			//获取今天的日期
+			Date date = new Date(System.currentTimeMillis());
+			//将从单词书表中获取的单词加入到用户单词表中
+			for(Words w:words) {
+				learningService.insWords(userTableName, w.getWord(), w.getUs_pron(), w.getUk_pron(), w.getUs_mp3(), w.getUk_mp3(), w.getExplanation(), w.getVal_ex1(), w.getBil_ex1(), w.getVal_ex2(), w.getBil_ex2(), w.getVal_ex3(), w.getBil_ex3(), w.getCollocation(), 0, date);
+			}
+			list=learningService.getWords(userTableName,0);
+			return list;
+		}
+
 	}
 	@ResponseBody
 	@RequestMapping("/updStatus.do")
