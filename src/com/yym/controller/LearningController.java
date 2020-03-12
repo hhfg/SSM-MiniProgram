@@ -5,6 +5,7 @@ import java.io.Writer;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -69,14 +70,15 @@ public class LearningController {
 	}
 	@ResponseBody
 	@RequestMapping("/selReviewWords.do")
-	public List<ChooseWords> selReviewWords(String nickName,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
+	public Set<ChooseWords> selReviewWords(String nickName,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
 		String userTableName=nickName+"_word";
-		List<ChooseWords> words=new ArrayList<ChooseWords>();
+		Set<ChooseWords> words=new HashSet<ChooseWords>();
 		List<UserWords> list=new ArrayList<UserWords>();
 		list=learningService.getWords(userTableName,0);
+		int index=0;
 		for(UserWords u:list) {
 			ChooseWords c=new ChooseWords();
-			c.setId(u.getId());
+			c.setId(index);
 			c.setWord(u.getWord());
 			c.setPron(u.getUs_pron());
 			c.setPron_mp3(u.getUs_mp3());
@@ -85,6 +87,7 @@ public class LearningController {
 			s.add(u.getExplanation());
 			c.setExplanation(s);
 			words.add(c);
+			index++;
 		}
 		return words;
 	}
