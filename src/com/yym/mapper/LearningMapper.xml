@@ -41,4 +41,7 @@
 	<select id="selReview" resultType="com.yym.entity.UserWords">
 		select * from ${table_name} where status=1 and <![CDATA[dates!=#{dates,jdbcType=DATE}]]>
 	</select>
+	<select id="selPractise" resultType="com.yym.entity.UserWords">
+		select  * from ${table_name} where <![CDATA[status!=2]]> and <![CDATA[dates=#{dates,jdbcType=DATE}]]>
+	</select>
 </mapper>

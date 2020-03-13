@@ -28,6 +28,9 @@ public interface LearningService {
 	Set<String> selExplanation();
 	// 从用户单词表中获取当前status=0的个数
 	int selLearningCount(String table_name);
-	//查看需要复习的单词
+	//获取需要复习的单词
 	List<UserWords> selReview(String table_name,Date dates);
+	//获取需要练习的单词
+	List<UserWords> selPractise(String table_name,Date dates);
+	
 }
