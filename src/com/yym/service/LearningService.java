@@ -17,7 +17,7 @@ public interface LearningService {
 	//将单词插入到用户的单词表中
 	int insWords(String tabel_name,String word,String us_pron,String uk_pron,String us_mp3,String uk_mp3,String explanation
 			,String val_ex1,String bil_ex1,String val_ex2,String bil_ex2,String val_ex3,String bil_ex3,String collocation,int status,
-			Date dates);
+			Date dates,int bookid);
 	 //获取用户单词表的count，用来判断是否有数据 
 	int getCount(String table_name);
 	//从用户单词表中查询status为0的数据(0表示还未学习
@@ -27,5 +27,7 @@ public interface LearningService {
 	// 随机从数据库取三条记录
 	Set<String> selExplanation();
 	// 从用户单词表中获取当前status=0的个数
-	int selLearningCount(@Param("table_name")String table_name);
+	int selLearningCount(String table_name);
+	//查看需要复习的单词
+	List<UserWords> selReview(String table_name,Date dates);
 }

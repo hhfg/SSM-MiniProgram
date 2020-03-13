@@ -32,9 +32,21 @@ import com.yym.service.LearningService;
 public class LearningController {
 	@Autowired
 	private LearningService learningService;
+	//是否需要复习
+	@ResponseBody
+	@RequestMapping("/selReview.do")
+	public List<UserWords> ifReview(String nickName,int bookid,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
+		String userTableName=nickName+"_word";
+		//获取今天的日期
+		Date dates = new Date(System.currentTimeMillis());
+		System.out.println(dates);
+		List<UserWords> list=learningService.selReview(userTableName, dates);
+		//System.out.println(list);
+		return list;
+	}
 	@ResponseBody
 	@RequestMapping("/selWords.do")
-	public List<UserWords> selWords(String nickName,String bookName,int num,int start,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
+	public List<UserWords> selWords(String nickName,String bookName,int num,int start,int bookid,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
 		String userTableName=nickName+"_word";
 		//获取用户单词表中记录的个数
 		int count=learningService.getCount(userTableName);				
@@ -55,7 +67,7 @@ public class LearningController {
 			Date date = new Date(System.currentTimeMillis());
 			//将从单词书表中获取的单词加入到用户单词表中
 			for(Words w:words) {
-				learningService.insWords(userTableName, w.getWord(), w.getUs_pron(), w.getUk_pron(), w.getUs_mp3(), w.getUk_mp3(), w.getExplanation(), w.getVal_ex1(), w.getBil_ex1(), w.getVal_ex2(), w.getBil_ex2(), w.getVal_ex3(), w.getBil_ex3(), w.getCollocation(), 0, date);
+				learningService.insWords(userTableName, w.getWord(), w.getUs_pron(), w.getUk_pron(), w.getUs_mp3(), w.getUk_mp3(), w.getExplanation(), w.getVal_ex1(), w.getBil_ex1(), w.getVal_ex2(), w.getBil_ex2(), w.getVal_ex3(), w.getBil_ex3(), w.getCollocation(), 0, date,bookid);
 			}
 			list=learningService.getWords(userTableName,0);
 			return list;
@@ -70,11 +82,17 @@ public class LearningController {
 	}
 	@ResponseBody
 	@RequestMapping("/selReviewWords.do")
-	public Set<ChooseWords> selReviewWords(String nickName,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
+	public Set<ChooseWords> selReviewWords(String nickName,int review,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
 		String userTableName=nickName+"_word";
 		Set<ChooseWords> words=new HashSet<ChooseWords>();
 		List<UserWords> list=new ArrayList<UserWords>();
-		list=learningService.getWords(userTableName,0);
+		Date dates = new Date(System.currentTimeMillis());
+		if(review==0) {
+			list=learningService.selReview(userTableName, dates);
+		}
+		else{
+			list=learningService.getWords(userTableName,0);
+		}
 		int index=0;
 		for(UserWords u:list) {
 			ChooseWords c=new ChooseWords();

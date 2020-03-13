@@ -19,6 +19,7 @@ public class UserWords {
 	private String collocation;
 	private int status;
 	private Date dates;
+	private int bookid;  //单词对应的单词书
 	public int getId() {
 		return id;
 	}
@@ -116,12 +117,26 @@ public class UserWords {
 	public void setDates(Date dates) {
 		this.dates = dates;
 	}
+	
+	public int getStatus() {
+		return status;
+	}
+	public void setStatus(int status) {
+		this.status = status;
+	}
+	public int getBookid() {
+		return bookid;
+	}
+	public void setBookid(int bookid) {
+		this.bookid = bookid;
+	}
 	@Override
 	public String toString() {
 		return "UserWords [id=" + id + ", word=" + word + ", us_pron=" + us_pron + ", uk_pron=" + uk_pron + ", us_mp3="
 				+ us_mp3 + ", uk_mp3=" + uk_mp3 + ", explanation=" + explanation + ", val_ex1=" + val_ex1 + ", bil_ex1="
 				+ bil_ex1 + ", val_ex2=" + val_ex2 + ", bil_ex2=" + bil_ex2 + ", val_ex3=" + val_ex3 + ", bil_ex3="
-				+ bil_ex3 + ", collocation=" + collocation + ", status=" + status + ", dates=" + dates + "]";
+				+ bil_ex3 + ", collocation=" + collocation + ", status=" + status + ", dates=" + dates + ", bookid="
+				+ bookid + "]";
 	}
-	
+
 }

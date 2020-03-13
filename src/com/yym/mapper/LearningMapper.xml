@@ -13,9 +13,9 @@
 	<!-- 将单词插入到用户单词表 -->
 	<insert id="insWords" parameterType="map">
 		insert into ${table_name}(word,us_pron,uk_pron,us_mp3,uk_mp3,explanation,val_ex1,bil_ex1,
-		val_ex2,bil_ex2,val_ex3,bil_ex3,collocation,status,dates) values(#{word},
+		val_ex2,bil_ex2,val_ex3,bil_ex3,collocation,status,dates,bookid) values(#{word},
 		#{us_pron},#{uk_pron},#{us_mp3},#{uk_mp3},#{explanation},#{val_ex1},#{bil_ex1},#{val_ex2},#{bil_ex2},
-		#{val_ex3},#{bil_ex3},#{collocation},#{status},#{dates})
+		#{val_ex3},#{bil_ex3},#{collocation},#{status},#{dates},#{bookid})
 	</insert>
 	<!-- 获取用户单词表的count，用来判断是否有数据 -->
 	<select id="getCount" parameterType="string" resultType="int">
@@ -36,5 +36,9 @@
 	<!-- 从用户单词表中获取当前status=0的个数 -->
 	<select id="selLearningCount" resultType="int">
 		select count(*) from ${table_name} where status=0
+	</select>
+	<!-- 获取需要复习的单词 -->
+	<select id="selReview" resultType="com.yym.entity.UserWords">
+		select * from ${table_name} where status=1 and <![CDATA[dates!=#{dates,jdbcType=DATE}]]>
 	</select>
 </mapper>
