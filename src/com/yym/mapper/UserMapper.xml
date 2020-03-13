@@ -103,4 +103,5 @@
 		insert into personal_data(uid,learningDay,completedNum,haveToLearn,haveToReview,endTime)
 		values(#{uid},#{learningDay},#{completedNum},#{haveToLearn},#{haveToReview},#{endTime})
 	</insert> -->
+	
 </mapper>

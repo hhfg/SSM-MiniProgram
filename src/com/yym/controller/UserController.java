@@ -129,4 +129,20 @@ public class UserController {
 		int result=userService.updPersonalData(p);
 		return result;
 	}
+	@ResponseBody
+	@RequestMapping("/updLastWordId.do")
+	public int updLastWordId(String nickName,HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ParseException{
+		int uid=userService.getUserIdByName(nickName);
+		PersonalData user=userService.selPersonalData(uid);
+		PersonalData p=new PersonalData();
+		int id=p.getLastWordId();
+		System.out.println(id);
+		System.out.println(user.getHaveToLearn());
+		p.setLastWordId((id+user.getHaveToLearn()));
+		p.setUid(uid);
+		p.setHaveToReview(user.getHaveToLearn());
+		p.setCompletedNum(user.getCompletedNum()+user.getHaveToLearn());
+		int result=userService.updPersonalData(p);
+		return result;
+	}
 }
