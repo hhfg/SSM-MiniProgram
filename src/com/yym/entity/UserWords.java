@@ -1,6 +1,7 @@
 package com.yym.entity;
 
 import java.util.Date;
+import java.util.Set;
 
 public class UserWords {
 	private int id;
@@ -20,6 +21,7 @@ public class UserWords {
 	private int status;
 	private Date dates;
 	private int bookid;  //单词对应的单词书
+	private Set<String> choose;
 	public int getId() {
 		return id;
 	}
@@ -130,13 +132,21 @@ public class UserWords {
 	public void setBookid(int bookid) {
 		this.bookid = bookid;
 	}
+	
+	public Set<String> getChoose() {
+		return choose;
+	}
+	public void setChoose(Set<String> choose) {
+		this.choose = choose;
+	}
 	@Override
 	public String toString() {
 		return "UserWords [id=" + id + ", word=" + word + ", us_pron=" + us_pron + ", uk_pron=" + uk_pron + ", us_mp3="
 				+ us_mp3 + ", uk_mp3=" + uk_mp3 + ", explanation=" + explanation + ", val_ex1=" + val_ex1 + ", bil_ex1="
 				+ bil_ex1 + ", val_ex2=" + val_ex2 + ", bil_ex2=" + bil_ex2 + ", val_ex3=" + val_ex3 + ", bil_ex3="
 				+ bil_ex3 + ", collocation=" + collocation + ", status=" + status + ", dates=" + dates + ", bookid="
-				+ bookid + "]";
+				+ bookid + ", choose=" + choose + "]";
 	}
+
 
 }

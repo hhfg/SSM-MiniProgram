@@ -81,7 +81,7 @@ public class LearningController {
 	}
 	@ResponseBody
 	@RequestMapping("/selReviewWords.do")
-	public Set<ChooseWords> selReviewWords(String nickName,int review,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
+	public List<UserWords> selReviewWords(String nickName,int review,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
 		String userTableName=nickName+"_word";
 		Set<ChooseWords> words=new HashSet<ChooseWords>();
 		List<UserWords> list=new ArrayList<UserWords>();
@@ -96,18 +96,10 @@ public class LearningController {
 		}
 		int index=0;
 		for(UserWords u:list) {
-			ChooseWords c=new ChooseWords();
-			c.setId(index);
-			c.setWord(u.getWord());
-			c.setPron(u.getUs_pron());
-			c.setPron_mp3(u.getUs_mp3());
-			c.setCorrectEx(u.getExplanation());
 			Set<String> s=learningService.selExplanation();
 			s.add(u.getExplanation());
-			c.setExplanation(s);
-			words.add(c);
-			index++;
+			u.setChoose(s);
 		}
-		return words;
+		return list;
 	}
 }

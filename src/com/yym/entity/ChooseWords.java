@@ -8,6 +8,7 @@ public class ChooseWords {
 	private String word;
 	private String pron;
 	private String pron_mp3;
+	private Set<String> explanation;
 	//正确的释义
 	private String correctEx;
 	public String getCorrectEx() {
@@ -16,7 +17,7 @@ public class ChooseWords {
 	public void setCorrectEx(String correctEx) {
 		this.correctEx = correctEx;
 	}
-	private Set<String> explanation;
+
 	public int getId() {
 		return id;
 	}
