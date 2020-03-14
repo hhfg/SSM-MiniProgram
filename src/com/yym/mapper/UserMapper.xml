@@ -38,9 +38,6 @@
 	
 	<!-- 更新用户需要学习的单词和学习计划截至日期等信息 -->
 	<update id="updPersonalData" parameterType="com.yym.entity.PersonalData">
-<!-- 	 	update personal_data set 
-	 	haveToLearn=#{haveToLearn},endTime=#{endTime},learningDay=#{learningDay}
-	 	where uid=#{uid} -->
 	 	update personal_data
 	 	<trim prefix="set" suffixOverrides=",">
 	 		<if test="bookid!=null and bookid!=''">
@@ -52,10 +49,10 @@
 	 		<if test="completedNum!=null and completedNum!=''">
 	 			completedNum=#{completedNum},
 	 		</if>
-	 		<if test="haveToLearn!=null and haveToLearn!=''">
+	 		<if test="haveToLearn!=null">
 	 			haveToLearn=#{haveToLearn},
 	 		</if>
-	 		<if test="haveToReview!=null and haveToReview!=''">
+	 		<if test="haveToReview!=null">
 	 			haveToReview=#{haveToReview},
 	 		</if>
 	 		<if test="endTime!=null">
@@ -122,4 +119,5 @@
 	<select id="selTableName" parameterType="int" resultType="String">
 		select tableName from wordbooks where id=#{id}
 	</select>
+
 </mapper>

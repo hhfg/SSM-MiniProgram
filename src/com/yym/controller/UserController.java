@@ -86,11 +86,12 @@ public class UserController {
 		SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
 		Date todayDate=new Date(System.currentTimeMillis());
 		PersonalData p1=new PersonalData();
-//		int haveToReview=userService.selReviewCount(table_name, todayDate);
-//		int haveToLearn=userService.selLearningCount(table_name, todayDate);
-//		p1.setHaveToLearn(haveToLearn);
-//		p1.setHaveToReview(haveToReview);
-//		p1.setUid(uid);
+		//获取今日需要学习和复习的单词量
+		int haveToReview=userService.selReviewCount(table_name, todayDate);
+		int haveToLearn=userService.selLearningCount(table_name, todayDate);
+		p1.setHaveToLearn(haveToLearn);
+		p1.setHaveToReview(haveToReview);
+		p1.setUid(uid);
 		//已预计完成时间且开始时间不等于当天日期
 		if(p.getEndTime()!=null&&!formatter.format(todayDate).equals(formatter.format(p.getStartUseDate()))) {
 			//转换预计完成时间
@@ -107,9 +108,9 @@ public class UserController {
 //			p1.setHaveToReview(0);
 //		}
 		System.out.println(p1);
-		//int result=userService.updPersonalData(p1);
-		//System.out.println(result);
-		//p=userService.selPersonalData(uid);
+		int result=userService.updPersonalData(p1);
+		System.out.println(result);
+		p=userService.selPersonalData(uid);
 		return p;
 	}
 	
@@ -161,12 +162,13 @@ public class UserController {
 		int uid=userService.getUserIdByName(nickName);
 		PersonalData user=userService.selPersonalData(uid);
 		PersonalData p=new PersonalData();
-		int id=p.getLastWordId();
+		int id=user.getLastWordId();
 		p.setLastWordId((id+user.getHaveToLearn()));
 		p.setUid(uid);
 		p.setHaveToReview(0);
 		p.setHaveToLearn(0);
 		p.setCompletedNum(user.getCompletedNum()+user.getHaveToLearn());
+		System.out.println(p.getLastWordId()+","+p.getUid()+","+p.getHaveToLearn()+","+p.getHaveToReview());
 		int result=userService.updPersonalData(p);
 		return result;
 	}
