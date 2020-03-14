@@ -99,13 +99,27 @@
 			primary key(id)
 		)engine=InnoDB default charset=utf8
 	</update>
-	<!-- 获取用户选择的单词书的信息 -->
-<!-- 	<select id="selBookByUser" parameterType="java.lang.String" resultType="com.yym.entity.WordBooks">
-		select * from wordbooks where id=(select bookid from user where username=#{username})
-	</select> -->
-<!--  	<insert id="insPersonalData">
-		insert into personal_data(uid,learningDay,completedNum,haveToLearn,haveToReview,endTime)
-		values(#{uid},#{learningDay},#{completedNum},#{haveToLearn},#{haveToReview},#{endTime})
-	</insert> -->
-	
+	<!-- 获取用户当天需要复习的单词量 -->
+	<select id="selReviewCount" resultType="int">
+		select count(*) from ${table_name} where <![CDATA[status!=2]]> and <![CDATA[dates!=#{dates,jdbcType=DATE}]]>
+	</select>
+	<!--获取用户当天需要学习的单词量  -->
+	<select id="selLearningCount" resultType="int">
+		select count(*) from ${table_name} where status=0 and <![CDATA[dates=#{dates,jdbcType=DATE}]]>
+	</select>
+		<!-- 从单词书中选取单词 -->
+	<select id="selWords" parameterType="map" resultType="com.yym.entity.Words" >
+		select * from ${table_name} where wid between #{start} and #{end}
+	</select>
+	<!-- 将单词插入到用户单词表 -->
+	<insert id="insWords" parameterType="map">
+		insert into ${table_name}(word,us_pron,uk_pron,us_mp3,uk_mp3,explanation,val_ex1,bil_ex1,
+		val_ex2,bil_ex2,val_ex3,bil_ex3,collocation,status,dates,bookid) values(#{word},
+		#{us_pron},#{uk_pron},#{us_mp3},#{uk_mp3},#{explanation},#{val_ex1},#{bil_ex1},#{val_ex2},#{bil_ex2},
+		#{val_ex3},#{bil_ex3},#{collocation},#{status},#{dates},#{bookid})
+	</insert>
+	<!-- 通过id查找对应的单词书的表名 -->
+	<select id="selTableName" parameterType="int" resultType="String">
+		select tableName from wordbooks where id=#{id}
+	</select>
 </mapper>

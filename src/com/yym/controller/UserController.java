@@ -5,6 +5,7 @@ import java.io.Writer;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.yym.entity.PersonalData;
 import com.yym.entity.User;
 import com.yym.entity.WordBooks;
+import com.yym.entity.Words;
 import com.yym.service.UserService;
 import com.yym.util.DecodeUserUtil;
 import com.yym.util.GetOpenIdUtil;
@@ -79,23 +81,35 @@ public class UserController {
 	@RequestMapping("/selPersonalData.do")
 	public PersonalData selPersonalData(String nickName,HttpServletRequest request,HttpServletResponse response) throws ServletException,IOException, ParseException {
 		int uid=userService.getUserIdByName(nickName);
+		String table_name=nickName+"_word";
 		PersonalData p=userService.selPersonalData(uid);
 		SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
 		Date todayDate=new Date(System.currentTimeMillis());
-		//如果还未设置预计完成时间且开始时间不等于当天日期
+		PersonalData p1=new PersonalData();
+//		int haveToReview=userService.selReviewCount(table_name, todayDate);
+//		int haveToLearn=userService.selLearningCount(table_name, todayDate);
+//		p1.setHaveToLearn(haveToLearn);
+//		p1.setHaveToReview(haveToReview);
+//		p1.setUid(uid);
+		//已预计完成时间且开始时间不等于当天日期
 		if(p.getEndTime()!=null&&!formatter.format(todayDate).equals(formatter.format(p.getStartUseDate()))) {
 			//转换预计完成时间
 			Date endDate=p.getEndTime();
 			//计算剩余天数
 			int betweenDate=(int) ((endDate.getTime()-todayDate.getTime())/(60*60*24*1000));
 			int clockInDay=(int) ((todayDate.getTime()-p.getStartUseDate().getTime())/(60*60*24*1000));
-			PersonalData p1=new PersonalData();
 			p1.setClockInDay(clockInDay+1);
-			p1.setLearningDay(betweenDate);
-			p1.setUid(uid);
-			int result=userService.updPersonalData(p1);
-			p=userService.selPersonalData(uid);
-		}	
+			p1.setLearningDay(betweenDate);	
+		}
+		//如果已制定计划 且是头一天使用小程序
+//		if(p.getEndTime()!=null&&p.getHaveToLearn()==0) {
+//			p1.setHaveToLearn(p.getDayNum());
+//			p1.setHaveToReview(0);
+//		}
+		System.out.println(p1);
+		//int result=userService.updPersonalData(p1);
+		//System.out.println(result);
+		//p=userService.selPersonalData(uid);
 		return p;
 	}
 	
@@ -109,14 +123,16 @@ public class UserController {
         PersonalData p=new PersonalData();
         p.setBookid(bookid);
         p.setUid(uid);
+        p.setLastWordId(0);
         int result=userService.updPersonalData(p);
 		return result;
 	}
 
 	@ResponseBody
 	@RequestMapping("/updLearningPlan.do")
-	public int updPersonalData(String nickName,int dayNum,String endTime,int learningDay,HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ParseException{
+	public int updPersonalData(String nickName,int dayNum,String endTime,int learningDay,int bookid,int lastWordId,HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ParseException{
 		int uid=userService.getUserIdByName(nickName);
+		String userTableName=nickName+"_word";
 		PersonalData p=new PersonalData();
 		SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
 		Date date=formatter.parse(endTime);
@@ -124,6 +140,7 @@ public class UserController {
 		Date todayDate = new Date(System.currentTimeMillis());
 		String today=formatter.format(todayDate);
 		Date startTime=formatter.parse(today);
+		System.out.println(learningDay);
 		int haveToLearn=dayNum;
 		p.setDayNum(dayNum);                 //制定的计划，每天需要学习的单词量
 		p.setLearningDay(learningDay);       //预计学习天数
@@ -132,6 +149,11 @@ public class UserController {
 		p.setStartTime(startTime);           //计划结束的日期
 		p.setHaveToLearn(haveToLearn);       //一旦计划好，更新当天需要学习的单词量
 		int result=userService.updPersonalData(p);
+		String tablename=userService.selTableName(bookid);
+		List<Words> list=userService.selWords(tablename, lastWordId,lastWordId+dayNum);
+		for(Words w:list) {
+			userService.insWords(userTableName, w.getWord(), w.getUs_pron(), w.getUk_pron(), w.getUs_mp3(), w.getUk_mp3(), w.getExplanation(), w.getVal_ex1(), w.getBil_ex1(), w.getVal_ex2(), w.getBil_ex2(), w.getVal_ex3(), w.getBil_ex3(), w.getCollocation(),0, todayDate, bookid);
+		}
 		return result;
 	}
 	@ResponseBody

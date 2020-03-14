@@ -1,12 +1,14 @@
 package com.yym.dao;
 
 import java.util.Date;
+import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
 import com.yym.entity.PersonalData;
 import com.yym.entity.User;
 import com.yym.entity.WordBooks;
+import com.yym.entity.Words;
 
 public interface UserDao {
 	//根据openid判断是否有用户
@@ -37,4 +39,16 @@ public interface UserDao {
 	//int setMyBookId(@Param("username")String username,@Param("bookid")int bookid);
 	//  获取用户选择的单词书的信息
 	//WordBooks selBookByUser(@Param("username")String username);
+	int selReviewCount(@Param("table_name")String table_name,@Param("dates")Date dates);
+	int selLearningCount(@Param("table_name")String table_name,@Param("dates")Date dates);
+	//从单词书表中获取单词
+	List<Words> selWords(@Param("table_name")String table_name,@Param("start")int start,@Param("end")int end);
+	//将单词插入到用户的单词表中
+	int insWords(@Param("table_name")String tabel_name,@Param("word")String word,@Param("us_pron")String us_pron,
+				@Param("uk_pron")String uk_pron,@Param("us_mp3")String us_mp3,@Param("uk_mp3")String uk_mp3,@Param("explanation")String explanation
+				,@Param("val_ex1")String val_ex1,@Param("bil_ex1")String bil_ex1,@Param("val_ex2")String val_ex2,@Param("bil_ex2")String bil_ex2,
+				@Param("val_ex3")String val_ex3,@Param("bil_ex3")String bil_ex3,@Param("collocation")String collocation,@Param("status")int status,
+				@Param("dates")Date dates,@Param("bookid")int bookid);
+	//根据单词书的id获取所对应的表
+	String selTableName(@Param("id")int id);
 }
