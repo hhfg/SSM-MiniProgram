@@ -110,14 +110,18 @@
 	</select>
 	<!-- 将单词插入到用户单词表 -->
 	<insert id="insWords" parameterType="map">
-		insert into ${table_name}(word,us_pron,uk_pron,us_mp3,uk_mp3,explanation,val_ex1,bil_ex1,
-		val_ex2,bil_ex2,val_ex3,bil_ex3,collocation,status,dates,bookid) values(#{word},
+		insert into ${table_name}(id,word,us_pron,uk_pron,us_mp3,uk_mp3,explanation,val_ex1,bil_ex1,
+		val_ex2,bil_ex2,val_ex3,bil_ex3,collocation,status,dates,bookid) values(#{id},#{word},
 		#{us_pron},#{uk_pron},#{us_mp3},#{uk_mp3},#{explanation},#{val_ex1},#{bil_ex1},#{val_ex2},#{bil_ex2},
 		#{val_ex3},#{bil_ex3},#{collocation},#{status},#{dates},#{bookid})
 	</insert>
 	<!-- 通过id查找对应的单词书的表名 -->
 	<select id="selTableName" parameterType="int" resultType="String">
 		select tableName from wordbooks where id=#{id}
+	</select>
+	<!--//查看dates为当天日期的个数  -->
+	<select id="selCountToday" resultType="int">
+		select count(*) from ${table_name} where <![CDATA[dates=#{dates,jdbcType=DATE}]]>
 	</select>
 
 </mapper>

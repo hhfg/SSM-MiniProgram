@@ -41,9 +41,11 @@ public interface UserService {
 	//从单词书表中获取单词
 	List<Words> selWords(String table,int start,int end);
 	//将单词插入到用户的单词表中
-	int insWords(String tabel_name,String word,String us_pron,String uk_pron,String us_mp3,String uk_mp3,String explanation
+	int insWords(String tabel_name,int id,String word,String us_pron,String uk_pron,String us_mp3,String uk_mp3,String explanation
 			,String val_ex1,String bil_ex1,String val_ex2,String bil_ex2,String val_ex3,String bil_ex3,String collocation,int status,
 			Date dates,int bookid);
 	//根据单词书的id获取所对应的表
 	String selTableName(int id);
+	////查看dates为当天日期的个数
+	int selCountToday(String table_name,Date dates);
 }

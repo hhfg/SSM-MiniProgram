@@ -86,12 +86,8 @@ public class UserController {
 		SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
 		Date todayDate=new Date(System.currentTimeMillis());
 		PersonalData p1=new PersonalData();
-		//获取今日需要学习和复习的单词量
-		int haveToReview=userService.selReviewCount(table_name, todayDate);
-		int haveToLearn=userService.selLearningCount(table_name, todayDate);
-		p1.setHaveToLearn(haveToLearn);
-		p1.setHaveToReview(haveToReview);
-		p1.setUid(uid);
+		int haveToReview;
+		int haveToLearn;
 		//已预计完成时间且开始时间不等于当天日期
 		if(p.getEndTime()!=null&&!formatter.format(todayDate).equals(formatter.format(p.getStartUseDate()))) {
 			//转换预计完成时间
@@ -102,12 +98,22 @@ public class UserController {
 			p1.setClockInDay(clockInDay+1);
 			p1.setLearningDay(betweenDate);	
 		}
-		//如果已制定计划 且是头一天使用小程序
-//		if(p.getEndTime()!=null&&p.getHaveToLearn()==0) {
-//			p1.setHaveToLearn(p.getDayNum());
-//			p1.setHaveToReview(0);
-//		}
-		System.out.println(p1);
+		int count=userService.selCountToday(table_name, todayDate);
+		if(count==0) {
+			//通过用户选择的bookid查询对应的单词书的表名
+			String table=userService.selTableName(p.getBookid());
+			List<Words> list=userService.selWords(table, p.getLastWordId()+1, p.getDayNum()+p.getLastWordId());
+			for(Words w:list) {
+				userService.insWords(table_name, w.getWid(), w.getWord(), w.getUs_pron(), w.getUk_pron(), w.getUs_mp3(), w.getUk_mp3(), w.getExplanation(), w.getVal_ex1(), w.getBil_ex1(), w.getVal_ex2(), w.getBil_ex2(), w.getVal_ex3(), w.getBil_ex3(), w.getCollocation(),0, todayDate, p.getBookid());
+			}
+			
+		}
+			//获取今日需要学习和复习的单词量
+			haveToReview=userService.selReviewCount(table_name, todayDate);
+			haveToLearn=userService.selLearningCount(table_name, todayDate);
+			p1.setHaveToLearn(haveToLearn);
+			p1.setHaveToReview(haveToReview);
+			p1.setUid(uid);
 		int result=userService.updPersonalData(p1);
 		System.out.println(result);
 		p=userService.selPersonalData(uid);

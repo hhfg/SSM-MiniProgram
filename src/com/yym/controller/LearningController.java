@@ -53,7 +53,7 @@ public class LearningController {
 		if(list.size()==0) {
 			//先获取选择的书所对应的单词书表名
 			String tableName=learningService.selTableName(bookid);
-			List<Words> words=learningService.selWords(tableName, start, start+num);
+			List<Words> words=learningService.selWords(tableName, start+1, start+num);
 			Date dates=new Date(System.currentTimeMillis());
 			//将单词存入用户单词表中
 			for(Words w:words) {
