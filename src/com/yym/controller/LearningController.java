@@ -57,7 +57,7 @@ public class LearningController {
 			Date dates=new Date(System.currentTimeMillis());
 			//将单词存入用户单词表中
 			for(Words w:words) {
-				learningService.insWords(userTableName, w.getWord(), w.getUs_pron(), w.getUk_pron(), w.getUs_mp3(), w.getUk_mp3(), w.getExplanation(), w.getVal_ex1(), w.getBil_ex1(), w.getVal_ex2(), w.getBil_ex2(), w.getVal_ex3(), w.getBil_ex3(), w.getCollocation(),0, dates, bookid);
+				learningService.insWords(userTableName, w.getWid(), w.getWord(), w.getUs_pron(), w.getUk_pron(), w.getUs_mp3(), w.getUk_mp3(), w.getExplanation(), w.getVal_ex1(), w.getBil_ex1(), w.getVal_ex2(), w.getBil_ex2(), w.getVal_ex3(), w.getBil_ex3(), w.getCollocation(),0, dates, bookid);
 			}
 			list=learningService.getWords(userTableName, 0, bookid);
 			return list;

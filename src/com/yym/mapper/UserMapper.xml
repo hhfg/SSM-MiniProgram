@@ -64,7 +64,7 @@
 	 		<if test="startTime!=null">
 	 			startTime=#{startTime},
 	 		</if>
-	 		<if test="learningDay!=null">
+	 		<if test="learningDay!=null and learningDay!=''">
 	 			learningDay=#{learningDay},
 	 		</if>
 	 		<if test="lastWordId!=null and lastWordId!=''">
@@ -79,7 +79,7 @@
 	
 	<update id="createUserWordTable" parameterType="string">
 		create table ${tableName} (
-			id int(11) not null auto_increment,
+			id int(11) not null,
 			word varchar(255) not null,
 			us_pron varchar(255) default null,
 			uk_pron varchar(255) default null,

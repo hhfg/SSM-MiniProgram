@@ -140,7 +140,6 @@ public class UserController {
 		Date todayDate = new Date(System.currentTimeMillis());
 		String today=formatter.format(todayDate);
 		Date startTime=formatter.parse(today);
-		System.out.println(learningDay);
 		int haveToLearn=dayNum;
 		p.setDayNum(dayNum);                 //制定的计划，每天需要学习的单词量
 		p.setLearningDay(learningDay);       //预计学习天数
@@ -150,10 +149,10 @@ public class UserController {
 		p.setHaveToLearn(haveToLearn);       //一旦计划好，更新当天需要学习的单词量
 		int result=userService.updPersonalData(p);
 		String tablename=userService.selTableName(bookid);
-		List<Words> list=userService.selWords(tablename, lastWordId,lastWordId+dayNum);
-		for(Words w:list) {
-			userService.insWords(userTableName, w.getWord(), w.getUs_pron(), w.getUk_pron(), w.getUs_mp3(), w.getUk_mp3(), w.getExplanation(), w.getVal_ex1(), w.getBil_ex1(), w.getVal_ex2(), w.getBil_ex2(), w.getVal_ex3(), w.getBil_ex3(), w.getCollocation(),0, todayDate, bookid);
-		}
+//		List<Words> list=userService.selWords(tablename, lastWordId,lastWordId+dayNum);
+//		for(Words w:list) {
+//			userService.insWords(userTableName, w.getWord(), w.getUs_pron(), w.getUk_pron(), w.getUs_mp3(), w.getUk_mp3(), w.getExplanation(), w.getVal_ex1(), w.getBil_ex1(), w.getVal_ex2(), w.getBil_ex2(), w.getVal_ex3(), w.getBil_ex3(), w.getCollocation(),0, todayDate, bookid);
+//		}
 		return result;
 	}
 	@ResponseBody
@@ -163,11 +162,10 @@ public class UserController {
 		PersonalData user=userService.selPersonalData(uid);
 		PersonalData p=new PersonalData();
 		int id=p.getLastWordId();
-		System.out.println(id);
-		System.out.println(user.getHaveToLearn());
 		p.setLastWordId((id+user.getHaveToLearn()));
 		p.setUid(uid);
-		p.setHaveToReview(user.getHaveToLearn());
+		p.setHaveToReview(0);
+		p.setHaveToLearn(0);
 		p.setCompletedNum(user.getCompletedNum()+user.getHaveToLearn());
 		int result=userService.updPersonalData(p);
 		return result;
