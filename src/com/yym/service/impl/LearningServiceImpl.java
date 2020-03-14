@@ -25,9 +25,9 @@ public class LearningServiceImpl implements LearningService{
 	}
 
 	@Override
-	public String selTableName(String bookName) {
+	public String selTableName(int id) {
 		// TODO Auto-generated method stub
-		String tableName=learningDao.selTableName(bookName);
+		String tableName=learningDao.selTableName(id);
 		return tableName;
 	}
 
@@ -48,9 +48,9 @@ public class LearningServiceImpl implements LearningService{
 	}
 
 	@Override
-	public List<UserWords> getWords(String table_name,int status) {
+	public List<UserWords> getWords(String table_name,int status,int bookid) {
 		// TODO Auto-generated method stub
-		List<UserWords> list=learningDao.getWords(table_name,status);
+		List<UserWords> list=learningDao.getWords(table_name,status,bookid);
 		return list;
 	}
 
