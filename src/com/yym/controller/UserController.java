@@ -53,16 +53,19 @@ public class UserController {
             return "redirect:/createUserWordTable.do?nickName="+nickName;
         }
 	}
+	//创建用户单词表
 	@RequestMapping("/createUserWordTable.do")
 	public String createUserWordTable(String nickName,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
 		int result=userService.createUserWordTable(nickName+"_word");
 		return "redirect:/getUserIdByName.do?nickName="+nickName;
 	}
+	//通过nickName查询id
 	@RequestMapping("/getUserIdByName.do")
 	public String getUserId(String nickName,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
 		int id=userService.getUserIdByName(nickName);
 		return "redirect:/insPersonalData.do?id="+id;
 	}
+    //personal_data表中新增用户信息 
 	@ResponseBody
 	@RequestMapping("/insPersonalData.do")
 	public int insPersonalData(int id,HttpServletRequest request,HttpServletResponse response) throws ServletException,IOException {
@@ -111,8 +114,8 @@ public class UserController {
 	}
 
 	@ResponseBody
-	@RequestMapping("/updPersonalData.do")
-	public int updPersonalData(String nickName,int haveToLearn,String endTime,int learningDay,HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ParseException{
+	@RequestMapping("/updLearningPlan.do")
+	public int updPersonalData(String nickName,int dayNum,String endTime,int learningDay,HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ParseException{
 		int uid=userService.getUserIdByName(nickName);
 		PersonalData p=new PersonalData();
 		SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
@@ -121,11 +124,13 @@ public class UserController {
 		Date todayDate = new Date(System.currentTimeMillis());
 		String today=formatter.format(todayDate);
 		Date startTime=formatter.parse(today);
-		p.setHaveToLearn(haveToLearn);
-		p.setLearningDay(learningDay);
-		p.setUid(uid);
-		p.setEndTime(date);
-		p.setStartTime(startTime);
+		int haveToLearn=dayNum;
+		p.setDayNum(dayNum);                 //制定的计划，每天需要学习的单词量
+		p.setLearningDay(learningDay);       //预计学习天数
+		p.setUid(uid);          
+		p.setEndTime(date);                  //计划开始的日期
+		p.setStartTime(startTime);           //计划结束的日期
+		p.setHaveToLearn(haveToLearn);       //一旦计划好，更新当天需要学习的单词量
 		int result=userService.updPersonalData(p);
 		return result;
 	}

@@ -36,7 +36,7 @@
 		update user set bookid=#{bookid} where username=#{username}
 	</update>
 	
-	<!-- 更新用户需要学习的单词和学习计划截至日期 -->
+	<!-- 更新用户需要学习的单词和学习计划截至日期等信息 -->
 	<update id="updPersonalData" parameterType="com.yym.entity.PersonalData">
 <!-- 	 	update personal_data set 
 	 	haveToLearn=#{haveToLearn},endTime=#{endTime},learningDay=#{learningDay}
@@ -69,6 +69,9 @@
 	 		</if>
 	 		<if test="lastWordId!=null and lastWordId!=''">
 	 			lastWordId=#{lastWordId},
+	 		</if>
+	 		<if test="dayNum!=null and dayNum!=''">
+	 			dayNum=#{dayNum}
 	 		</if>
 	 	</trim>
 	 	where uid=#{uid}
