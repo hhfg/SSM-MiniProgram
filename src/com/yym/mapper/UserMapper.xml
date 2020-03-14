@@ -95,6 +95,7 @@
 			collocation varchar(255) default null,
 			status int(2) default null,
 			dates date default null,
+			bookid int(2) not null,
 			primary key(id)
 		)engine=InnoDB default charset=utf8
 	</update>
