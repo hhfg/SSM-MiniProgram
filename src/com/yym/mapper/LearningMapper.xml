@@ -27,7 +27,7 @@
 	</select>
 	<!-- 设置单词为已学status=0 -->
 	<update id="updStatus">
-		update ${table_name} set status=1 where id=#{id}
+		update ${table_name} set status=#{status} where id=#{id}
 	</update>
 	<!-- 随机从数据库取三条记录 -->
 	<select id="selExplanation" resultType="string">

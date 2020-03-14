@@ -25,7 +25,7 @@ public interface LearningDao {
 	//从单词表中获取status=0即未学的单词 
 	List<UserWords> getWords(@Param("table_name")String table_name,@Param("status")int status,@Param("bookid")int bookid);
 	//设置单词为已学status=0
-	int updStatus(@Param("table_name")String table_name,@Param("id")int id);
+	int updStatus(@Param("table_name")String table_name,@Param("status")int status,@Param("id")int id);
 	// 随机从数据库取三条记录
 	Set<String> selExplanation();
 	// 从用户单词表中获取当前status=0的个数

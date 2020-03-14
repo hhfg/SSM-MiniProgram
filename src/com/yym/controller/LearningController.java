@@ -69,9 +69,10 @@ public class LearningController {
 	}
 	@ResponseBody
 	@RequestMapping("/updStatus.do")
-	public void updStatus(String nickName,int id,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
+	public int updStatus(String nickName,int status,int id,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
 		String userTableName=nickName+"_word";
-		int result=learningService.updStatus(userTableName,id);
+		int result=learningService.updStatus(userTableName,status,id);
+		return result;
 	}
 	@ResponseBody
 	@RequestMapping("/selReviewWords.do")

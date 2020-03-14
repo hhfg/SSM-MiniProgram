@@ -55,9 +55,9 @@ public class LearningServiceImpl implements LearningService{
 	}
 
 	@Override
-	public int updStatus(String table_name, int id) {
+	public int updStatus(String table_name, int status, int id) {
 		// TODO Auto-generated method stub
-		int result=learningDao.updStatus(table_name, id);
+		int result=learningDao.updStatus(table_name, status, id);
 		return result;
 	}
 

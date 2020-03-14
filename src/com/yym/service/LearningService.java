@@ -23,7 +23,7 @@ public interface LearningService {
 	//从用户单词表中查询status为0的数据(0表示还未学习
 	List<UserWords> getWords(String table_name,int status,int bookid);
 	//设置单词为已学status=0
-	int updStatus(String table_name,int id);
+	int updStatus(String table_name,int status,int id);
 	// 随机从数据库取三条记录
 	Set<String> selExplanation();
 	// 从用户单词表中获取当前status=0的个数
