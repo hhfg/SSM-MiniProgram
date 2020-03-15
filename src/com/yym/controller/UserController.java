@@ -83,6 +83,7 @@ public class UserController {
 		int uid=userService.getUserIdByName(nickName);
 		String table_name=nickName+"_word";
 		PersonalData p=userService.selPersonalData(uid);
+		System.out.println(p.getLastWordId()+";"+p.getCompletedNum());
 		SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
 		Date todayDate=new Date(System.currentTimeMillis());
 		PersonalData p1=new PersonalData();
@@ -99,21 +100,23 @@ public class UserController {
 			p1.setLearningDay(betweenDate);	
 		}
 		int count=userService.selCountToday(table_name, todayDate);
-		if(count==0) {
+		if(count==0&&p.getEndTime()!=null) {
 			//通过用户选择的bookid查询对应的单词书的表名
 			String table=userService.selTableName(p.getBookid());
-			List<Words> list=userService.selWords(table, p.getLastWordId()+1, p.getDayNum()+p.getLastWordId());
+			List<Words> list=userService.selWords(table, p.getLastWordId(), p.getDayNum()+p.getLastWordId());
 			for(Words w:list) {
-				userService.insWords(table_name, w.getWid(), w.getWord(), w.getUs_pron(), w.getUk_pron(), w.getUs_mp3(), w.getUk_mp3(), w.getExplanation(), w.getVal_ex1(), w.getBil_ex1(), w.getVal_ex2(), w.getBil_ex2(), w.getVal_ex3(), w.getBil_ex3(), w.getCollocation(),0, todayDate, p.getBookid());
-			}
-			
+				userService.insWords(table_name, w.getWord(), w.getUs_pron(), w.getUk_pron(), w.getUs_mp3(), w.getUk_mp3(), w.getExplanation(), w.getVal_ex1(), w.getBil_ex1(), w.getVal_ex2(), w.getBil_ex2(), w.getVal_ex3(), w.getBil_ex3(), w.getCollocation(),0, todayDate, p.getBookid());
+			}	
 		}
 			//获取今日需要学习和复习的单词量
-			haveToReview=userService.selReviewCount(table_name, todayDate);
-			haveToLearn=userService.selLearningCount(table_name, todayDate);
-			p1.setHaveToLearn(haveToLearn);
-			p1.setHaveToReview(haveToReview);
-			p1.setUid(uid);
+		haveToReview=userService.selReviewCount(table_name, todayDate);
+		haveToLearn=userService.selLearningCount(table_name, todayDate);
+		p1.setHaveToLearn(haveToLearn);
+		p1.setHaveToReview(haveToReview);
+		p1.setUid(uid);
+		p1.setCompletedNum(p.getCompletedNum());
+		p1.setLastWordId(p.getLastWordId());
+		System.out.println(p1);
 		int result=userService.updPersonalData(p1);
 		System.out.println(result);
 		p=userService.selPersonalData(uid);
@@ -127,10 +130,12 @@ public class UserController {
         response.setHeader("Access-Control-Allow-Origin", "*");  
         response.setHeader("Access-Control-Allow-Methods", "GET,POST"); 
         int uid=userService.getUserIdByName(nickName);
+        System.out.println(bookid);
         PersonalData p=new PersonalData();
         p.setBookid(bookid);
         p.setUid(uid);
         p.setLastWordId(0);
+        p.setCompletedNum(0);
         int result=userService.updPersonalData(p);
 		return result;
 	}
@@ -156,10 +161,10 @@ public class UserController {
 		p.setHaveToLearn(haveToLearn);       //一旦计划好，更新当天需要学习的单词量
 		int result=userService.updPersonalData(p);
 		String tablename=userService.selTableName(bookid);
-//		List<Words> list=userService.selWords(tablename, lastWordId,lastWordId+dayNum);
-//		for(Words w:list) {
-//			userService.insWords(userTableName, w.getWord(), w.getUs_pron(), w.getUk_pron(), w.getUs_mp3(), w.getUk_mp3(), w.getExplanation(), w.getVal_ex1(), w.getBil_ex1(), w.getVal_ex2(), w.getBil_ex2(), w.getVal_ex3(), w.getBil_ex3(), w.getCollocation(),0, todayDate, bookid);
-//		}
+		List<Words> list=userService.selWords(tablename, lastWordId,lastWordId+dayNum);
+		for(Words w:list) {
+			userService.insWords(userTableName, w.getWord(), w.getUs_pron(), w.getUk_pron(), w.getUs_mp3(), w.getUk_mp3(), w.getExplanation(), w.getVal_ex1(), w.getBil_ex1(), w.getVal_ex2(), w.getBil_ex2(), w.getVal_ex3(), w.getBil_ex3(), w.getCollocation(),0, todayDate, bookid);
+		}
 		return result;
 	}
 	@ResponseBody
@@ -169,11 +174,15 @@ public class UserController {
 		PersonalData user=userService.selPersonalData(uid);
 		PersonalData p=new PersonalData();
 		int id=user.getLastWordId();
-		p.setLastWordId((id+user.getHaveToLearn()));
+		int completedNum=user.getCompletedNum()+user.getDayNum();
+		int lastWordId=user.getLastWordId()+user.getDayNum();
+		System.out.println(completedNum);
+		System.out.println(lastWordId);
+		p.setLastWordId((id+user.getDayNum()));
 		p.setUid(uid);
 		p.setHaveToReview(0);
 		p.setHaveToLearn(0);
-		p.setCompletedNum(user.getCompletedNum()+user.getHaveToLearn());
+		p.setCompletedNum((completedNum));
 		System.out.println(p.getLastWordId()+","+p.getUid()+","+p.getHaveToLearn()+","+p.getHaveToReview());
 		int result=userService.updPersonalData(p);
 		return result;

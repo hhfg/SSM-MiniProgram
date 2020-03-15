@@ -44,7 +44,7 @@ public interface UserDao {
 	//从单词书表中获取单词
 	List<Words> selWords(@Param("table_name")String table_name,@Param("start")int start,@Param("end")int end);
 	//将单词插入到用户的单词表中
-	int insWords(@Param("table_name")String tabel_name,@Param("id")int id,@Param("word")String word,@Param("us_pron")String us_pron,
+	int insWords(@Param("table_name")String tabel_name,@Param("word")String word,@Param("us_pron")String us_pron,
 				@Param("uk_pron")String uk_pron,@Param("us_mp3")String us_mp3,@Param("uk_mp3")String uk_mp3,@Param("explanation")String explanation
 				,@Param("val_ex1")String val_ex1,@Param("bil_ex1")String bil_ex1,@Param("val_ex2")String val_ex2,@Param("bil_ex2")String bil_ex2,
 				@Param("val_ex3")String val_ex3,@Param("bil_ex3")String bil_ex3,@Param("collocation")String collocation,@Param("status")int status,
