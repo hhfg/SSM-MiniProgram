@@ -47,5 +47,5 @@ public interface UserService {
 	//根据单词书的id获取所对应的表
 	String selTableName(int id);
 	////查看dates为当天日期的个数
-	int selCountToday(String table_name,Date dates);
+	int selCountToday(String table_name,Date dates,int bookid);
 }

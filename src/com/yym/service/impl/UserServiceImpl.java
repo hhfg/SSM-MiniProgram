@@ -100,9 +100,9 @@ public class UserServiceImpl implements UserService{
 		return userDao.selTableName(id);
 	}
 	@Override
-	public int selCountToday(String table_name, Date dates) {
+	public int selCountToday(String table_name, Date dates,int bookid) {
 		// TODO Auto-generated method stub
-		return userDao.selCountToday(table_name, dates);
+		return userDao.selCountToday(table_name, dates,bookid);
 	}
 
 

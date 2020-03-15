@@ -121,7 +121,7 @@
 	</select>
 	<!--//查看dates为当天日期的个数  -->
 	<select id="selCountToday" resultType="int">
-		select count(*) from ${table_name} where <![CDATA[dates=#{dates,jdbcType=DATE}]]>
+		select count(*) from ${table_name} where <![CDATA[dates=#{dates,jdbcType=DATE}]]> and bookid=#{bookid}
 	</select>
 
 </mapper>

@@ -99,7 +99,7 @@ public class UserController {
 			p1.setClockInDay(clockInDay+1);
 			p1.setLearningDay(betweenDate);	
 		}
-		int count=userService.selCountToday(table_name, todayDate);
+		int count=userService.selCountToday(table_name, todayDate,p.getBookid());
 		if(count==0&&p.getEndTime()!=null) {
 			//通过用户选择的bookid查询对应的单词书的表名
 			String table=userService.selTableName(p.getBookid());
@@ -160,11 +160,6 @@ public class UserController {
 		p.setStartTime(startTime);           //计划结束的日期
 		p.setHaveToLearn(haveToLearn);       //一旦计划好，更新当天需要学习的单词量
 		int result=userService.updPersonalData(p);
-		String tablename=userService.selTableName(bookid);
-		List<Words> list=userService.selWords(tablename, lastWordId,lastWordId+dayNum);
-		for(Words w:list) {
-			userService.insWords(userTableName, w.getWord(), w.getUs_pron(), w.getUk_pron(), w.getUs_mp3(), w.getUk_mp3(), w.getExplanation(), w.getVal_ex1(), w.getBil_ex1(), w.getVal_ex2(), w.getBil_ex2(), w.getVal_ex3(), w.getBil_ex3(), w.getCollocation(),0, todayDate, bookid);
-		}
 		return result;
 	}
 	@ResponseBody

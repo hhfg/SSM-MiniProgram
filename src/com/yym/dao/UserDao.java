@@ -52,5 +52,5 @@ public interface UserDao {
 	//根据单词书的id获取所对应的表
 	String selTableName(@Param("id")int id);
 	//查看dates为当天日期的个数
-	int selCountToday(@Param("table_name")String table_name,@Param("dates")Date dates);
+	int selCountToday(@Param("table_name")String table_name,@Param("dates")Date dates,@Param("bookid")int bookid);
 }
