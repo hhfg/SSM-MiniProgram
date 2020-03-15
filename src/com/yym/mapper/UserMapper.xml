@@ -98,11 +98,11 @@
 	</update>
 	<!-- 获取用户当天需要复习的单词量 -->
 	<select id="selReviewCount" resultType="int">
-		select count(*) from ${table_name} where <![CDATA[status!=2]]> and <![CDATA[dates!=#{dates,jdbcType=DATE}]]>
+		select count(*) from ${table_name} where <![CDATA[status!=2]]> and <![CDATA[dates!=#{dates,jdbcType=DATE}]]> and bookid=#{bookid}
 	</select>
 	<!--获取用户当天需要学习的单词量  -->
 	<select id="selLearningCount" resultType="int">
-		select count(*) from ${table_name} where status=0 and <![CDATA[dates=#{dates,jdbcType=DATE}]]>
+		select count(*) from ${table_name} where status=0 and <![CDATA[dates=#{dates,jdbcType=DATE}]]> and bookid=#{bookid}
 	</select>
 		<!-- 从单词书中选取单词 -->
 	<select id="selWords" parameterType="map" resultType="com.yym.entity.Words" >
