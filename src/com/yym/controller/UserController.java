@@ -84,7 +84,6 @@ public class UserController {
 		int uid=userService.getUserIdByName(nickName);
 		String table_name=nickName+"_word";
 		PersonalData p=userService.selPersonalData(uid);
-		System.out.println(p.getLastWordId()+";"+p.getCompletedNum());
 		SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
 		Date todayDate=new Date(System.currentTimeMillis());
 		PersonalData p1=new PersonalData();
@@ -117,9 +116,7 @@ public class UserController {
 		p1.setUid(uid);
 		p1.setCompletedNum(p.getCompletedNum());
 		p1.setLastWordId(p.getLastWordId());
-		System.out.println(p1);
 		int result=userService.updPersonalData(p1);
-		System.out.println(result);
 		p=userService.selPersonalData(uid);
 		return p;
 	}
@@ -131,7 +128,6 @@ public class UserController {
         response.setHeader("Access-Control-Allow-Origin", "*");  
         response.setHeader("Access-Control-Allow-Methods", "GET,POST"); 
         int uid=userService.getUserIdByName(nickName);
-        System.out.println(bookid);
         PersonalData p=new PersonalData();
         p.setBookid(bookid);
         p.setUid(uid);
@@ -179,7 +175,6 @@ public class UserController {
 		p.setHaveToReview(0);
 		p.setHaveToLearn(0);
 		p.setCompletedNum((completedNum));
-		System.out.println(p.getLastWordId()+","+p.getUid()+","+p.getHaveToLearn()+","+p.getHaveToReview());
 		int result=userService.updPersonalData(p);
 		return result;
 	}
