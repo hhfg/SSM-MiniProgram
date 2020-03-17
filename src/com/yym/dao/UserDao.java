@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.yym.entity.PersonalData;
+import com.yym.entity.SignRecord;
 import com.yym.entity.User;
 import com.yym.entity.WordBooks;
 import com.yym.entity.Words;
@@ -53,4 +54,6 @@ public interface UserDao {
 	String selTableName(@Param("id")int id);
 	//查看dates为当天日期的个数
 	int selCountToday(@Param("table_name")String table_name,@Param("dates")Date dates,@Param("bookid")int bookid);
+	//新增打卡记录
+	int insSignRecord(SignRecord signRecord);
 }

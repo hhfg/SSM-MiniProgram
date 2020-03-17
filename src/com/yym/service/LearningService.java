@@ -6,6 +6,7 @@ import java.util.Set;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.yym.entity.SignRecord;
 import com.yym.entity.UserWords;
 import com.yym.entity.Words;
 
@@ -32,5 +33,5 @@ public interface LearningService {
 	List<UserWords> selReview(String table_name,Date dates);
 	//获取需要练习的单词
 	List<UserWords> selPractise(String table_name,Date dates);
-	
+
 }

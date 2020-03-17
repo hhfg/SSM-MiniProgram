@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.yym.dao.UserDao;
 import com.yym.entity.PersonalData;
+import com.yym.entity.SignRecord;
 import com.yym.entity.User;
 import com.yym.entity.WordBooks;
 import com.yym.entity.Words;
@@ -103,6 +104,11 @@ public class UserServiceImpl implements UserService{
 	public int selCountToday(String table_name, Date dates,int bookid) {
 		// TODO Auto-generated method stub
 		return userDao.selCountToday(table_name, dates,bookid);
+	}
+	@Override
+	public int insSignRecord(SignRecord signRecord) {
+		// TODO Auto-generated method stub
+		return userDao.insSignRecord(signRecord);
 	}
 
 

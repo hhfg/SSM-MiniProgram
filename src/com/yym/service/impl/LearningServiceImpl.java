@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.yym.dao.LearningDao;
+import com.yym.entity.SignRecord;
 import com.yym.entity.UserWords;
 import com.yym.entity.Words;
 import com.yym.service.LearningService;
@@ -85,6 +86,5 @@ public class LearningServiceImpl implements LearningService{
 		// TODO Auto-generated method stub
 		return learningDao.selPractise(table_name, dates);
 	}
-
 
 }

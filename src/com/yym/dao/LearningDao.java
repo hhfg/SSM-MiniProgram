@@ -6,6 +6,7 @@ import java.util.Set;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.yym.entity.SignRecord;
 import com.yym.entity.UserWords;
 import com.yym.entity.Words;
 
@@ -34,4 +35,5 @@ public interface LearningDao {
 	List<UserWords> selReview(@Param("table_name")String table_name,@Param("dates")Date dates);
 	//获取需要练习的单词
 	List<UserWords> selPractise(@Param("table_name")String table_name,@Param("dates")Date dates);
+
 }

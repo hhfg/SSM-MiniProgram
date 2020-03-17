@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yym.entity.PersonalData;
+import com.yym.entity.SignRecord;
 import com.yym.entity.User;
 import com.yym.entity.WordBooks;
 import com.yym.entity.Words;
@@ -181,5 +182,19 @@ public class UserController {
 		System.out.println(p.getLastWordId()+","+p.getUid()+","+p.getHaveToLearn()+","+p.getHaveToReview());
 		int result=userService.updPersonalData(p);
 		return result;
+	}
+	@ResponseBody
+	@RequestMapping("/insSignRecord.do")
+	public void insSignRecord(String nickName,String date,int learned_num,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException, ParseException {
+		SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
+		Date sign_date=formatter.parse(date);
+		int uid=userService.getUserIdByName(nickName);
+		SignRecord s=new SignRecord();
+		s.setUid(uid);
+		s.setSign_date(sign_date);
+		s.setLearned_num(learned_num);
+		s.setContinue_sign(2);
+		int result=userService.insSignRecord(s);
+		System.out.println(result);
 	}
 }

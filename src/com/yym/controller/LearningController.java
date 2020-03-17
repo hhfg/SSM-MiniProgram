@@ -2,6 +2,7 @@ package com.yym.controller;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -22,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.yym.entity.ChooseWords;
 import com.yym.entity.UserWords;
 import com.yym.entity.Words;
 import com.yym.service.LearningService;
@@ -78,7 +78,6 @@ public class LearningController {
 	@RequestMapping("/selReviewWords.do")
 	public List<UserWords> selReviewWords(String nickName,int review,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
 		String userTableName=nickName+"_word";
-		Set<ChooseWords> words=new HashSet<ChooseWords>();
 		List<UserWords> list=new ArrayList<UserWords>();
 		Date dates = new Date(System.currentTimeMillis());
 		if(review==0) {
@@ -97,4 +96,5 @@ public class LearningController {
 		}
 		return list;
 	}
+
 }
