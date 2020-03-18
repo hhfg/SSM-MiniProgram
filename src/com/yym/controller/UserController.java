@@ -97,8 +97,10 @@ public class UserController {
 		SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
 		Date todayDate=new Date(System.currentTimeMillis());
 		PersonalData p=userService.selPersonalData(uid);
-
 		PersonalData p1=new PersonalData();
+		SignRecord s=ifTheDayBeforSign(uid);
+		System.out.println(s);
+		
 		int haveToReview;
 		int haveToLearn;
 		//已预计完成时间且开始时间不等于当天日期
