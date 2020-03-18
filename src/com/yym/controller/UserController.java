@@ -158,25 +158,6 @@ public class UserController {
 		int result=userService.updPersonalData(p);
 		return result;
 	}
-	@ResponseBody
-	@RequestMapping("/updLastWordId.do")
-	public int updLastWordId(String nickName,HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ParseException{
-		int uid=userService.getUserIdByName(nickName);
-		PersonalData user=userService.selPersonalData(uid);
-		PersonalData p=new PersonalData();
-		int id=user.getLastWordId();
-		int completedNum=user.getCompletedNum()+user.getDayNum();
-		int lastWordId=user.getLastWordId()+user.getDayNum();
-		System.out.println(completedNum);
-		System.out.println(lastWordId);
-		p.setLastWordId((id+user.getDayNum()));
-		p.setUid(uid);
-		p.setHaveToReview(0);
-		p.setHaveToLearn(0);
-		p.setCompletedNum((completedNum));
-		int result=userService.updPersonalData(p);
-		return result;
-	}
 
 	@RequestMapping("/insSignRecord.do")
 	public String insSignRecord(String nickName,String date,int learned_num,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException, ParseException {
