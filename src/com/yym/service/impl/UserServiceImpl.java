@@ -10,6 +10,7 @@ import com.yym.dao.UserDao;
 import com.yym.entity.PersonalData;
 import com.yym.entity.SignRecord;
 import com.yym.entity.User;
+import com.yym.entity.UserWords;
 import com.yym.entity.WordBooks;
 import com.yym.entity.Words;
 import com.yym.service.UserService;
@@ -114,6 +115,16 @@ public class UserServiceImpl implements UserService{
 	public SignRecord selSignRecord(int uid, Date sign_date) {
 		// TODO Auto-generated method stub
 		return userDao.selSignRecord(uid, sign_date);
+	}
+	@Override
+	public List<UserWords> selNotLearned(String table_name) {
+		// TODO Auto-generated method stub
+		return userDao.selNotLearned(table_name);
+	}
+	@Override
+	public SignRecord selTodaySign(int uid, Date sign_date) {
+		// TODO Auto-generated method stub
+		return userDao.selTodaySign(uid, sign_date);
 	}
 
 }

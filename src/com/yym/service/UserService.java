@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import com.yym.entity.PersonalData;
 import com.yym.entity.SignRecord;
 import com.yym.entity.User;
+import com.yym.entity.UserWords;
 import com.yym.entity.WordBooks;
 import com.yym.entity.Words;
 
@@ -53,4 +54,8 @@ public interface UserService {
 	int insSignRecord(SignRecord signRecord);
 	//查看是否有特定日期的打卡记录
 	SignRecord selSignRecord(int uid,Date sign_date);
+	//获取还未学习的单词
+	List<UserWords> selNotLearned(String table_name);
+	//查看今日是否已打卡
+	SignRecord selTodaySign(int uid,Date sign_date);
 }

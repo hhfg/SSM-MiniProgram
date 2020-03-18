@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.yym.entity.PersonalData;
 import com.yym.entity.SignRecord;
 import com.yym.entity.User;
+import com.yym.entity.UserWords;
 import com.yym.entity.WordBooks;
 import com.yym.entity.Words;
 import com.yym.service.UserService;
@@ -95,43 +96,99 @@ public class UserController {
 		int uid=userService.getUserIdByName(nickName);
 		String table_name=nickName+"_word";
 		SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
-		Date todayDate=new Date(System.currentTimeMillis());
+		Date dates=new Date(System.currentTimeMillis());
 		PersonalData p=userService.selPersonalData(uid);
-		PersonalData p1=new PersonalData();
-		SignRecord s=ifTheDayBeforSign(uid);
-		System.out.println(s);
-		
+		PersonalData p1=new PersonalData();				
 		int haveToReview;
 		int haveToLearn;
+		//查看今天是否已打卡
+		System.out.println(dates);
+		SignRecord todaySign=userService.selTodaySign(uid, dates);
+		//如果今天已打卡
+		System.out.println(todaySign);
+		if(todaySign!=null) {
+			return p;
+		}
+		else {
+			//查看前一天是否有打卡
+			SignRecord s=ifTheDayBeforSign(uid);
+			//如果没有的话
+			if(s==null) {
+				//从用户表中获取status=0的单词
+				List<UserWords> userWords=userService.selNotLearned(table_name);
+				//如果长度不为0，说明还有未学习的单词
+				if(userWords.size()!=0) {
+					haveToLearn=userWords.size();
+					haveToReview=userService.selReviewCount(table_name, dates, p.getBookid());
+				}
+				//否则表示上一次是已经打完卡后 就没学习了
+				else {
+					//通过用户选择的bookid查询对应的单词书的表名
+					String table=userService.selTableName(p.getBookid());
+					List<Words> list=userService.selWords(table, p.getLastWordId()+1, p.getDayNum()+p.getLastWordId());
+					for(Words w:list) {
+						userService.insWords(table_name, w.getWord(), w.getUs_pron(), w.getUk_pron(), w.getUs_mp3(), w.getUk_mp3(), w.getExplanation(), w.getVal_ex1(), w.getBil_ex1(), w.getVal_ex2(), w.getBil_ex2(), w.getVal_ex3(), w.getBil_ex3(), w.getCollocation(),0, dates, p.getBookid());
+					}
+				}
+			}else {//如果前一天有打卡
+				//查看用户单词表中是否有今天的单词
+				int count=userService.selCountToday(table_name, dates,p.getBookid());
+				//如果没有，表示今日还未开始学习，将需要学习的单词加入到用户单词表中
+				if(count==0&&p.getEndTime()!=null) {
+					//通过用户选择的bookid查询对应的单词书的表名
+					String table=userService.selTableName(p.getBookid());
+					List<Words> list=userService.selWords(table, p.getLastWordId()+1, p.getDayNum()+p.getLastWordId());
+					for(Words w:list) {
+						userService.insWords(table_name, w.getWord(), w.getUs_pron(), w.getUk_pron(), w.getUs_mp3(), w.getUk_mp3(), w.getExplanation(), w.getVal_ex1(), w.getBil_ex1(), w.getVal_ex2(), w.getBil_ex2(), w.getVal_ex3(), w.getBil_ex3(), w.getCollocation(),0, dates, p.getBookid());
+					}	
+				}else {
+					
+				}
+			}
+//			//获取今日需要学习和复习的单词量
+			haveToReview=userService.selReviewCount(table_name, dates,p.getBookid());
+			haveToLearn=userService.selLearningCount(table_name, dates,p.getBookid());
+			System.out.println(haveToReview+":"+haveToLearn);
+			p1.setHaveToLearn(haveToLearn);
+			p1.setHaveToReview(haveToReview);
+			p1.setUid(uid);
+			p1.setCompletedNum(p.getCompletedNum());
+			p1.setLastWordId(p.getLastWordId());
+			int result=userService.updPersonalData(p1);
+			p=userService.selPersonalData(uid);
+			return p;
+		}
+
+
 		//已预计完成时间且开始时间不等于当天日期
-		if(p.getEndTime()!=null&&!formatter.format(todayDate).equals(formatter.format(p.getStartUseDate()))) {
-			//转换预计完成时间
-			Date endDate=p.getEndTime();
-			//计算剩余天数
-			int betweenDate=(int) ((endDate.getTime()-todayDate.getTime())/(60*60*24*1000));
-			int clockInDay=(int) ((todayDate.getTime()-p.getStartUseDate().getTime())/(60*60*24*1000));
-			p1.setLearningDay(betweenDate);	
-		}
-		int count=userService.selCountToday(table_name, todayDate,p.getBookid());
-		if(count==0&&p.getEndTime()!=null) {
-			//通过用户选择的bookid查询对应的单词书的表名
-			String table=userService.selTableName(p.getBookid());
-			List<Words> list=userService.selWords(table, p.getLastWordId(), p.getDayNum()+p.getLastWordId());
-			for(Words w:list) {
-				userService.insWords(table_name, w.getWord(), w.getUs_pron(), w.getUk_pron(), w.getUs_mp3(), w.getUk_mp3(), w.getExplanation(), w.getVal_ex1(), w.getBil_ex1(), w.getVal_ex2(), w.getBil_ex2(), w.getVal_ex3(), w.getBil_ex3(), w.getCollocation(),0, todayDate, p.getBookid());
-			}	
-		}
-			//获取今日需要学习和复习的单词量
-		haveToReview=userService.selReviewCount(table_name, todayDate,p.getBookid());
-		haveToLearn=userService.selLearningCount(table_name, todayDate,p.getBookid());
-		p1.setHaveToLearn(haveToLearn);
-		p1.setHaveToReview(haveToReview);
-		p1.setUid(uid);
-		p1.setCompletedNum(p.getCompletedNum());
-		p1.setLastWordId(p.getLastWordId());
-		int result=userService.updPersonalData(p1);
-		p=userService.selPersonalData(uid);
-		return p;
+//		if(p.getEndTime()!=null&&!formatter.format(todayDate).equals(formatter.format(p.getStartUseDate()))) {
+//			//转换预计完成时间
+//			Date endDate=p.getEndTime();
+//			//计算剩余天数
+//			int betweenDate=(int) ((endDate.getTime()-todayDate.getTime())/(60*60*24*1000));
+//			int clockInDay=(int) ((todayDate.getTime()-p.getStartUseDate().getTime())/(60*60*24*1000));
+//			p1.setLearningDay(betweenDate);	
+//		}
+//		int count=userService.selCountToday(table_name, todayDate,p.getBookid());
+//		if(count==0&&p.getEndTime()!=null) {
+//			//通过用户选择的bookid查询对应的单词书的表名
+//			String table=userService.selTableName(p.getBookid());
+//			List<Words> list=userService.selWords(table, p.getLastWordId(), p.getDayNum()+p.getLastWordId());
+//			for(Words w:list) {
+//				userService.insWords(table_name, w.getWord(), w.getUs_pron(), w.getUk_pron(), w.getUs_mp3(), w.getUk_mp3(), w.getExplanation(), w.getVal_ex1(), w.getBil_ex1(), w.getVal_ex2(), w.getBil_ex2(), w.getVal_ex3(), w.getBil_ex3(), w.getCollocation(),0, todayDate, p.getBookid());
+//			}	
+//		}
+//			//获取今日需要学习和复习的单词量
+//		haveToReview=userService.selReviewCount(table_name, todayDate,p.getBookid());
+//		haveToLearn=userService.selLearningCount(table_name, todayDate,p.getBookid());
+//		p1.setHaveToLearn(haveToLearn);
+//		p1.setHaveToReview(haveToReview);
+//		p1.setUid(uid);
+//		p1.setCompletedNum(p.getCompletedNum());
+//		p1.setLastWordId(p.getLastWordId());
+//		int result=userService.updPersonalData(p1);
+//		p=userService.selPersonalData(uid);
+//		return p;
 	}
 	
 	@ResponseBody

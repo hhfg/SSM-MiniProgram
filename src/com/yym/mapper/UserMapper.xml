@@ -98,7 +98,7 @@
 	</update>
 	<!-- 获取用户当天需要复习的单词量 -->
 	<select id="selReviewCount" resultType="int">
-		select count(*) from ${table_name} where <![CDATA[status!=2]]> and <![CDATA[dates!=#{dates,jdbcType=DATE}]]> and bookid=#{bookid}
+		select count(*) from ${table_name} where status=1 and <![CDATA[dates!=#{dates,jdbcType=DATE}]]> and bookid=#{bookid}
 	</select>
 	<!--获取用户当天需要学习的单词量  -->
 	<select id="selLearningCount" resultType="int">
@@ -130,5 +130,12 @@
 	<!-- 查看是否有特定日期的打卡记录 -->
 	<select id="selSignRecord" resultType="com.yym.entity.SignRecord">
 		select * from sign_record where uid=#{uid} and sign_date=#{sign_date}
+	</select>
+	<!-- 获取还未学习的单词 -->
+	<select id="selNotLearned" resultType="com.yym.entity.UserWords">
+		select * from ${table_name} where status=0
+	</select>
+	<select id="selTodaySign" resultType="com.yym.entity.SignRecord">
+		select * from sign_record where uid=#{uid} and <![CDATA[sign_date=#{sign_date,jdbcType=DATE}]]>
 	</select>
 </mapper>
