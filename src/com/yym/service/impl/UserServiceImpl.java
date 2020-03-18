@@ -110,6 +110,10 @@ public class UserServiceImpl implements UserService{
 		// TODO Auto-generated method stub
 		return userDao.insSignRecord(signRecord);
 	}
-
+	@Override
+	public SignRecord selSignRecord(int uid, Date sign_date) {
+		// TODO Auto-generated method stub
+		return userDao.selSignRecord(uid, sign_date);
+	}
 
 }

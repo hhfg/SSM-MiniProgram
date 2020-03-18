@@ -26,6 +26,7 @@ import com.yym.entity.Words;
 import com.yym.service.UserService;
 import com.yym.util.DecodeUserUtil;
 import com.yym.util.GetOpenIdUtil;
+import com.yym.util.GetSpecifiedDay;
 
 import net.sf.json.JSONObject;
 
@@ -78,14 +79,25 @@ public class UserController {
 		int result=userService.insPersonalData(id,clockInDay,startUseDate);
 		return result;
 	}
+	public SignRecord ifTheDayBeforSign(int uid) throws ParseException {
+		SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
+		Date todayDate=new Date(System.currentTimeMillis());
+		String specifiedDay=formatter.format(todayDate);
+		GetSpecifiedDay getSpecifiedDay=new GetSpecifiedDay();
+		String d=getSpecifiedDay.getSpecifiedDayBefore(specifiedDay);
+		Date sign_date=formatter.parse(d);
+		SignRecord s=userService.selSignRecord(uid, sign_date);
+		return s;
+	}
 	@ResponseBody
 	@RequestMapping("/selPersonalData.do")
 	public PersonalData selPersonalData(String nickName,HttpServletRequest request,HttpServletResponse response) throws ServletException,IOException, ParseException {
 		int uid=userService.getUserIdByName(nickName);
 		String table_name=nickName+"_word";
-		PersonalData p=userService.selPersonalData(uid);
 		SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
 		Date todayDate=new Date(System.currentTimeMillis());
+		PersonalData p=userService.selPersonalData(uid);
+
 		PersonalData p1=new PersonalData();
 		int haveToReview;
 		int haveToLearn;
@@ -164,11 +176,17 @@ public class UserController {
 		SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
 		Date sign_date=formatter.parse(date);
 		int uid=userService.getUserIdByName(nickName);
+		SignRecord beforeDay=ifTheDayBeforSign(uid);
+		System.out.println(beforeDay);
 		SignRecord s=new SignRecord();
+		if(beforeDay==null) {
+			s.setContinue_sign(1);
+		}else {
+			s.setContinue_sign(beforeDay.getContinue_sign()+1);
+		}
 		s.setUid(uid);
 		s.setSign_date(sign_date);
 		s.setLearned_num(learned_num);
-		s.setContinue_sign(2);
 		int result=userService.insSignRecord(s);
 		return "redirect:/updateClock.do?nickName="+nickName;
 	}

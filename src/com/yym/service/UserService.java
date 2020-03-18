@@ -51,4 +51,6 @@ public interface UserService {
 	int selCountToday(String table_name,Date dates,int bookid);
 	//新增打卡记录
 	int insSignRecord(SignRecord signRecord);
+	//查看是否有特定日期的打卡记录
+	SignRecord selSignRecord(int uid,Date sign_date);
 }

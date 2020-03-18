@@ -56,4 +56,6 @@ public interface UserDao {
 	int selCountToday(@Param("table_name")String table_name,@Param("dates")Date dates,@Param("bookid")int bookid);
 	//新增打卡记录
 	int insSignRecord(SignRecord signRecord);
+	//查看是否有特定日期的打卡记录
+	SignRecord selSignRecord(@Param("uid")int uid,@Param("sign_date")Date sign_date);
 }

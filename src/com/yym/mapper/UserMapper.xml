@@ -127,4 +127,8 @@
 	<insert id="insSignRecord" parameterType="com.yym.entity.SignRecord">
 		insert into sign_record(uid,sign_date,continue_sign,learned_num) values(#{uid},#{sign_date},#{continue_sign},#{learned_num}) 
 	</insert>
+	<!-- 查看是否有特定日期的打卡记录 -->
+	<select id="selSignRecord" resultType="com.yym.entity.SignRecord">
+		select * from sign_record where uid=#{uid} and sign_date=#{sign_date}
+	</select>
 </mapper>
