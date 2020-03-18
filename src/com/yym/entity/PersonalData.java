@@ -16,12 +16,6 @@ public class PersonalData {
 	private int learningDay;    //预计学习的天数
 	private int lastWordId;     //最后背诵的一个id
 	private int dayNum;         //定制的计划 每天需要学习的单词量
-	public int getLastWordId() {
-		return lastWordId;
-	}
-	public void setLastWordId(int lastWordId) {
-		this.lastWordId = lastWordId;
-	}
 	public int getId() {
 		return id;
 	}
@@ -64,11 +58,23 @@ public class PersonalData {
 	public void setHaveToReview(int haveToReview) {
 		this.haveToReview = haveToReview;
 	}
+	public Date getStartUseDate() {
+		return startUseDate;
+	}
+	public void setStartUseDate(Date startUseDate) {
+		this.startUseDate = startUseDate;
+	}
 	public Date getEndTime() {
 		return endTime;
 	}
 	public void setEndTime(Date endTime) {
 		this.endTime = endTime;
+	}
+	public Date getStartTime() {
+		return startTime;
+	}
+	public void setStartTime(Date startTime) {
+		this.startTime = startTime;
 	}
 	public int getLearningDay() {
 		return learningDay;
@@ -76,21 +82,12 @@ public class PersonalData {
 	public void setLearningDay(int learningDay) {
 		this.learningDay = learningDay;
 	}
-	
-	public Date getStartTime() {
-		return startTime;
+	public int getLastWordId() {
+		return lastWordId;
 	}
-	public void setStartTime(Date startTime) {
-		this.startTime = startTime;
+	public void setLastWordId(int lastWordId) {
+		this.lastWordId = lastWordId;
 	}
-	
-	public Date getStartUseDate() {
-		return startUseDate;
-	}
-	public void setStartUseDate(Date startUseDate) {
-		this.startUseDate = startUseDate;
-	}
-	
 	public int getDayNum() {
 		return dayNum;
 	}
@@ -105,5 +102,5 @@ public class PersonalData {
 				+ ", learningDay=" + learningDay + ", lastWordId=" + lastWordId + ", dayNum=" + dayNum + "]";
 	}
 
-
+	
 }

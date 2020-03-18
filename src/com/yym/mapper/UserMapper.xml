@@ -123,7 +123,7 @@
 	<select id="selCountToday" resultType="int">
 		select count(*) from ${table_name} where <![CDATA[dates=#{dates,jdbcType=DATE}]]> and bookid=#{bookid}
 	</select>
-		<!-- 新增打卡记录  -->
+	<!-- 新增打卡记录  -->
 	<insert id="insSignRecord" parameterType="com.yym.entity.SignRecord">
 		insert into sign_record(uid,sign_date,continue_sign,learned_num) values(#{uid},#{sign_date},#{continue_sign},#{learned_num}) 
 	</insert>

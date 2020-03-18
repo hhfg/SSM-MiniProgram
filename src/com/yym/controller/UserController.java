@@ -72,7 +72,7 @@ public class UserController {
 	@ResponseBody
 	@RequestMapping("/insPersonalData.do")
 	public int insPersonalData(int id,HttpServletRequest request,HttpServletResponse response) throws ServletException,IOException {
-		int clockInDay=1;
+		int clockInDay=0;
 		SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
 		Date startUseDate=new Date(System.currentTimeMillis());
 		int result=userService.insPersonalData(id,clockInDay,startUseDate);
@@ -96,7 +96,6 @@ public class UserController {
 			//º∆À„ £”‡ÃÏ ˝
 			int betweenDate=(int) ((endDate.getTime()-todayDate.getTime())/(60*60*24*1000));
 			int clockInDay=(int) ((todayDate.getTime()-p.getStartUseDate().getTime())/(60*60*24*1000));
-			p1.setClockInDay(clockInDay+1);
 			p1.setLearningDay(betweenDate);	
 		}
 		int count=userService.selCountToday(table_name, todayDate,p.getBookid());
@@ -178,9 +177,9 @@ public class UserController {
 		int result=userService.updPersonalData(p);
 		return result;
 	}
-	@ResponseBody
+
 	@RequestMapping("/insSignRecord.do")
-	public void insSignRecord(String nickName,String date,int learned_num,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException, ParseException {
+	public String insSignRecord(String nickName,String date,int learned_num,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException, ParseException {
 		SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
 		Date sign_date=formatter.parse(date);
 		int uid=userService.getUserIdByName(nickName);
@@ -190,6 +189,23 @@ public class UserController {
 		s.setLearned_num(learned_num);
 		s.setContinue_sign(2);
 		int result=userService.insSignRecord(s);
-		System.out.println(result);
+		return "redirect:/updateClock.do?nickName="+nickName;
+	}
+	@ResponseBody
+	@RequestMapping("/updateClock.do")
+	public int updateClock(String nickName,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
+		int uid=userService.getUserIdByName(nickName);
+		PersonalData user=userService.selPersonalData(uid);
+		PersonalData p=new PersonalData();
+		int completedNum=user.getCompletedNum()+user.getDayNum();
+		int lastWordId=user.getLastWordId()+user.getDayNum();
+		p.setUid(uid);
+		p.setClockInDay(user.getClockInDay()+1);
+		p.setHaveToLearn(0);
+		p.setHaveToReview(0);
+		p.setCompletedNum(completedNum);
+		p.setLastWordId(lastWordId);
+		int result=userService.updPersonalData(p);
+		return result;		
 	}
 }
