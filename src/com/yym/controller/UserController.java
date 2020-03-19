@@ -102,7 +102,6 @@ public class UserController {
 		int haveToReview;
 		int haveToLearn;
 		//查看今天是否已打卡
-		System.out.println(dates);
 		SignRecord todaySign=userService.selTodaySign(uid, dates);
 		//如果今天已打卡
 		System.out.println(todaySign);
@@ -145,7 +144,10 @@ public class UserController {
 					
 				}
 			}
-//			//获取今日需要学习和复习的单词量
+			
+			Date endDate=p.getEndTime();
+			long learningDay=(endDate.getTime()-dates.getTime())/(60*60*24*1000);
+			//获取今日需要学习和复习的单词量
 			haveToReview=userService.selReviewCount(table_name, dates,p.getBookid());
 			haveToLearn=userService.selLearningCount(table_name, dates,p.getBookid());
 			System.out.println(haveToReview+":"+haveToLearn);
@@ -154,6 +156,7 @@ public class UserController {
 			p1.setUid(uid);
 			p1.setCompletedNum(p.getCompletedNum());
 			p1.setLastWordId(p.getLastWordId());
+			p1.setLearningDay((int)learningDay);
 			int result=userService.updPersonalData(p1);
 			p=userService.selPersonalData(uid);
 			return p;
