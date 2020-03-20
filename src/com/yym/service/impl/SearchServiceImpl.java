@@ -1,5 +1,7 @@
 package com.yym.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +15,7 @@ public class SearchServiceImpl implements SearchService{
 	private SearchDao searchDao;
 	
 	@Override
-	public Words searchWord(String word) {
+	public List<Words> searchWord(String word) {
 		// TODO Auto-generated method stub
 		return searchDao.searchWord(word);
 	}

@@ -5,6 +5,10 @@
 <mapper namespace="com.yym.dao.SearchDao">
 	<select id="searchWord" parameterType="string" resultType="com.yym.entity.Words">
 		select * from cet4word where word=#{word}
+		union
+		select * from cet6word where word=#{word}
+		union 
+		select * from postgraduateword where word=#{word}
 	</select>
 
 </mapper>

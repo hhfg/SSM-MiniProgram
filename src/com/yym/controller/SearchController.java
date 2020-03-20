@@ -1,5 +1,7 @@
 package com.yym.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -19,8 +21,12 @@ public class SearchController {
 	@ResponseBody
 	@RequestMapping("/searchWord.do")
 	public Words searchWord(String word,HttpServletRequest request,HttpServletResponse response) {
-		Words w=searchService.searchWord(word);
-		return w;
-		
+		List<Words> w=searchService.searchWord(word);
+		if(w.size()==0) {
+			return null;
+		}else {
+			Words ww=w.get(0);
+			return ww;
+		}
 	}
 }
