@@ -104,7 +104,6 @@ public class UserController {
 		//查看今天是否已打卡
 		SignRecord todaySign=userService.selTodaySign(uid, dates);
 		//如果今天已打卡
-		System.out.println(todaySign);
 		if(todaySign!=null) {
 			return p;
 		}
@@ -157,41 +156,11 @@ public class UserController {
 			p1.setCompletedNum(p.getCompletedNum());
 			p1.setLastWordId(p.getLastWordId());
 			p1.setLearningDay((int)learningDay);
+			p1.setContinue_sign(p.getContinue_sign());
 			int result=userService.updPersonalData(p1);
 			p=userService.selPersonalData(uid);
 			return p;
 		}
-
-
-		//已预计完成时间且开始时间不等于当天日期
-//		if(p.getEndTime()!=null&&!formatter.format(todayDate).equals(formatter.format(p.getStartUseDate()))) {
-//			//转换预计完成时间
-//			Date endDate=p.getEndTime();
-//			//计算剩余天数
-//			int betweenDate=(int) ((endDate.getTime()-todayDate.getTime())/(60*60*24*1000));
-//			int clockInDay=(int) ((todayDate.getTime()-p.getStartUseDate().getTime())/(60*60*24*1000));
-//			p1.setLearningDay(betweenDate);	
-//		}
-//		int count=userService.selCountToday(table_name, todayDate,p.getBookid());
-//		if(count==0&&p.getEndTime()!=null) {
-//			//通过用户选择的bookid查询对应的单词书的表名
-//			String table=userService.selTableName(p.getBookid());
-//			List<Words> list=userService.selWords(table, p.getLastWordId(), p.getDayNum()+p.getLastWordId());
-//			for(Words w:list) {
-//				userService.insWords(table_name, w.getWord(), w.getUs_pron(), w.getUk_pron(), w.getUs_mp3(), w.getUk_mp3(), w.getExplanation(), w.getVal_ex1(), w.getBil_ex1(), w.getVal_ex2(), w.getBil_ex2(), w.getVal_ex3(), w.getBil_ex3(), w.getCollocation(),0, todayDate, p.getBookid());
-//			}	
-//		}
-//			//获取今日需要学习和复习的单词量
-//		haveToReview=userService.selReviewCount(table_name, todayDate,p.getBookid());
-//		haveToLearn=userService.selLearningCount(table_name, todayDate,p.getBookid());
-//		p1.setHaveToLearn(haveToLearn);
-//		p1.setHaveToReview(haveToReview);
-//		p1.setUid(uid);
-//		p1.setCompletedNum(p.getCompletedNum());
-//		p1.setLastWordId(p.getLastWordId());
-//		int result=userService.updPersonalData(p1);
-//		p=userService.selPersonalData(uid);
-//		return p;
 	}
 	
 	@ResponseBody
@@ -241,15 +210,26 @@ public class UserController {
 		SignRecord beforeDay=ifTheDayBeforSign(uid);
 		System.out.println(beforeDay);
 		SignRecord s=new SignRecord();
+		PersonalData user=userService.selPersonalData(uid);
+		PersonalData p=new PersonalData();
 		if(beforeDay==null) {
 			s.setContinue_sign(1);
+			p.setContinue_sign(1);
+		
 		}else {
 			s.setContinue_sign(beforeDay.getContinue_sign()+1);
+			p.setContinue_sign(beforeDay.getContinue_sign()+1);
 		}
 		s.setUid(uid);
 		s.setSign_date(sign_date);
 		s.setLearned_num(learned_num);
-		int result=userService.insSignRecord(s);
+		userService.insSignRecord(s);
+		p.setUid(uid);
+		p.setCompletedNum(user.getCompletedNum());
+		p.setHaveToLearn(user.getHaveToLearn());
+		p.setHaveToReview(user.getHaveToReview());
+		p.setLastWordId(user.getLastWordId());
+		userService.updPersonalData(p);
 		return "redirect:/updateClock.do?nickName="+nickName;
 	}
 	@ResponseBody

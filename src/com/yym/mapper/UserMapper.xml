@@ -70,6 +70,9 @@
 	 		<if test="dayNum!=null and dayNum!=''">
 	 			dayNum=#{dayNum}
 	 		</if>
+	 		<if test="continue_sign!=null and continue_sign!=''">
+	 			continue_sign=#{continue_sign}
+	 		</if>
 	 	</trim>
 	 	where uid=#{uid}
 	</update>

@@ -16,6 +16,7 @@ public class PersonalData {
 	private int learningDay;    //预计学习的天数
 	private int lastWordId;     //最后背诵的一个id
 	private int dayNum;         //定制的计划 每天需要学习的单词量
+	private int continue_sign;  //连续签到天数
 	public int getId() {
 		return id;
 	}
@@ -94,13 +95,21 @@ public class PersonalData {
 	public void setDayNum(int dayNum) {
 		this.dayNum = dayNum;
 	}
+	
+	public int getContinue_sign() {
+		return continue_sign;
+	}
+	public void setContinue_sign(int continue_sign) {
+		this.continue_sign = continue_sign;
+	}
 	@Override
 	public String toString() {
 		return "PersonalData [id=" + id + ", uid=" + uid + ", bookid=" + bookid + ", clockInDay=" + clockInDay
 				+ ", completedNum=" + completedNum + ", haveToLearn=" + haveToLearn + ", haveToReview=" + haveToReview
 				+ ", startUseDate=" + startUseDate + ", endTime=" + endTime + ", startTime=" + startTime
-				+ ", learningDay=" + learningDay + ", lastWordId=" + lastWordId + ", dayNum=" + dayNum + "]";
+				+ ", learningDay=" + learningDay + ", lastWordId=" + lastWordId + ", dayNum=" + dayNum
+				+ ", continue_sign=" + continue_sign + "]";
 	}
-
+	
 	
 }
