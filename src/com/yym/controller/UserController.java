@@ -149,7 +149,6 @@ public class UserController {
 			//获取今日需要学习和复习的单词量
 			haveToReview=userService.selReviewCount(table_name, dates,p.getBookid());
 			haveToLearn=userService.selLearningCount(table_name, dates,p.getBookid());
-			System.out.println(haveToReview+":"+haveToLearn);
 			p1.setHaveToLearn(haveToLearn);
 			p1.setHaveToReview(haveToReview);
 			p1.setUid(uid);

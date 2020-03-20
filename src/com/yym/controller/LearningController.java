@@ -39,7 +39,7 @@ public class LearningController {
 		String userTableName=nickName+"_word";
 		//获取今天的日期
 		Date dates = new Date(System.currentTimeMillis());
-		List<UserWords> list=learningService.selReview(userTableName, dates);
+		List<UserWords> list=learningService.selReview(userTableName, dates,bookid);
 		//System.out.println(list);
 		return list;
 	}
@@ -76,16 +76,16 @@ public class LearningController {
 	}
 	@ResponseBody
 	@RequestMapping("/selReviewWords.do")
-	public List<UserWords> selReviewWords(String nickName,int review,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
+	public List<UserWords> selReviewWords(String nickName,int review,int bookid,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
 		String userTableName=nickName+"_word";
 		List<UserWords> list=new ArrayList<UserWords>();
 		Date dates = new Date(System.currentTimeMillis());
 		if(review==0) {
-			list=learningService.selReview(userTableName, dates);
+			list=learningService.selReview(userTableName, dates,bookid);
 		}
 		else{
 			//获取需要复习的单词
-			list=learningService.selPractise(userTableName, dates);
+			list=learningService.selPractise(userTableName, dates,bookid);
 			System.out.println(list);
 		}
 		int index=0;
