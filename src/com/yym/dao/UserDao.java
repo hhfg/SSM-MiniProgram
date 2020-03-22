@@ -60,7 +60,7 @@ public interface UserDao {
 	//查看是否有特定日期的打卡记录
 	SignRecord selSignRecord(@Param("uid")int uid,@Param("sign_date")Date sign_date);
 	//获取未学习的单词
-	List<UserWords> selNotLearned(@Param("table_name")String table_name);
+	List<UserWords> selNotLearned(@Param("table_name")String table_name,@Param("bookid")int bookid);
 	//查看今日是否已打卡
 	SignRecord selTodaySign(@Param("uid")int uid,@Param("sign_date")Date sign_date);
 }

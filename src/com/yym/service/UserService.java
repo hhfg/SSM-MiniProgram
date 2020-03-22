@@ -55,7 +55,7 @@ public interface UserService {
 	//查看是否有特定日期的打卡记录
 	SignRecord selSignRecord(int uid,Date sign_date);
 	//获取还未学习的单词
-	List<UserWords> selNotLearned(String table_name);
+	List<UserWords> selNotLearned(String table_name,int bookid);
 	//查看今日是否已打卡
 	SignRecord selTodaySign(int uid,Date sign_date);
 }

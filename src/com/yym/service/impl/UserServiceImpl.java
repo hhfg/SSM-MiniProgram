@@ -117,9 +117,9 @@ public class UserServiceImpl implements UserService{
 		return userDao.selSignRecord(uid, sign_date);
 	}
 	@Override
-	public List<UserWords> selNotLearned(String table_name) {
+	public List<UserWords> selNotLearned(String table_name,int bookid) {
 		// TODO Auto-generated method stub
-		return userDao.selNotLearned(table_name);
+		return userDao.selNotLearned(table_name,bookid);
 	}
 	@Override
 	public SignRecord selTodaySign(int uid, Date sign_date) {

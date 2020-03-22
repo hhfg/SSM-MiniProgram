@@ -136,7 +136,7 @@
 	</select>
 	<!-- 获取还未学习的单词 -->
 	<select id="selNotLearned" resultType="com.yym.entity.UserWords">
-		select * from ${table_name} where status=0
+		select * from ${table_name} where status=0 and bookid=#{bookid}
 	</select>
 	<select id="selTodaySign" resultType="com.yym.entity.SignRecord">
 		select * from sign_record where uid=#{uid} and <![CDATA[sign_date=#{sign_date,jdbcType=DATE}]]>

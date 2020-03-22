@@ -79,6 +79,7 @@ public class LearningController {
 	public List<UserWords> selReviewWords(String nickName,int review,int bookid,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
 		String userTableName=nickName+"_word";
 		List<UserWords> list=new ArrayList<UserWords>();
+		System.out.println(bookid);
 		Date dates = new Date(System.currentTimeMillis());
 		if(review==0) {
 			list=learningService.selReview(userTableName, dates,bookid);
