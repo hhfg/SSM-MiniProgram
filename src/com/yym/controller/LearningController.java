@@ -85,8 +85,8 @@ public class LearningController {
 			list=learningService.selReview(userTableName, dates,bookid);
 		}
 		else{
-			//获取需要复习的单词
-			list=learningService.selPractise(userTableName, dates,bookid);
+			//获取需要练习的单词
+			list=learningService.selPractise(userTableName,bookid);
 			System.out.println(list);
 		}
 		int index=0;

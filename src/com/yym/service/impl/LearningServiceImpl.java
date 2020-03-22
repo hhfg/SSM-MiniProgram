@@ -82,9 +82,9 @@ public class LearningServiceImpl implements LearningService{
 	}
 
 	@Override
-	public List<UserWords> selPractise(String table_name, Date dates,int bookid) {
+	public List<UserWords> selPractise(String table_name,int bookid) {
 		// TODO Auto-generated method stub
-		return learningDao.selPractise(table_name, dates,bookid);
+		return learningDao.selPractise(table_name, bookid);
 	}
 
 }
