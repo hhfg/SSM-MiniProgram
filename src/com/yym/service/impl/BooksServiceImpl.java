@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.yym.dao.BooksDao;
 import com.yym.entity.BooksType;
 import com.yym.entity.WordBooks;
+import com.yym.entity.Words;
 import com.yym.service.BooksService;
 
 @Service
@@ -31,6 +32,11 @@ public class BooksServiceImpl implements BooksService{
 		// TODO Auto-generated method stub
 		WordBooks w=booksDao.selBookById(id);
 		return w;
+	}
+	@Override
+	public List<Words> selAllWords(String table_name) {
+		// TODO Auto-generated method stub
+		return booksDao.selAllWords(table_name);
 	}
 
 

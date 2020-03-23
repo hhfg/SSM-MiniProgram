@@ -15,4 +15,7 @@
 	<select id="selBookById" resultType="com.yym.entity.WordBooks">
 		select * from wordbooks where id=#{id}
 	</select>
+	<select id="selAllWords" parameterType="string" resultType="com.yym.entity.Words">
+		select * from ${table_name} where wid between 1 and 20
+	</select>
 </mapper>

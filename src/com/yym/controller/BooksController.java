@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yym.entity.BooksType;
 import com.yym.entity.WordBooks;
+import com.yym.entity.Words;
 import com.yym.service.BooksService;
 
 @Controller
@@ -36,5 +37,13 @@ public class BooksController {
 	public WordBooks selBookById(int id,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
 		WordBooks s=booksService.selBookById(id);
 		return s;
+	}
+	@ResponseBody
+	@RequestMapping("/selAllWords.do")
+	public List<Words> selAllWords(String nickName,int id,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
+		WordBooks w=booksService.selBookById(id);
+		String table_name=w.getTableName();
+		List<Words> list=booksService.selAllWords(table_name);
+		return list;
 	}
 }
