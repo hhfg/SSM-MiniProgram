@@ -33,5 +33,6 @@ public interface LearningService {
 	List<UserWords> selReview(String table_name,Date dates,int bookid);
 	//获取需要练习的单词
 	List<UserWords> selPractise(String table_name,int bookid);
-
+	//更新collect 
+	int setCollect(String table_name,int collect,int id);
 }

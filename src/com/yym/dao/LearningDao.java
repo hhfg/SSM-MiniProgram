@@ -35,5 +35,6 @@ public interface LearningDao {
 	List<UserWords> selReview(@Param("table_name")String table_name,@Param("dates")Date dates,@Param("bookid")int bookid);
 	//获取需要练习的单词
 	List<UserWords> selPractise(@Param("table_name")String table_name,@Param("bookid")int bookid);
-
+	//更新collect字段
+	int setCollect(@Param("table_name")String table_name,@Param("collect")int collect,@Param("id")int id);
 }

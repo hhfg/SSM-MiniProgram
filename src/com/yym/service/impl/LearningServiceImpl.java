@@ -87,4 +87,10 @@ public class LearningServiceImpl implements LearningService{
 		return learningDao.selPractise(table_name, bookid);
 	}
 
+	@Override
+	public int setCollect(String table_name, int collect, int id) {
+		// TODO Auto-generated method stub
+		return learningDao.setCollect(table_name, collect, id);
+	}
+
 }

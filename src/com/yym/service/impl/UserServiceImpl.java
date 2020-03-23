@@ -126,5 +126,9 @@ public class UserServiceImpl implements UserService{
 		// TODO Auto-generated method stub
 		return userDao.selTodaySign(uid, sign_date);
 	}
-
+	@Override
+	public int selWordNum(int bid) {
+		// TODO Auto-generated method stub
+		return userDao.selWordNum(bid);
+	}
 }

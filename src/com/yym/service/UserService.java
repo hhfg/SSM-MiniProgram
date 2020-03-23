@@ -58,4 +58,7 @@ public interface UserService {
 	List<UserWords> selNotLearned(String table_name,int bookid);
 	//查看今日是否已打卡
 	SignRecord selTodaySign(int uid,Date sign_date);
+	//根据bookid获取单词书的单词量
+	int selWordNum(int bid);
+
 }

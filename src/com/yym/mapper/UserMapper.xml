@@ -96,6 +96,7 @@
 			status int(2) default null,
 			dates date default null,
 			bookid int(2) not null,
+			collect int(2) default null,
 			primary key(id)
 		)engine=InnoDB default charset=utf8
 	</update>
@@ -138,7 +139,13 @@
 	<select id="selNotLearned" resultType="com.yym.entity.UserWords">
 		select * from ${table_name} where status=0 and bookid=#{bookid}
 	</select>
+	<!-- 查看今天是否打卡 -->
 	<select id="selTodaySign" resultType="com.yym.entity.SignRecord">
 		select * from sign_record where uid=#{uid} and <![CDATA[sign_date=#{sign_date,jdbcType=DATE}]]>
 	</select>
+	<!--根据bookid获取单词书的单词量  -->
+	<select id="selWordNum" parameterType="int" resultType="int">
+		select wordNum from wordbooks where bid=#{bid}
+	</select>
+
 </mapper>

@@ -87,7 +87,6 @@ public class LearningController {
 		else{
 			//获取需要练习的单词
 			list=learningService.selPractise(userTableName,bookid);
-			System.out.println(list);
 		}
 		int index=0;
 		for(UserWords u:list) {
@@ -96,6 +95,13 @@ public class LearningController {
 			u.setChoose(s);
 		}
 		return list;
+	}
+	@ResponseBody
+	@RequestMapping("/setCollect.do")
+	public int setCollect(String nickName,int collect,int id,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
+		String table_name=nickName+"_word";
+		int result=learningService.setCollect(table_name, collect, id);
+		return result;
 	}
 
 }

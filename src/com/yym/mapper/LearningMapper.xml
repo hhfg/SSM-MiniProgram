@@ -44,5 +44,7 @@
 	<select id="selPractise" resultType="com.yym.entity.UserWords">
 		select  * from ${table_name} where <![CDATA[status!=2]]> and bookid=#{bookid}
 	</select>
-
+	<update id="setCollect">
+		update ${table_name} set collect=#{collect} where id=#{id}
+	</update>
 </mapper>

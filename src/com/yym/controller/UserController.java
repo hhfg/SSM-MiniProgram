@@ -98,6 +98,7 @@ public class UserController {
 		SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
 		Date dates=new Date(System.currentTimeMillis());
 		PersonalData p=userService.selPersonalData(uid);
+		int wordNum=userService.selWordNum(p.getBookid());
 		PersonalData p1=new PersonalData();				
 		int haveToReview;
 		int haveToLearn;
