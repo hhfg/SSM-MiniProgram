@@ -20,4 +20,6 @@ public interface BooksDao {
 	List<Words> selAllWords(@Param("table_name")String table_name,@Param("start")int start,@Param("end")int end);
 	//获取已学单词
 	List<UserWords> selLearnedWords(@Param("table_name")String table_name);
+	//获取收藏的单词
+	List<UserWords> selCollectWords(@Param("table_name")String table_name);
 }

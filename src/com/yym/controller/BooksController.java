@@ -56,4 +56,11 @@ public class BooksController {
 		List<UserWords> list=booksService.selLearnedWords(table_name);
 		return list;
 	}
+	@ResponseBody
+	@RequestMapping("selCollectWords.do")
+	public List<UserWords> selCollectWords(String nickName,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
+		String table_name=nickName+"_word";
+		List<UserWords> list=booksService.selCollectWords(table_name);
+		return list;
+	}
 }
