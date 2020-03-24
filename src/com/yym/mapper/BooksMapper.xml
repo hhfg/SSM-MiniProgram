@@ -15,7 +15,13 @@
 	<select id="selBookById" resultType="com.yym.entity.WordBooks">
 		select * from wordbooks where id=#{id}
 	</select>
+	<!-- 查找全部单词 -->
 	<select id="selAllWords" resultType="com.yym.entity.Words">
 		select * from ${table_name} where wid between #{start} and #{end}
 	</select>
+	<!--获取已学单词  -->
+	<select id="selLearnedWords" resultType="com.yym.entity.UserWords">
+		select * from ${table_name} where status=1
+	</select>
+	
 </mapper>

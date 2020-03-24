@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yym.entity.BooksType;
+import com.yym.entity.UserWords;
 import com.yym.entity.WordBooks;
 import com.yym.entity.Words;
 import com.yym.service.BooksService;
@@ -46,6 +47,13 @@ public class BooksController {
 		int start=page*10+1;
 		int end=page*10+10;
 		List<Words> list=booksService.selAllWords(table_name,start,end);
+		return list;
+	}
+	@ResponseBody
+	@RequestMapping("selLearnedWords.do")
+	public List<UserWords> selLearnedWords(String nickName,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
+		String table_name=nickName+"_word";
+		List<UserWords> list=booksService.selLearnedWords(table_name);
 		return list;
 	}
 }
