@@ -34,9 +34,9 @@ public class BooksServiceImpl implements BooksService{
 		return w;
 	}
 	@Override
-	public List<Words> selAllWords(String table_name) {
+	public List<Words> selAllWords(String table_name,int start,int end) {
 		// TODO Auto-generated method stub
-		return booksDao.selAllWords(table_name);
+		return booksDao.selAllWords(table_name,start,end);
 	}
 
 

@@ -40,10 +40,12 @@ public class BooksController {
 	}
 	@ResponseBody
 	@RequestMapping("/selAllWords.do")
-	public List<Words> selAllWords(String nickName,int id,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
+	public List<Words> selAllWords(String nickName,int page,int id,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
 		WordBooks w=booksService.selBookById(id);
 		String table_name=w.getTableName();
-		List<Words> list=booksService.selAllWords(table_name);
+		int start=page*10+1;
+		int end=page*10+10;
+		List<Words> list=booksService.selAllWords(table_name,start,end);
 		return list;
 	}
 }

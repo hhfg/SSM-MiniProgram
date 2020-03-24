@@ -16,5 +16,5 @@ public interface BooksDao {
 	//通过id查找单词书
 	WordBooks selBookById(@Param("id")int id);
 	//获取单词书的单词
-	List<Words> selAllWords(@Param("table_name")String table_name);
+	List<Words> selAllWords(@Param("table_name")String table_name,@Param("start")int start,@Param("end")int end);
 }

@@ -15,5 +15,5 @@ public interface BooksService {
 	//  通过id查找单词书
 	WordBooks selBookById(int id);
 	//获取单词书的单词
-	List<Words> selAllWords(String table_name);
+	List<Words> selAllWords(String table_name,int start,int end);
 }
