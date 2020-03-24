@@ -1,6 +1,7 @@
 package com.yym.service;
 
 import java.util.List;
+
 import com.yym.entity.BooksType;
 import com.yym.entity.UserWords;
 import com.yym.entity.WordBooks;
@@ -19,4 +20,6 @@ public interface BooksService {
 	List<UserWords> selLearnedWords(String table_name);
 	//获取收藏的单词
 	List<UserWords> selCollectWords(String table_name);
+	//获取部分已学单词
+	List<UserWords> selPartWords(String table_name,int start,int end);
 }

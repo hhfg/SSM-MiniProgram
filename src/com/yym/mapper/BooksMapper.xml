@@ -27,5 +27,9 @@
 	<select id="selCollectWords" resultType="com.yym.entity.UserWords">
 		select * from ${table_name} where collect=1
 	</select>
+	<!--获取部分已学单词  -->
+	<select id="selPartWords" resultType="com.yym.entity.UserWords">
+		select * from ${table_name} where status=1 and wid between #{start} and #{end}
+	</select>
 	
 </mapper>

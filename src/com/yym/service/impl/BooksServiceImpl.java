@@ -49,6 +49,11 @@ public class BooksServiceImpl implements BooksService{
 		// TODO Auto-generated method stub
 		return booksDao.selCollectWords(table_name);
 	}
+	@Override
+	public List<UserWords> selPartWords(String table_name, int start, int end) {
+		// TODO Auto-generated method stub
+		return booksDao.selPartWords(table_name, start, end);
+	}
 
 
 }

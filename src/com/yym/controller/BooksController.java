@@ -44,16 +44,24 @@ public class BooksController {
 	public List<Words> selAllWords(String nickName,int page,int id,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
 		WordBooks w=booksService.selBookById(id);
 		String table_name=w.getTableName();
-		int start=page*10+1;
-		int end=page*10+10;
+		int start=page*15+1;
+		int end=page*15+15;
 		List<Words> list=booksService.selAllWords(table_name,start,end);
 		return list;
 	}
 	@ResponseBody
 	@RequestMapping("selLearnedWords.do")
-	public List<UserWords> selLearnedWords(String nickName,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
+	public List<UserWords> selLearnedWords(String nickName,int page,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
 		String table_name=nickName+"_word";
 		List<UserWords> list=booksService.selLearnedWords(table_name);
+		if(list.size()>15) {
+			int start=page*15+1;
+			int end=page*15+15;
+			if(list.size()<end) {
+				end=list.size();
+			}
+			list=booksService.selPartWords(table_name, start, end);
+		}
 		return list;
 	}
 	@ResponseBody
