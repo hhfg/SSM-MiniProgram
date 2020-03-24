@@ -50,7 +50,7 @@ public interface UserDao {
 				@Param("uk_pron")String uk_pron,@Param("us_mp3")String us_mp3,@Param("uk_mp3")String uk_mp3,@Param("explanation")String explanation
 				,@Param("val_ex1")String val_ex1,@Param("bil_ex1")String bil_ex1,@Param("val_ex2")String val_ex2,@Param("bil_ex2")String bil_ex2,
 				@Param("val_ex3")String val_ex3,@Param("bil_ex3")String bil_ex3,@Param("collocation")String collocation,@Param("status")int status,
-				@Param("dates")Date dates,@Param("bookid")int bookid);
+				@Param("dates")Date dates,@Param("bookid")int bookid,@Param("collect")int collect);
 	//根据单词书的id获取所对应的表
 	String selTableName(@Param("id")int id);
 	//查看dates为当天日期的个数
@@ -64,6 +64,6 @@ public interface UserDao {
 	//查看今日是否已打卡
 	SignRecord selTodaySign(@Param("uid")int uid,@Param("sign_date")Date sign_date);
 	//根据bookid获取单词书的单词量
-	int selWordNum(@Param("bid")int bid);
+	//int selWordNum(@Param("bid")int bid);
 
 }

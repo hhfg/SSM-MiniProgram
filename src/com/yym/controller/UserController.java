@@ -98,14 +98,14 @@ public class UserController {
 		SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
 		Date dates=new Date(System.currentTimeMillis());
 		PersonalData p=userService.selPersonalData(uid);
-		int wordNum=userService.selWordNum(p.getBookid());
 		PersonalData p1=new PersonalData();				
 		int haveToReview;
 		int haveToLearn;
 		//查看今天是否已打卡
 		SignRecord todaySign=userService.selTodaySign(uid, dates);
+		//如果bookid=0说明还未选择单词书，直接返回p
 		//如果今天已打卡
-		if(todaySign!=null) {
+		if(todaySign!=null||p.getBookid()==0) {
 			return p;
 		}
 		else {
@@ -126,7 +126,7 @@ public class UserController {
 					String table=userService.selTableName(p.getBookid());
 					List<Words> list=userService.selWords(table, p.getLastWordId()+1, p.getDayNum()+p.getLastWordId());
 					for(Words w:list) {
-						userService.insWords(table_name, w.getWord(), w.getUs_pron(), w.getUk_pron(), w.getUs_mp3(), w.getUk_mp3(), w.getExplanation(), w.getVal_ex1(), w.getBil_ex1(), w.getVal_ex2(), w.getBil_ex2(), w.getVal_ex3(), w.getBil_ex3(), w.getCollocation(),0, dates, p.getBookid());
+						userService.insWords(table_name, w.getWord(), w.getUs_pron(), w.getUk_pron(), w.getUs_mp3(), w.getUk_mp3(), w.getExplanation(), w.getVal_ex1(), w.getBil_ex1(), w.getVal_ex2(), w.getBil_ex2(), w.getVal_ex3(), w.getBil_ex3(), w.getCollocation(),0, dates, p.getBookid(),0);
 					}
 					haveToReview=userService.selReviewCount(table_name, dates,p.getBookid());
 					haveToLearn=userService.selLearningCount(table_name, dates,p.getBookid());
@@ -140,7 +140,7 @@ public class UserController {
 					String table=userService.selTableName(p.getBookid());
 					List<Words> list=userService.selWords(table, p.getLastWordId()+1, p.getDayNum()+p.getLastWordId());
 					for(Words w:list) {
-						userService.insWords(table_name, w.getWord(), w.getUs_pron(), w.getUk_pron(), w.getUs_mp3(), w.getUk_mp3(), w.getExplanation(), w.getVal_ex1(), w.getBil_ex1(), w.getVal_ex2(), w.getBil_ex2(), w.getVal_ex3(), w.getBil_ex3(), w.getCollocation(),0, dates, p.getBookid());
+						userService.insWords(table_name, w.getWord(), w.getUs_pron(), w.getUk_pron(), w.getUs_mp3(), w.getUk_mp3(), w.getExplanation(), w.getVal_ex1(), w.getBil_ex1(), w.getVal_ex2(), w.getBil_ex2(), w.getVal_ex3(), w.getBil_ex3(), w.getCollocation(),0, dates, p.getBookid(),0);
 					}
 					haveToReview=userService.selReviewCount(table_name, dates,p.getBookid());
 					haveToLearn=userService.selLearningCount(table_name, dates,p.getBookid());

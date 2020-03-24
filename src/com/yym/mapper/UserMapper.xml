@@ -115,9 +115,9 @@
 	<!-- 将单词插入到用户单词表 -->
 	<insert id="insWords" parameterType="map">
 		insert into ${table_name}(word,us_pron,uk_pron,us_mp3,uk_mp3,explanation,val_ex1,bil_ex1,
-		val_ex2,bil_ex2,val_ex3,bil_ex3,collocation,status,dates,bookid) values(#{word},
+		val_ex2,bil_ex2,val_ex3,bil_ex3,collocation,status,dates,bookid,collect) values(#{word},
 		#{us_pron},#{uk_pron},#{us_mp3},#{uk_mp3},#{explanation},#{val_ex1},#{bil_ex1},#{val_ex2},#{bil_ex2},
-		#{val_ex3},#{bil_ex3},#{collocation},#{status},#{dates},#{bookid})
+		#{val_ex3},#{bil_ex3},#{collocation},#{status},#{dates},#{bookid},#{collect})
 	</insert>
 	<!-- 通过id查找对应的单词书的表名 -->
 	<select id="selTableName" parameterType="int" resultType="String">
@@ -144,8 +144,8 @@
 		select * from sign_record where uid=#{uid} and <![CDATA[sign_date=#{sign_date,jdbcType=DATE}]]>
 	</select>
 	<!--根据bookid获取单词书的单词量  -->
-	<select id="selWordNum" parameterType="int" resultType="int">
+<!-- 	<select id="selWordNum" parameterType="int" resultType="int">
 		select wordNum from wordbooks where bid=#{bid}
-	</select>
+	</select> -->
 
 </mapper>
