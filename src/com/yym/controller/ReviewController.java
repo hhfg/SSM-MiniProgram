@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -29,6 +30,14 @@ public class ReviewController {
 		SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
 		Date dates=formatter.parse(date);
 		List<UserWords> list=reviewService.getReviewWords(table_name, dates);
+		for(UserWords u:list) {
+			Set<String> explanation=reviewService.RanExplanation();
+			Set<String> word=reviewService.RanWord();
+			explanation.add(u.getExplanation());
+			word.add(u.getWord());
+			u.setChoose(explanation);
+			u.setChooseEn(word);
+		}
 		return list;
 	}
 }

@@ -23,6 +23,7 @@ public class UserWords {
 	private int bookid;  //单词对应的单词书
 	private int collect; //是否收藏单词,0表示未收藏,1表示收藏
 	private Set<String> choose;
+	private Set<String> chooseEn;
 	public int getId() {
 		return id;
 	}
@@ -146,14 +147,19 @@ public class UserWords {
 	public void setCollect(int collect) {
 		this.collect = collect;
 	}
+	public Set<String> getChooseEn() {
+		return chooseEn;
+	}
+	public void setChooseEn(Set<String> chooseEn) {
+		this.chooseEn = chooseEn;
+	}
 	@Override
 	public String toString() {
 		return "UserWords [id=" + id + ", word=" + word + ", us_pron=" + us_pron + ", uk_pron=" + uk_pron + ", us_mp3="
 				+ us_mp3 + ", uk_mp3=" + uk_mp3 + ", explanation=" + explanation + ", val_ex1=" + val_ex1 + ", bil_ex1="
 				+ bil_ex1 + ", val_ex2=" + val_ex2 + ", bil_ex2=" + bil_ex2 + ", val_ex3=" + val_ex3 + ", bil_ex3="
 				+ bil_ex3 + ", collocation=" + collocation + ", status=" + status + ", dates=" + dates + ", bookid="
-				+ bookid + ", collect=" + collect + ", choose=" + choose + "]";
+				+ bookid + ", collect=" + collect + ", choose=" + choose + ", chooseEn=" + chooseEn + "]";
 	}
-
-
+	
 }

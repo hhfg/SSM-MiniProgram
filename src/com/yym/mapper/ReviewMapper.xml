@@ -6,4 +6,12 @@
 	<select id="getReviewWords" resultType="com.yym.entity.UserWords">
 		select * from ${table_name} where <![CDATA[dates=#{dates,jdbcType=DATE}]]>
 	</select>
+	<!-- 随机从数据库取三条中文释义 -->
+	<select id="RanExplanation" resultType="string">
+		SELECT explanation FROM cet4word  WHERE wid >= ((SELECT MAX(wid) FROM cet4word )-(SELECT MIN(wid) FROM user )) * RAND() + (SELECT MIN(wid) FROM cet4word )  LIMIT 3
+	</select>
+	<!-- 随机从事过数据库取三个英语单词  -->
+	<select id="RanWord" resultType="string">
+		SELECT word FROM cet4word  WHERE wid >= ((SELECT MAX(wid) FROM cet4word )-(SELECT MIN(wid) FROM user )) * RAND() + (SELECT MIN(wid) FROM cet4word )  LIMIT 3
+	</select>
 </mapper>
