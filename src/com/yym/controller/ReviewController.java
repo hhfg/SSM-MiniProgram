@@ -31,8 +31,13 @@ public class ReviewController {
 		Date dates=formatter.parse(date);
 		List<UserWords> list=reviewService.getReviewWords(table_name, dates);
 		for(UserWords u:list) {
+<<<<<<< HEAD
 			Set<String> explanation=reviewService.getRanExplanation();
 			Set<String> word=reviewService.getRanWord();
+=======
+			Set<String> explanation=reviewService.RanExplanation();
+			Set<String> word=reviewService.RanWord();
+>>>>>>> refs/remotes/origin/master
 			explanation.add(u.getExplanation());
 			word.add(u.getWord());
 			u.setChoose(explanation);
