@@ -161,11 +161,4 @@ public class UserWords {
 				+ bil_ex3 + ", collocation=" + collocation + ", status=" + status + ", dates=" + dates + ", bookid="
 				+ bookid + ", collect=" + collect + ", choose=" + choose + ", chooseEn=" + chooseEn + "]";
 	}
-<<<<<<< HEAD
-
-	
-
-=======
-	
->>>>>>> refs/remotes/origin/master
 }

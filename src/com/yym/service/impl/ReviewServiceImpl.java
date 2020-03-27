@@ -21,7 +21,6 @@ public class ReviewServiceImpl implements ReviewService{
 		return reviewDao.getReviewWords(table_name, dates);
 	}
 	@Override
-<<<<<<< HEAD
 	public Set<String> getRanExplanation() {
 		// TODO Auto-generated method stub
 		return reviewDao.getRanExplanation();
@@ -30,16 +29,5 @@ public class ReviewServiceImpl implements ReviewService{
 	public Set<String> getRanWord() {
 		// TODO Auto-generated method stub
 		return reviewDao.getRanWord();
-=======
-	public Set<String> RanExplanation() {
-		// TODO Auto-generated method stub
-		return reviewDao.RanExplanation();
 	}
-	@Override
-	public Set<String> RanWord() {
-		// TODO Auto-generated method stub
-		return reviewDao.RanWord();
->>>>>>> refs/remotes/origin/master
-	}
-
 }
