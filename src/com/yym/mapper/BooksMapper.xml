@@ -21,7 +21,7 @@
 	</select>
 	<!--获取已学单词  -->
 	<select id="selLearnedWords" resultType="com.yym.entity.UserWords">
-		select * from ${table_name} where status=1
+		select * from ${table_name} where status!=0
 	</select>
 	<!-- 获取收藏的单词 -->
 	<select id="selCollectWords" resultType="com.yym.entity.UserWords">
@@ -29,7 +29,14 @@
 	</select>
 	<!--获取部分已学单词  -->
 	<select id="selPartWords" resultType="com.yym.entity.UserWords">
-		select * from ${table_name} where status=1 and wid between #{start} and #{end}
+		select * from ${table_name} where status!=0 and id between #{start} and #{end}
 	</select>
-	
+	<!-- 获取已学习的单词的个数 -->
+	<select id="selLearnedCount" parameterType="string" resultType="int">
+		select count(*) from ${table_name} where status!=0
+	</select>
+	<!-- 获取已收藏的单词的个数 -->
+	<select id="selCollectCount" parameterType="string" resultType="int"> 
+		select count(*) from ${table_name} where collect=1
+	</select>
 </mapper>

@@ -53,22 +53,30 @@ public class BooksController {
 	@RequestMapping("selLearnedWords.do")
 	public List<UserWords> selLearnedWords(String nickName,int page,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
 		String table_name=nickName+"_word";
-		List<UserWords> list=booksService.selLearnedWords(table_name);
-		if(list.size()>15) {
+		int count=booksService.selLearnedCount(table_name);
+		List<UserWords> list=new ArrayList<UserWords>();
+		if(count<=15) {
+			list=booksService.selLearnedWords(table_name);
+		}else {
 			int start=page*15+1;
 			int end=page*15+15;
-			if(list.size()<end) {
-				end=list.size();
+			if(count<end) {
+				end=count;
 			}
 			list=booksService.selPartWords(table_name, start, end);
+			
 		}
 		return list;
 	}
 	@ResponseBody
 	@RequestMapping("selCollectWords.do")
-	public List<UserWords> selCollectWords(String nickName,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
+	public List<UserWords> selCollectWords(String nickName,int page,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
 		String table_name=nickName+"_word";
-		List<UserWords> list=booksService.selCollectWords(table_name);
+		int count=booksService.selCollectCount(table_name);	
+		List<UserWords> list=new ArrayList<UserWords>();
+		if(count<15) {
+			list=booksService.selCollectWords(table_name);
+		}
 		return list;
 	}
 }
