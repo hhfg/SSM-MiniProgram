@@ -22,7 +22,6 @@ public interface BooksService {
 	List<UserWords> selCollectWords(String table_name);
 	//获取部分已学单词
 	List<UserWords> selPartWords(String table_name,int start,int end);
-	//获取用户单词表中已学习的单词
 	int selLearnedCount(String table_name);
 	int selCollectCount(String table_name);
 }

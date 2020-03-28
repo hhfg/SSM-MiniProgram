@@ -64,7 +64,6 @@ public class BooksController {
 				end=count;
 			}
 			list=booksService.selPartWords(table_name, start, end);
-			
 		}
 		return list;
 	}
@@ -72,11 +71,8 @@ public class BooksController {
 	@RequestMapping("selCollectWords.do")
 	public List<UserWords> selCollectWords(String nickName,int page,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
 		String table_name=nickName+"_word";
-		int count=booksService.selCollectCount(table_name);	
 		List<UserWords> list=new ArrayList<UserWords>();
-		if(count<15) {
-			list=booksService.selCollectWords(table_name);
-		}
+		list=booksService.selCollectWords(table_name);
 		return list;
 	}
 }

@@ -18,16 +18,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yym.entity.UserWords;
 import com.yym.service.ReviewService;
-
 @Controller
 public class ReviewController {
 	@Autowired
 	private ReviewService reviewService;
 	@ResponseBody
 	@RequestMapping("/getReviewWords.do")
-	public List<UserWords> getReviewWords(String nickName,String date,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException, ParseException {
+	public List<UserWords> getReviewWords(String nickName,String date,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException, ParseException{
 		String table_name=nickName+"_word";
-		SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat formatter=new SimpleDateFormat("yyyy-MM-dd");
 		Date dates=formatter.parse(date);
 		List<UserWords> list=reviewService.getReviewWords(table_name, dates);
 		for(UserWords u:list) {
