@@ -35,9 +35,9 @@ public class LearningServiceImpl implements LearningService{
 	@Override
 	public int insWords(String tabel_name, int id,String word, String us_pron, String uk_pron, String us_mp3, String uk_mp3,
 			String explanation, String val_ex1, String bil_ex1, String val_ex2, String bil_ex2, String val_ex3,
-			String bil_ex3, String collocation, int status, Date dates,int bookid) {
+			String bil_ex3, String collocation, int status, Date dates,int bookid,int collect) {
 		// TODO Auto-generated method stub
-		int result=learningDao.insWords(tabel_name, id, word, us_pron, uk_pron, us_mp3, uk_mp3, explanation, val_ex1, bil_ex1, val_ex2, bil_ex2, val_ex3, bil_ex3, collocation, status, dates, bookid);
+		int result=learningDao.insWords(tabel_name, id, word, us_pron, uk_pron, us_mp3, uk_mp3, explanation, val_ex1, bil_ex1, val_ex2, bil_ex2, val_ex3, bil_ex3, collocation, status, dates, bookid,collect);
 		return 0;
 	}
 
@@ -93,4 +93,21 @@ public class LearningServiceImpl implements LearningService{
 		return learningDao.setCollect(table_name, collect, id);
 	}
 
+	@Override
+	public int selReviewCount(String table_name, Date dates, int bookid) {
+		// TODO Auto-generated method stub
+		return learningDao.selReviewCount(table_name, dates, bookid);
+	}
+
+	@Override
+	public int selLearning(String table_name, Date dates, int bookid) {
+		// TODO Auto-generated method stub
+		return learningDao.selLearning(table_name, dates, bookid);
+	}
+
+	@Override
+	public int updLearning(int haveToLearn, int uid) {
+		// TODO Auto-generated method stub
+		return learningDao.updLearning(haveToLearn, uid);
+	}
 }

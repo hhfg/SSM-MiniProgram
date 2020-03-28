@@ -13,9 +13,9 @@
 	<!-- 将单词插入到用户单词表 -->
 	<insert id="insWords" parameterType="map">
 		insert into ${table_name}(id,word,us_pron,uk_pron,us_mp3,uk_mp3,explanation,val_ex1,bil_ex1,
-		val_ex2,bil_ex2,val_ex3,bil_ex3,collocation,status,dates,bookid) values(#{id},#{word},
+		val_ex2,bil_ex2,val_ex3,bil_ex3,collocation,status,dates,bookid,collect) values(#{id},#{word},
 		#{us_pron},#{uk_pron},#{us_mp3},#{uk_mp3},#{explanation},#{val_ex1},#{bil_ex1},#{val_ex2},#{bil_ex2},
-		#{val_ex3},#{bil_ex3},#{collocation},#{status},#{dates},#{bookid})
+		#{val_ex3},#{bil_ex3},#{collocation},#{status},#{dates},#{bookid},#{collect})
 	</insert>
 	<!-- 获取用户单词表的count，用来判断是否有数据 -->
 	<select id="getCount" parameterType="string" resultType="int">
@@ -46,5 +46,16 @@
 	</select>
 	<update id="setCollect">
 		update ${table_name} set collect=#{collect} where id=#{id}
+	</update>
+		<!-- 获取用户当天需要复习的单词量 -->
+	<select id="selReviewCount" resultType="int">
+		select count(*) from ${table_name} where status=1 and <![CDATA[dates!=#{dates,jdbcType=DATE}]]> and bookid=#{bookid}
+	</select>
+	<!--获取用户当天需要学习的单词量  -->
+	<select id="selLearning" resultType="int">
+		select count(*) from ${table_name} where status=0 and <![CDATA[dates=#{dates,jdbcType=DATE}]]> and bookid=#{bookid}
+	</select>
+	<update id="updLearning">
+		update personal_data set haveToLearn=#{haveToLearn} where uid=#{uid}
 	</update>
 </mapper>

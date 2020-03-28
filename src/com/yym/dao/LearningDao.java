@@ -20,7 +20,7 @@ public interface LearningDao {
 			@Param("uk_pron")String uk_pron,@Param("us_mp3")String us_mp3,@Param("uk_mp3")String uk_mp3,@Param("explanation")String explanation
 			,@Param("val_ex1")String val_ex1,@Param("bil_ex1")String bil_ex1,@Param("val_ex2")String val_ex2,@Param("bil_ex2")String bil_ex2,
 			@Param("val_ex3")String val_ex3,@Param("bil_ex3")String bil_ex3,@Param("collocation")String collocation,@Param("status")int status,
-			@Param("dates")Date dates,@Param("bookid")int bookid);
+			@Param("dates")Date dates,@Param("bookid")int bookid,@Param("collect")int collect);
 	//获取用户单词表的count，用来判断是否有数据 -
 	int getCount(@Param("table_name")String table_name);
 	//从单词表中获取status=0即未学的单词 
@@ -37,4 +37,7 @@ public interface LearningDao {
 	List<UserWords> selPractise(@Param("table_name")String table_name,@Param("bookid")int bookid);
 	//更新collect字段
 	int setCollect(@Param("table_name")String table_name,@Param("collect")int collect,@Param("id")int id);
+	int selReviewCount(@Param("table_name")String table_name,@Param("dates")Date dates,@Param("bookid")int bookid);
+	int selLearning(@Param("table_name")String table_name,@Param("dates")Date dates,@Param("bookid")int bookid);
+	int updLearning(@Param("haveToLearn")int haveToLearn,@Param("uid")int uid);
 }

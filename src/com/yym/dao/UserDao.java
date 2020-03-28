@@ -63,7 +63,6 @@ public interface UserDao {
 	List<UserWords> selNotLearned(@Param("table_name")String table_name,@Param("bookid")int bookid);
 	//查看今日是否已打卡
 	SignRecord selTodaySign(@Param("uid")int uid,@Param("sign_date")Date sign_date);
-	//根据bookid获取单词书的单词量
-	//int selWordNum(@Param("bid")int bid);
+	int updSignRecord(@Param("learned_num")int learned_num,@Param("uid")int uid);
 
 }

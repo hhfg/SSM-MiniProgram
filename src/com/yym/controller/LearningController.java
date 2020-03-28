@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.yym.entity.PersonalData;
 import com.yym.entity.UserWords;
 import com.yym.entity.Words;
 import com.yym.service.LearningService;
@@ -45,11 +46,11 @@ public class LearningController {
 	}
 	@ResponseBody
 	@RequestMapping("/selLearningWords.do")
-	public List<UserWords> selWords(String nickName,int num,int start,int bookid,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
+	public List<UserWords> selWords(String nickName,int num,int start,int bookid,int uid,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
 		String userTableName=nickName+"_word";
 		//从用户单词表获取status=0的记录
 		List<UserWords> list=learningService.getWords(userTableName, 0, bookid);
-		//如果list为空，说明是当天的第一次学习，先从单词书表中获取单词
+		//如果list为空，说明今日已打卡过，先从单词书表中获取单词
 		if(list.size()==0) {
 			//先获取选择的书所对应的单词书表名
 			String tableName=learningService.selTableName(bookid);
@@ -57,8 +58,10 @@ public class LearningController {
 			Date dates=new Date(System.currentTimeMillis());
 			//将单词存入用户单词表中
 			for(Words w:words) {
-				learningService.insWords(userTableName, w.getWid(), w.getWord(), w.getUs_pron(), w.getUk_pron(), w.getUs_mp3(), w.getUk_mp3(), w.getExplanation(), w.getVal_ex1(), w.getBil_ex1(), w.getVal_ex2(), w.getBil_ex2(), w.getVal_ex3(), w.getBil_ex3(), w.getCollocation(),0, dates, bookid);
+				learningService.insWords(userTableName, w.getWid(), w.getWord(), w.getUs_pron(), w.getUk_pron(), w.getUs_mp3(), w.getUk_mp3(), w.getExplanation(), w.getVal_ex1(), w.getBil_ex1(), w.getVal_ex2(), w.getBil_ex2(), w.getVal_ex3(), w.getBil_ex3(), w.getCollocation(),0, dates, bookid,0);
 			}
+			int haveToLearn=learningService.selLearning(userTableName, dates, bookid);
+			learningService.updLearning(haveToLearn, uid);
 			list=learningService.getWords(userTableName, 0, bookid);
 			return list;
 		}else {

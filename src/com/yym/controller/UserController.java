@@ -204,37 +204,58 @@ public class UserController {
 		int result=userService.updPersonalData(p);
 		return result;
 	}
-
+	@ResponseBody
 	@RequestMapping("/insSignRecord.do")
-	public String insSignRecord(String nickName,String date,int learned_num,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException, ParseException {
+	public int insSignRecord(String nickName,String date,int learned_num,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException, ParseException {
 		SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
 		Date sign_date=formatter.parse(date);
 		int uid=userService.getUserIdByName(nickName);
-		SignRecord beforeDay=ifTheDayBeforSign(uid);
-		System.out.println(beforeDay);
-		SignRecord s=new SignRecord();
+		SignRecord today=userService.selTodaySign(uid, sign_date);
 		PersonalData user=userService.selPersonalData(uid);
 		PersonalData p=new PersonalData();
-		if(beforeDay==null) {
-			s.setContinue_sign(1);
-			p.setContinue_sign(1);
-		
-		}else {
-			s.setContinue_sign(beforeDay.getContinue_sign()+1);
-			p.setContinue_sign(beforeDay.getContinue_sign()+1);
+		int completedNum=user.getCompletedNum()+user.getDayNum();
+		int lastWordId=user.getLastWordId()+user.getDayNum();
+		int result;
+		//如果今天还未打卡
+		if(today==null) {
+			SignRecord beforeDay=ifTheDayBeforSign(uid);
+			SignRecord s=new SignRecord();
+			if(beforeDay==null) {
+				s.setContinue_sign(1);
+				p.setContinue_sign(1);
+			}else {
+				s.setContinue_sign(beforeDay.getContinue_sign()+1);
+				p.setContinue_sign(beforeDay.getContinue_sign()+1);
+			}
+			s.setUid(uid);
+			s.setSign_date(sign_date);
+			s.setLearned_num(learned_num);
+			userService.insSignRecord(s);
+			p.setUid(uid);
+			p.setClockInDay(user.getClockInDay()+1);
+			p.setHaveToLearn(0);
+			p.setHaveToReview(0);
+			p.setCompletedNum(completedNum);
+			p.setLastWordId(lastWordId);
+			p.setCompletedNum(user.getCompletedNum());
+			p.setHaveLearned(user.getHaveLearned()+learned_num);
+			result=userService.updPersonalData(p);
 		}
-		s.setUid(uid);
-		s.setSign_date(sign_date);
-		s.setLearned_num(learned_num);
-		userService.insSignRecord(s);
-		p.setUid(uid);
-		p.setCompletedNum(user.getCompletedNum());
-		p.setHaveToLearn(user.getHaveToLearn());
-		p.setHaveToReview(user.getHaveToReview());
-		p.setLastWordId(user.getLastWordId());
-		p.setHaveLearned(user.getHaveLearned()+learned_num);
-		userService.updPersonalData(p);
-		return "redirect:/updateClock.do?nickName="+nickName;
+		//否则 如果今天已经打过卡
+		else{
+			//更新sign_record记录
+			int learnedNum=today.getLearned_num()+learned_num;
+			userService.updSignRecord(learnedNum, uid);
+			p.setUid(uid);
+			p.setHaveToLearn(0);
+			p.setHaveToReview(0);
+			p.setCompletedNum(completedNum);
+			p.setLastWordId(lastWordId);
+			p.setCompletedNum(user.getCompletedNum());
+			p.setHaveLearned(user.getHaveLearned()+learned_num);
+			result=userService.updPersonalData(p);
+		}
+		return result;
 	}
 	@ResponseBody
 	@RequestMapping("/updateClock.do")

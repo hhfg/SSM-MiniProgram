@@ -37,11 +37,12 @@ public class LearningRecordController {
 		SignRecord sign=new SignRecord();
 		List<DayNum> list=new ArrayList<DayNum>();
 		Date sign_date;
-		DayNum d=new DayNum();
 		for(String s:dateList) {
+			DayNum d=new DayNum();
 			sign_date=formatter.parse(s);
 			sign=learningRecordService.selDate(sign_date, uid);
-			d.setDate(s);
+			String date=s.substring(5);
+			d.setDate(date);
 			if(sign==null) {
 				d.setNum(0);
 			}else {

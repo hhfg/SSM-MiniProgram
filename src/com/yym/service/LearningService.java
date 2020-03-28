@@ -18,7 +18,7 @@ public interface LearningService {
 	//将单词插入到用户的单词表中
 	int insWords(String tabel_name,int id,String word,String us_pron,String uk_pron,String us_mp3,String uk_mp3,String explanation
 			,String val_ex1,String bil_ex1,String val_ex2,String bil_ex2,String val_ex3,String bil_ex3,String collocation,int status,
-			Date dates,int bookid);
+			Date dates,int bookid,int collect);
 	 //获取用户单词表的count，用来判断是否有数据 
 	int getCount(String table_name);
 	//从用户单词表中查询status为0的数据(0表示还未学习
@@ -35,4 +35,10 @@ public interface LearningService {
 	List<UserWords> selPractise(String table_name,int bookid);
 	//更新collect 
 	int setCollect(String table_name,int collect,int id);
+	//获取当天需要复习的单词量
+	int selReviewCount(String table_name,Date dates,int bookid);
+	//获取当天需要学习的单词量
+	int selLearning(String table_name,Date dates,int bookid);
+	int updLearning(int haveToLearn,int uid);
+	
 }
