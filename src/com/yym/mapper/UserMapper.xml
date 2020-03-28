@@ -68,10 +68,13 @@
 	 			lastWordId=#{lastWordId},
 	 		</if>
 	 		<if test="dayNum!=null and dayNum!=''">
-	 			dayNum=#{dayNum}
+	 			dayNum=#{dayNum},
 	 		</if>
 	 		<if test="continue_sign!=null and continue_sign!=''">
-	 			continue_sign=#{continue_sign}
+	 			continue_sign=#{continue_sign},
+	 		</if>
+	 		<if test="haveLearned!=null and haveLearned!=''">
+	 			haveLearned=#{haveLearned},
 	 		</if>
 	 	</trim>
 	 	where uid=#{uid}

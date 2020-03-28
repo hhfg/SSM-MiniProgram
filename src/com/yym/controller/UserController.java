@@ -232,6 +232,7 @@ public class UserController {
 		p.setHaveToLearn(user.getHaveToLearn());
 		p.setHaveToReview(user.getHaveToReview());
 		p.setLastWordId(user.getLastWordId());
+		p.setHaveLearned(user.getHaveLearned()+learned_num);
 		userService.updPersonalData(p);
 		return "redirect:/updateClock.do?nickName="+nickName;
 	}
