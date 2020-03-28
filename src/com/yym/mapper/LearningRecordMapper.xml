@@ -3,7 +3,10 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yym.dao.LearningRecordDao">
-	<select id="selCount" parameterType="string" resultType="int">
-		select count(*) from ${table_name} where status!=0
+	<select id="selDate" resultType="com.yym.entity.SignRecord">
+		select * from sign_record where <![CDATA[sign_date=#{sign_date,jdbcType=DATE}]]> and uid=#{uid}
+	</select>
+	<select id="selCountByDate" resultType="int">
+		select learned_num from sign_record where <![CDATA[sign_date=#{sign_date,jdbcType=DATE}]]> and uid=#{uid}
 	</select>
 </mapper>
