@@ -194,6 +194,8 @@ public class UserController {
 		Date todayDate = new Date(System.currentTimeMillis());
 		String today=formatter.format(todayDate);
 		Date startTime=formatter.parse(today);
+		PersonalData user=userService.selPersonalData(uid);
+		System.out.println(user);
 		int haveToLearn=dayNum;
 		p.setDayNum(dayNum);                 //制定的计划，每天需要学习的单词量
 		p.setLearningDay(learningDay);       //预计学习天数
@@ -201,6 +203,8 @@ public class UserController {
 		p.setEndTime(date);                  //计划开始的日期
 		p.setStartTime(startTime);           //计划结束的日期
 		p.setHaveToLearn(haveToLearn);       //一旦计划好，更新当天需要学习的单词量
+		p.setLastWordId(user.getLastWordId());
+		p.setCompletedNum(user.getCompletedNum());
 		int result=userService.updPersonalData(p);
 		return result;
 	}
