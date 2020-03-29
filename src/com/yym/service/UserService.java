@@ -58,6 +58,6 @@ public interface UserService {
 	List<UserWords> selNotLearned(String table_name,int bookid);
 	//查看今日是否已打卡
 	SignRecord selTodaySign(int uid,Date sign_date);
-	int updSignRecord(int learned_num,int uid);
+	int updSignRecord(int learned_num,int uid,Date sign_date);
 
 }

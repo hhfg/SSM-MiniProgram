@@ -127,9 +127,9 @@ public class UserServiceImpl implements UserService{
 		return userDao.selTodaySign(uid, sign_date);
 	}
 	@Override
-	public int updSignRecord(int learned_num, int uid) {
+	public int updSignRecord(int learned_num, int uid,Date sign_date) {
 		// TODO Auto-generated method stub
-		return userDao.updSignRecord(learned_num, uid);
+		return userDao.updSignRecord(learned_num, uid,sign_date);
 	}
 	
 }

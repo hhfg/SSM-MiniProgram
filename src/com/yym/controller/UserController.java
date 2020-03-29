@@ -237,7 +237,6 @@ public class UserController {
 			p.setHaveToReview(0);
 			p.setCompletedNum(completedNum);
 			p.setLastWordId(lastWordId);
-			p.setCompletedNum(user.getCompletedNum());
 			p.setHaveLearned(user.getHaveLearned()+learned_num);
 			result=userService.updPersonalData(p);
 		}
@@ -245,13 +244,12 @@ public class UserController {
 		else{
 			//¸üÐÂsign_record¼ÇÂ¼
 			int learnedNum=today.getLearned_num()+learned_num;
-			userService.updSignRecord(learnedNum, uid);
+			userService.updSignRecord(learnedNum, uid,sign_date);
 			p.setUid(uid);
 			p.setHaveToLearn(0);
 			p.setHaveToReview(0);
 			p.setCompletedNum(completedNum);
 			p.setLastWordId(lastWordId);
-			p.setCompletedNum(user.getCompletedNum());
 			p.setHaveLearned(user.getHaveLearned()+learned_num);
 			result=userService.updPersonalData(p);
 		}

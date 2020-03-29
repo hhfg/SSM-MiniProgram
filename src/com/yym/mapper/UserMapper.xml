@@ -147,7 +147,7 @@
 		select * from sign_record where uid=#{uid} and <![CDATA[sign_date=#{sign_date,jdbcType=DATE}]]>
 	</select>
 	<update id="updSignRecord">
-		update sign_record set learned_num=#{learned_num} where uid=#{uid}
+		update sign_record set learned_num=#{learned_num} where uid=#{uid} and <![CDATA[sign_date=#{sign_date,jdbcType=DATE}]]>
 	</update>
 	<!--根据bookid获取单词书的单词量  -->
 <!-- 	<select id="selWordNum" parameterType="int" resultType="int">

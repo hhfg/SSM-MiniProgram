@@ -12,8 +12,8 @@
 	</select>
 	<!-- 将单词插入到用户单词表 -->
 	<insert id="insWords" parameterType="map">
-		insert into ${table_name}(id,word,us_pron,uk_pron,us_mp3,uk_mp3,explanation,val_ex1,bil_ex1,
-		val_ex2,bil_ex2,val_ex3,bil_ex3,collocation,status,dates,bookid,collect) values(#{id},#{word},
+		insert into ${table_name}(word,us_pron,uk_pron,us_mp3,uk_mp3,explanation,val_ex1,bil_ex1,
+		val_ex2,bil_ex2,val_ex3,bil_ex3,collocation,status,dates,bookid,collect) values(#{word},
 		#{us_pron},#{uk_pron},#{us_mp3},#{uk_mp3},#{explanation},#{val_ex1},#{bil_ex1},#{val_ex2},#{bil_ex2},
 		#{val_ex3},#{bil_ex3},#{collocation},#{status},#{dates},#{bookid},#{collect})
 	</insert>

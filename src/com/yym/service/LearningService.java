@@ -16,7 +16,7 @@ public interface LearningService {
 	//根据单词书的id得到其所对应的表
 	String selTableName(int id);
 	//将单词插入到用户的单词表中
-	int insWords(String tabel_name,int id,String word,String us_pron,String uk_pron,String us_mp3,String uk_mp3,String explanation
+	int insWords(String tabel_name,String word,String us_pron,String uk_pron,String us_mp3,String uk_mp3,String explanation
 			,String val_ex1,String bil_ex1,String val_ex2,String bil_ex2,String val_ex3,String bil_ex3,String collocation,int status,
 			Date dates,int bookid,int collect);
 	 //获取用户单词表的count，用来判断是否有数据 
