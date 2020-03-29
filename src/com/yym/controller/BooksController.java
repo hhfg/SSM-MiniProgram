@@ -73,6 +73,21 @@ public class BooksController {
 		String table_name=nickName+"_word";
 		List<UserWords> list=new ArrayList<UserWords>();
 		list=booksService.selCollectWords(table_name);
-		return list;
+		if(list.size()<=15) {
+			return list.subList(0, list.size());
+		}else {
+			int start=page*15+1-1;
+			if(page*15>list.size()) {
+				return null;
+			}
+			else {
+				int end=page*15+15;
+				if(list.size()<end) {
+					end=list.size();
+				}
+				return list.subList(start, end);
+			}
+		}
+		
 	}
 }
