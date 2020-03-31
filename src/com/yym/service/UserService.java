@@ -37,7 +37,7 @@ public interface UserService {
 	//创建用户的单词表
 	int createUserWordTable(String tableName);
 	//获取当天需要复习的单词量
-	int selReviewCount(String table_name,Date dates,int bookid);
+	int selReviewCount(String table_name,Date dates);
 	//获取当天需要学习的单词量
 	int selLearningCount(String table_name,Date dates,int bookid);
 	//从单词书表中获取单词

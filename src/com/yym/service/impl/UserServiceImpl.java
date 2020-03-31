@@ -75,9 +75,9 @@ public class UserServiceImpl implements UserService{
 		return result;
 	}
 	@Override
-	public int selReviewCount(String table_name, Date dates, int bookid) {
+	public int selReviewCount(String table_name, Date dates) {
 		// TODO Auto-generated method stub
-		return userDao.selReviewCount(table_name, dates, bookid);
+		return userDao.selReviewCount(table_name, dates);
 	}
 	@Override
 	public int selLearningCount(String table_name, Date dates, int bookid) {

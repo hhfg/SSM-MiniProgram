@@ -41,7 +41,7 @@ public interface UserDao {
 	//int setMyBookId(@Param("username")String username,@Param("bookid")int bookid);
 	//  获取用户选择的单词书的信息
 	//WordBooks selBookByUser(@Param("username")String username);
-	int selReviewCount(@Param("table_name")String table_name,@Param("dates")Date dates,@Param("bookid")int bookid);
+	int selReviewCount(@Param("table_name")String table_name,@Param("dates")Date dates);
 	int selLearningCount(@Param("table_name")String table_name,@Param("dates")Date dates,@Param("bookid")int bookid);
 	//从单词书表中获取单词
 	List<Words> selWords(@Param("table_name")String table_name,@Param("start")int start,@Param("end")int end);

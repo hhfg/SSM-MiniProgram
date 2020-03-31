@@ -40,7 +40,7 @@ public class LearningController {
 		String userTableName=nickName+"_word";
 		//获取今天的日期
 		Date dates = new Date(System.currentTimeMillis());
-		List<UserWords> list=learningService.selReview(userTableName, dates,bookid);
+		List<UserWords> list=learningService.selReview(userTableName, dates);
 		//System.out.println(list);
 		return list;
 	}
@@ -85,7 +85,7 @@ public class LearningController {
 		System.out.println(bookid);
 		Date dates = new Date(System.currentTimeMillis());
 		if(review==0) {
-			list=learningService.selReview(userTableName, dates,bookid);
+			list=learningService.selReview(userTableName, dates);
 		}
 		else{
 			//获取需要练习的单词

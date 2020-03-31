@@ -105,7 +105,7 @@
 	</update>
 	<!-- 获取用户当天需要复习的单词量 -->
 	<select id="selReviewCount" resultType="int">
-		select count(*) from ${table_name} where status=1 and <![CDATA[dates!=#{dates,jdbcType=DATE}]]> and bookid=#{bookid}
+		select count(*) from ${table_name} where status=1 and <![CDATA[dates!=#{dates,jdbcType=DATE}]]>
 	</select>
 	<!--获取用户当天需要学习的单词量  -->
 	<select id="selLearningCount" resultType="int">

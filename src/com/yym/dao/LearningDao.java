@@ -32,7 +32,7 @@ public interface LearningDao {
 	// 从用户单词表中获取当前status=0的个数
 	int selLearningCount(@Param("table_name")String table_name);
 	//从用户单词表中获取status=1且日期不等于当天的单词（需要复习的单词
-	List<UserWords> selReview(@Param("table_name")String table_name,@Param("dates")Date dates,@Param("bookid")int bookid);
+	List<UserWords> selReview(@Param("table_name")String table_name,@Param("dates")Date dates);
 	//获取需要练习的单词
 	List<UserWords> selPractise(@Param("table_name")String table_name,@Param("bookid")int bookid);
 	//更新collect字段

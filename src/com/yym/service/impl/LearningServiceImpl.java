@@ -76,9 +76,9 @@ public class LearningServiceImpl implements LearningService{
 	}
 
 	@Override
-	public List<UserWords> selReview(String table_name, Date dates,int bookid) {
+	public List<UserWords> selReview(String table_name, Date dates) {
 		// TODO Auto-generated method stub
-		return learningDao.selReview(table_name, dates, bookid);
+		return learningDao.selReview(table_name, dates);
 	}
 
 	@Override

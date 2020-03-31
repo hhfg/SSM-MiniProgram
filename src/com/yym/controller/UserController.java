@@ -118,7 +118,7 @@ public class UserController {
 				//如果长度不为0，说明还有未学习的单词
 				if(userWords.size()!=0) {
 					haveToLearn=userWords.size();
-					haveToReview=userService.selReviewCount(table_name, dates, p.getBookid());
+					haveToReview=userService.selReviewCount(table_name, dates);
 				}
 				//否则表示上一次是已经打完卡后 就没学习了
 				else {
@@ -128,7 +128,7 @@ public class UserController {
 					for(Words w:list) {
 						userService.insWords(table_name, w.getWord(), w.getUs_pron(), w.getUk_pron(), w.getUs_mp3(), w.getUk_mp3(), w.getExplanation(), w.getVal_ex1(), w.getBil_ex1(), w.getVal_ex2(), w.getBil_ex2(), w.getVal_ex3(), w.getBil_ex3(), w.getCollocation(),0, dates, p.getBookid(),0);
 					}
-					haveToReview=userService.selReviewCount(table_name, dates,p.getBookid());
+					haveToReview=userService.selReviewCount(table_name, dates);
 					haveToLearn=userService.selLearningCount(table_name, dates,p.getBookid());
 				}
 			}else {//如果前一天有打卡
@@ -142,12 +142,9 @@ public class UserController {
 					for(Words w:list) {
 						userService.insWords(table_name, w.getWord(), w.getUs_pron(), w.getUk_pron(), w.getUs_mp3(), w.getUk_mp3(), w.getExplanation(), w.getVal_ex1(), w.getBil_ex1(), w.getVal_ex2(), w.getBil_ex2(), w.getVal_ex3(), w.getBil_ex3(), w.getCollocation(),0, dates, p.getBookid(),0);
 					}
-					haveToReview=userService.selReviewCount(table_name, dates,p.getBookid());
-					haveToLearn=userService.selLearningCount(table_name, dates,p.getBookid());
-				}else {
-					haveToReview=userService.selReviewCount(table_name, dates,p.getBookid());
-					haveToLearn=userService.selLearningCount(table_name, dates,p.getBookid());
 				}
+				haveToReview=userService.selReviewCount(table_name, dates);
+				haveToLearn=userService.selLearningCount(table_name, dates,p.getBookid());
 			}
 			
 			Date endDate=p.getEndTime();
