@@ -2,6 +2,7 @@ package com.yym.controller;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -55,15 +56,17 @@ public class UserController {
             user.setCity(city);
             //插入用户 
             int result=userService.insUser(user);
-            return "redirect:/createUserWordTable.do?nickName="+nickName;
+            return "redirect:/createUserWordTable.do?nickName="+URLEncoder.encode(nickName,"UTF-8");
         }
 	}
 	//创建用户单词表
 	@RequestMapping("/createUserWordTable.do")
 	public String createUserWordTable(String nickName,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
+		response.setContentType("text/html;charset=utf-8");          
+        response.setHeader("Access-Control-Allow-Origin", "*");  
+        response.setHeader("Access-Control-Allow-Methods", "GET,POST"); 
 		int result=userService.createUserWordTable(nickName+"_word");
-		System.out.println(nickName);
-		return "redirect:/getUserIdByName.do?nickName="+nickName;
+		return "redirect:/getUserIdByName.do?nickName="+ URLEncoder.encode(nickName,"UTF-8");
 	}
 	//通过nickName查询id
 	@RequestMapping("/getUserIdByName.do")
