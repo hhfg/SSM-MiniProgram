@@ -62,6 +62,7 @@ public class UserController {
 	@RequestMapping("/createUserWordTable.do")
 	public String createUserWordTable(String nickName,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
 		int result=userService.createUserWordTable(nickName+"_word");
+		System.out.println(nickName);
 		return "redirect:/getUserIdByName.do?nickName="+nickName;
 	}
 	//Í¨¹ýnickName²éÑ¯id
