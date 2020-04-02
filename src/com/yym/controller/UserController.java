@@ -71,8 +71,9 @@ public class UserController {
 	//通过nickName查询id
 	@RequestMapping("/getUserIdByName.do")
 	public String getUserId(String nickName,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
-		int id=userService.getUserIdByName(nickName);
-		return "redirect:/insPersonalData.do?id="+id;
+		int uid=userService.getUserIdByName(nickName);
+		int result=userService.insPlayer(uid, nickName);
+		return "redirect:/insPersonalData.do?id="+uid;
 	}
     //personal_data表中新增用户信息 
 	@ResponseBody

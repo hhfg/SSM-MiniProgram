@@ -15,10 +15,13 @@
  	<select id="getUserId" parameterType="String" resultType="int">
 		select id from user where openid=#{openid}
 	</select> 
-	
 	<!-- 在personal_data表中新增用户  -->
 	<insert id="insPersonalData">
 		insert into personal_data(uid,clockInDay,startUseDate) values (#{uid},#{clockInDay},#{startUseDate})
+	</insert>
+	<!-- 在player中新增用户 -->
+	<insert id="insPlayer">
+		insert into player(uid,nickName) values(#{uid},#{nickName})
 	</insert>
 	<!-- 通过用户名查找用户的id -->
  	<select id="getUserIdByName" parameterType="String" resultType="int">
