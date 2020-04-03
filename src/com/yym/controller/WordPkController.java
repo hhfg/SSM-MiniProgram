@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.yym.entity.Player;
 import com.yym.service.WordPkService;
 
 @Controller
@@ -19,10 +20,16 @@ public class WordPkController {
 	private WordPkService wordPkService;
 	
 	@ResponseBody
-	@RequestMapping("/updBankId.do")
-	public int updBankId(int uid,int bankId,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
-		int result=wordPkService.updBankId(bankId, uid);
+	@RequestMapping("/updBank.do")
+	public int updBankId(int uid,String bank,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
+		int result=wordPkService.updBank(bank, uid);
 		return result;
 	}
 	
+	@ResponseBody
+	@RequestMapping("/getPlayerData.do")
+	public Player getPlayerData(int uid,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
+		Player p=wordPkService.selPlayer(uid);
+		return p;
+	}
 }
