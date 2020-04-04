@@ -23,7 +23,7 @@ public interface UserService {
 	//在personal_data表中新增用户
 	int insPersonalData(int uid,int clockInDay,Date startUseDate);
 	//在player中新增用户
-	int insPlayer(int uid,String nickName);
+	int insPlayer(int uid,String nickName,String bank);
 	//  查找用户在表中的id
 	int getUserIdByName(String nickName);
 	

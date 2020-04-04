@@ -21,7 +21,7 @@
 	</insert>
 	<!-- 在player中新增用户 -->
 	<insert id="insPlayer">
-		insert into player(uid,nickName) values(#{uid},#{nickName})
+		insert into player(uid,nickName,bank) values(#{uid},#{nickName},#{bank})
 	</insert>
 	<!-- 通过用户名查找用户的id -->
  	<select id="getUserIdByName" parameterType="String" resultType="int">

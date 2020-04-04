@@ -132,9 +132,9 @@ public class UserServiceImpl implements UserService{
 		return userDao.updSignRecord(learned_num, uid,sign_date);
 	}
 	@Override
-	public int insPlayer(int uid, String nickName) {
+	public int insPlayer(int uid, String nickName,String bank) {
 		// TODO Auto-generated method stub
-		return userDao.insPlayer(uid, nickName);
+		return userDao.insPlayer(uid, nickName,bank);
 	}
 	
 }

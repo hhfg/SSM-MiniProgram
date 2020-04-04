@@ -72,7 +72,8 @@ public class UserController {
 	@RequestMapping("/getUserIdByName.do")
 	public String getUserId(String nickName,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
 		int uid=userService.getUserIdByName(nickName);
-		int result=userService.insPlayer(uid, nickName);
+		String bank="高中题库";
+		int result=userService.insPlayer(uid, nickName,bank);
 		return "redirect:/insPersonalData.do?id="+uid;
 	}
     //personal_data表中新增用户信息 
