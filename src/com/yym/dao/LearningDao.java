@@ -29,6 +29,7 @@ public interface LearningDao {
 	int updStatus(@Param("table_name")String table_name,@Param("status")int status,@Param("id")int id);
 	// 随机从数据库取三条记录
 	Set<String> selExplanation();
+	Set<String> selRanWord();
 	// 从用户单词表中获取当前status=0的个数
 	int selLearningCount(@Param("table_name")String table_name);
 	//从用户单词表中获取status=1且日期不等于当天的单词（需要复习的单词

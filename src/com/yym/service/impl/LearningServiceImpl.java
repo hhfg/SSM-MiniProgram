@@ -110,4 +110,10 @@ public class LearningServiceImpl implements LearningService{
 		// TODO Auto-generated method stub
 		return learningDao.updLearning(haveToLearn, uid);
 	}
+
+	@Override
+	public Set<String> selRanWord() {
+		// TODO Auto-generated method stub
+		return learningDao.selRanWord();
+	}
 }

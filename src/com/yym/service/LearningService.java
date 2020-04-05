@@ -27,6 +27,7 @@ public interface LearningService {
 	int updStatus(String table_name,int status,int id);
 	// 随机从数据库取三条记录
 	Set<String> selExplanation();
+	Set<String> selRanWord();
 	// 从用户单词表中获取当前status=0的个数
 	int selLearningCount(String table_name);
 	//获取需要复习的单词

@@ -31,7 +31,10 @@
 	</update>
 	<!-- 随机从数据库取三条记录 -->
 	<select id="selExplanation" resultType="string">
-		SELECT explanation FROM cet4word  WHERE wid >= ((SELECT MAX(wid) FROM cet4word )-(SELECT MIN(wid) FROM user )) * RAND() + (SELECT MIN(wid) FROM cet4word )  LIMIT 3
+		SELECT explanation FROM postgraduateword  WHERE wid >= ((SELECT MAX(wid) FROM postgraduateword )-(SELECT MIN(wid) FROM user )) * RAND() + (SELECT MIN(wid) FROM postgraduateword )  LIMIT 3
+	</select>
+	<select id="selRanWord" resultType="string">
+		SELECT word FROM postgraduateword  WHERE wid >= ((SELECT MAX(wid) FROM postgraduateword )-(SELECT MIN(wid) FROM user )) * RAND() + (SELECT MIN(wid) FROM postgraduateword )  LIMIT 3
 	</select>
 	<!-- 从用户单词表中获取当前status=0的个数 -->
 	<select id="selLearningCount" resultType="int">

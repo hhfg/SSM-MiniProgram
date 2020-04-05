@@ -93,9 +93,12 @@ public class LearningController {
 		}
 		int index=0;
 		for(UserWords u:list) {
-			Set<String> s=learningService.selExplanation();
-			s.add(u.getExplanation());
-			u.setChoose(s);
+			Set<String> explanation=learningService.selExplanation();
+			Set<String> word=learningService.selRanWord();
+			explanation.add(u.getExplanation());
+			word.add(u.getWord());
+			u.setChoose(explanation);
+			u.setChooseEn(word);
 		}
 		return list;
 	}
