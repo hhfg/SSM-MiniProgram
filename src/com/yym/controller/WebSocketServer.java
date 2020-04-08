@@ -16,7 +16,7 @@ public class WebSocketServer {
 	@OnOpen
 	public void onOpen(Session session,@PathParam("id")int id) {
 		System.out.println("sessionId="+session.getId());
-		System.out.println("id:"+id);
+		System.out.println("id:"+session.getPathParameters().get("id"));
 		//RemoteEndpoint接口是配对的另一端的抽象
 		final RemoteEndpoint.Basic basic=session.getBasicRemote();
 		try {
@@ -24,38 +24,18 @@ public class WebSocketServer {
 		}catch(IOException e) {
 			e.printStackTrace();
 		}
-		//创建线程
-//		Thread t1=new Thread(new Runnable() {
-//			
-//			@Override
-//			public void run() {
-//				System.out.println("创建线程！");
-//				// TODO Auto-generated method stub
-//				try {
-//					Thread.currentThread();
-//					Thread.sleep(8000);
-//					basic.sendText("server get you a msg:what your name?");
-//				} catch (InterruptedException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				} catch(IOException e) {
-//					e.printStackTrace();
-//				}
-//				
-//			}
-//			
-//		});
-//		t1.start();
 	}
 
 	/* 收到客户端消息时触发 */
 	@OnMessage
-	public String onMessage(Session session,String message) {
+	public boolean onMessage(Session session,String message) {
+		System.out.println(message);
 		System.out.println("sessionId:"+session.getId());
-		System.out.println("pathParams:"+session.getPathParameters());
-		System.out.println("requestParams"+session.getRequestParameterMap());
-		return "Got your message!"+message;
-		
+		if(message.equals(session.getPathParameters().get("id"))) {
+			return true;
+		}else{
+			return false;
+		}		
 	}
 	@OnError
 	public void onError(Throwable throwable,Session session) {
