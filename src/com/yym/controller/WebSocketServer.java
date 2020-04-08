@@ -8,13 +8,15 @@ import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.RemoteEndpoint;
 import javax.websocket.Session;
+import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
-@ServerEndpoint("/getServer")
+@ServerEndpoint("/getServer/{id}")
 public class WebSocketServer {
 	@OnOpen
-	public void onOpen(Session session) {
+	public void onOpen(Session session,@PathParam("id")int id) {
 		System.out.println("sessionId="+session.getId());
+		System.out.println("id:"+id);
 		//RemoteEndpoint接口是配对的另一端的抽象
 		final RemoteEndpoint.Basic basic=session.getBasicRemote();
 		try {
@@ -23,27 +25,27 @@ public class WebSocketServer {
 			e.printStackTrace();
 		}
 		//创建线程
-		Thread t1=new Thread(new Runnable() {
-			
-			@Override
-			public void run() {
-				System.out.println("创建线程！");
-				// TODO Auto-generated method stub
-				try {
-					Thread.currentThread();
-					Thread.sleep(8000);
-					basic.sendText("server get you a msg:what your name?");
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch(IOException e) {
-					e.printStackTrace();
-				}
-				
-			}
-			
-		});
-		t1.start();
+//		Thread t1=new Thread(new Runnable() {
+//			
+//			@Override
+//			public void run() {
+//				System.out.println("创建线程！");
+//				// TODO Auto-generated method stub
+//				try {
+//					Thread.currentThread();
+//					Thread.sleep(8000);
+//					basic.sendText("server get you a msg:what your name?");
+//				} catch (InterruptedException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				} catch(IOException e) {
+//					e.printStackTrace();
+//				}
+//				
+//			}
+//			
+//		});
+//		t1.start();
 	}
 
 	/* 收到客户端消息时触发 */
@@ -64,9 +66,8 @@ public class WebSocketServer {
 	}
 	@OnClose
 	public void onClose(Session session) {
-		System.out.println("sessionId:"+session.getId());
-		System.out.println("pathParams:"+session.getPathParameters());
-		System.out.println("requestParams:"+session.getRequestParameterMap());
+//		System.out.println("pathParams:"+session.getPathParameters());
+//		System.out.println("requestParams:"+session.getRequestParameterMap());
 		System.out.println("onClose");
 	}
 	
