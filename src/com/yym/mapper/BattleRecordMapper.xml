@@ -4,6 +4,12 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yym.dao.BattleRecordDao">
 	<insert id="insRecord">
-		insert into battle_record(playA,status) values(#{playA},#{status})
+		insert into battle_record(playA,playB,status) values(#{playA},#{playB},#{status})
 	</insert>
+	<select id="selId" resultType="int">
+		select id from battle_record where playA=#{playA} and status=#{status}
+	</select>
+	<update id="updRecord">
+		update battle_record set playB=#{playB} and status=#{status} where id=#{id}
+	</update>
 </mapper>

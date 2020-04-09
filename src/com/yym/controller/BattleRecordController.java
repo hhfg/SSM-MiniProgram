@@ -19,9 +19,15 @@ public class BattleRecordController {
 	private BattleRecordService battleRecordService;
 	@ResponseBody
 	@RequestMapping("/insRecord.do")
-	public int insRecord(int playA,int status,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
-		int result=battleRecordService.insRecord(playA, status);
-		return status;
-		
+	public int insRecord(int playA,int playB,int status,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
+		int result=battleRecordService.insRecord(playA, playB,status);
+		//int id=battleRecordService.selId(playA, status);
+		return result;
+	}
+	@ResponseBody
+	@RequestMapping("/updRecord.do")
+	public int updRecord(int playB,int status,int id,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
+		int result=battleRecordService.updRecord(playB, status, id);
+		return result;
 	}
 }
