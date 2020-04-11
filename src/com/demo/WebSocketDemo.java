@@ -48,6 +48,9 @@ public class WebSocketDemo {
 		}
 	    subOnlineCount(); //在线数减
 	    System.out.println("有一连接关闭！当前在线人数为" + getOnlineCount());
+		for(String user:webSocketMap.keySet()) {
+			sendMessage("测试收到消息",webSocketMap.get(user));
+		}
 	}
 	/*
 	 * 收到客户端消息后调用的方法

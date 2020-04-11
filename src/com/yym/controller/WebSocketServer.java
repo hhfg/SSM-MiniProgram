@@ -30,18 +30,34 @@ public class WebSocketServer {
 	private static ConcurrentHashMap<String,Session> webSocketMap =new ConcurrentHashMap<String,Session>();
 	//每个用户所对应的房间
 	private static ConcurrentHashMap<String,String> webSocketUser=new ConcurrentHashMap<String,String>();
-	//private static CopyOnWriteArraySet<String> webSocketRoom=new CopyOnWriteArraySet<String>();
+	private static ConcurrentHashMap<String,Integer> webSocketNum=new ConcurrentHashMap<String,Integer>();
 	@OnOpen
-	public void onOpen(Session session,@PathParam("roomid")String roomid,@PathParam("uid")String uid) {
+	public void onOpen(Session session,@PathParam("roomid")String roomid,@PathParam("uid")String uid) throws IOException {
 		//将用户存进map
 		webSocketMap.put(uid, session);
 		webSocketUser.put(uid,roomid);
-		System.out.println(webSocketUser);
+		if(webSocketNum.get(roomid)==null) {
+			webSocketNum.put(roomid, 1);
+		}else {
+			if(webSocketNum.get(roomid)==2) {
+				System.out.println("已满");
+			}else {
+				webSocketNum.put(roomid, webSocketNum.get(roomid)+1);
+				for(String id:webSocketUser.keySet()) {
+					if(webSocketUser.get(id).equals(roomid)) {
+						sendMessage("true",webSocketMap.get(id));
+					}
+				}
+			}
+		}
+		System.out.println("Map:"+webSocketMap);
+		System.out.println("User:"+webSocketUser);
+		System.out.println("Num:"+webSocketNum);
 	}
 
 	/* 收到客户端消息时触发 */
 	@OnMessage
-	public void onMessage(Session session,String roomid) {
+	public void onMessage(Session session,String roomid) throws IOException {
 		System.out.println("onmessage");
 		Map<String,String> map=session.getPathParameters();
 		String userId=map.get("uid");
@@ -53,15 +69,13 @@ public class WebSocketServer {
 				sendMessage("true",webSocketMap.get(uid));
 			}
 		}
-//		for(String uid:webSocketMap.keySet()) {
-//			System.out.println(webSocketMap.get(uid));
-//			sendMessage(uid+"已满",webSocketMap.get(uid));
-//		}
 	}
-	public void sendMessage(String message,Session session) {
-		System.out.println(session+"-"+session.isOpen());
+	public void sendMessage(String message,Session session) throws IOException {
+		System.out.println(session);
 		if(session.isOpen()) {
-			session.getAsyncRemote().sendText(message);
+			synchronized(session) {
+				session.getBasicRemote().sendText(message);
+			}	
 		}
 	}
 	@OnError
