@@ -2,6 +2,7 @@ package com.yym.entity;
 
 public class BattleRecord {
 	private int id;
+	private int roomid;
 	private int playA;
 	private int playB;
 	private int status;
@@ -10,6 +11,13 @@ public class BattleRecord {
 	}
 	public void setId(int id) {
 		this.id = id;
+	}
+	
+	public int getRoomid() {
+		return roomid;
+	}
+	public void setRoomid(int roomid) {
+		this.roomid = roomid;
 	}
 	public int getPlayA() {
 		return playA;
@@ -31,7 +39,9 @@ public class BattleRecord {
 	}
 	@Override
 	public String toString() {
-		return "BattleRecord [id=" + id + ", playA=" + playA + ", playB=" + playB + ", status=" + status + "]";
+		return "BattleRecord [id=" + id + ", roomid=" + roomid + ", playA=" + playA + ", playB=" + playB + ", status="
+				+ status + "]";
 	}
+	
 	
 }

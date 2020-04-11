@@ -19,9 +19,8 @@ public class BattleRecordController {
 	private BattleRecordService battleRecordService;
 	@ResponseBody
 	@RequestMapping("/insRecord.do")
-	public int insRecord(int playA,int playB,int status,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
-		int result=battleRecordService.insRecord(playA, playB,status);
-		//int id=battleRecordService.selId(playA, status);
+	public int insRecord(int roomid,int playA,int status,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
+		int result=battleRecordService.insRecord(roomid,playA,status);
 		return result;
 	}
 	@ResponseBody

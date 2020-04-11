@@ -57,18 +57,8 @@ public class WebSocketServer {
 
 	/* 收到客户端消息时触发 */
 	@OnMessage
-	public void onMessage(Session session,String roomid) throws IOException {
-		System.out.println("onmessage");
-		Map<String,String> map=session.getPathParameters();
-		String userId=map.get("uid");
-		System.out.println(webSocketMap);
-		System.out.println(webSocketUser.keySet());
-		for(String uid:webSocketUser.keySet()) {
-			System.out.println(uid);
-			if(webSocketUser.get(uid).equals(roomid)) {
-				sendMessage("true",webSocketMap.get(uid));
-			}
-		}
+	public void onMessage(Session session,String message) throws IOException {
+		System.out.println("收到客户端消息:"+message);
 	}
 	public void sendMessage(String message,Session session) throws IOException {
 		System.out.println(session);
@@ -87,6 +77,8 @@ public class WebSocketServer {
 	public void onClose(Session session) {
 		Map<String,String> map=session.getPathParameters();
 		webSocketMap.remove(map.get("uid"));
+		webSocketUser.remove(map.get("uid"));
+		webSocketNum.remove(map.get("roomid"));
 		System.out.println(webSocketMap);
 	}
 	public static synchronized int getOnlineCount() {

@@ -12,9 +12,9 @@ public class BattleRecordServiceImpl implements BattleRecordService{
 	private BattleRecordDao battleRecordDao;
 	
 	@Override
-	public int insRecord(int playA, int playB, int status) {
+	public int insRecord(int roomid,int playA, int status) {
 		// TODO Auto-generated method stub
-		return battleRecordDao.insRecord(playA, playB, status);
+		return battleRecordDao.insRecord(roomid,playA, status);
 	}
 
 	@Override
