@@ -14,7 +14,7 @@ import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-@ServerEndpoint(value="/newwebsocket/{userId}")
+@ServerEndpoint(value="/newwebsocket/{roomid}/{userId}")
 public class WebSocketDemo {
 	@Resource
 	private WebSocketDemo webSocketDemo;
@@ -26,9 +26,10 @@ public class WebSocketDemo {
 	private static ConcurrentHashMap<String,Session> webSocketMap =new ConcurrentHashMap<String,Session>();
     /**
               * 连接开始调用的方法
+     * @throws IOException 
     */
 	@OnOpen
-	public void onOpen(Session session,@PathParam("userId")String userId) {
+	public void onOpen(Session session,@PathParam("userId")String userId) throws IOException {
 //		获取从/websocket开始的整条链接，用于获取userId？***=***的参数
 	//	String uri=session.getRequestURI().toString();
 		webSocketSet.add(this);
@@ -56,9 +57,8 @@ public class WebSocketDemo {
 		System.out.println("来自客户端的消息:"+message);
 		Map<String,String> map=session.getPathParameters();
 		String userId=map.get("userId");
-		System.out.println(webSocketSet);
 		for(String user:webSocketMap.keySet()) {
-			sendMessage(user+"你好，我是"+userId+"  ",webSocketMap.get(user));
+			sendMessage("可以开始了",webSocketMap.get(user));
 		}
 	}
 	@OnError

@@ -28,37 +28,38 @@ public class WebSocketServer {
 	private static CopyOnWriteArraySet<WebSocketDemo> webSocketSet=new CopyOnWriteArraySet<WebSocketDemo>();
 	//线程安全的Map
 	private static ConcurrentHashMap<String,Session> webSocketMap =new ConcurrentHashMap<String,Session>();
-	//用来存放每个房间的人数
-	private static ConcurrentHashMap<String,Integer> webSocketNum=new ConcurrentHashMap<String,Integer>();
-	
+	//每个用户所对应的房间
+	private static ConcurrentHashMap<String,String> webSocketUser=new ConcurrentHashMap<String,String>();
+	//private static CopyOnWriteArraySet<String> webSocketRoom=new CopyOnWriteArraySet<String>();
 	@OnOpen
 	public void onOpen(Session session,@PathParam("roomid")String roomid,@PathParam("uid")String uid) {
-		//将房间号存进map中
-		webSocketMap.put(roomid, session);
-		for(String id:webSocketMap.keySet()) {
-			if(roomid.equals(id)) {	
-				System.out.println(webSocketNum.get("roomid"));
-				if(webSocketNum.get(roomid)!=null) {
-					webSocketNum.put(roomid, webSocketNum.get(roomid)+1);
-				}
-				else if(webSocketNum.get(roomid)==null){
-					webSocketNum.put(roomid,1);
-				}
-				
-			}
-		}
-		System.out.println(webSocketMap);
-		System.out.println(webSocketNum);
-		//this.onMessage(session,"true");
+		//将用户存进map
+		webSocketMap.put(uid, session);
+		webSocketUser.put(uid,roomid);
+		System.out.println(webSocketUser);
 	}
 
 	/* 收到客户端消息时触发 */
 	@OnMessage
-	public String onMessage(Session session,String message) {
+	public void onMessage(Session session,String roomid) {
+		System.out.println("onmessage");
 		Map<String,String> map=session.getPathParameters();
-		return message;	
+		String userId=map.get("uid");
+		System.out.println(webSocketMap);
+		System.out.println(webSocketUser.keySet());
+		for(String uid:webSocketUser.keySet()) {
+			System.out.println(uid);
+			if(webSocketUser.get(uid).equals(roomid)) {
+				sendMessage("true",webSocketMap.get(uid));
+			}
+		}
+//		for(String uid:webSocketMap.keySet()) {
+//			System.out.println(webSocketMap.get(uid));
+//			sendMessage(uid+"已满",webSocketMap.get(uid));
+//		}
 	}
 	public void sendMessage(String message,Session session) {
+		System.out.println(session+"-"+session.isOpen());
 		if(session.isOpen()) {
 			session.getAsyncRemote().sendText(message);
 		}
@@ -71,10 +72,8 @@ public class WebSocketServer {
 	@OnClose
 	public void onClose(Session session) {
 		Map<String,String> map=session.getPathParameters();
-		webSocketMap.remove(map.get("roomid"));
-		webSocketNum.remove(map.get("roomid"));
+		webSocketMap.remove(map.get("uid"));
 		System.out.println(webSocketMap);
-		System.out.println(webSocketNum);
 	}
 	public static synchronized int getOnlineCount() {
 		return onlineCount;
