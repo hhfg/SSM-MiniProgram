@@ -10,6 +10,6 @@
 		select id from battle_record where playA=#{playA} and status=#{status}
 	</select>
 	<update id="updRecord">
-		update battle_record set playB=#{playB} and status=#{status} where id=#{id}
+		update battle_record set playB=#{playB},status=0 where roomid=#{roomid} and status=-1
 	</update>
 </mapper>

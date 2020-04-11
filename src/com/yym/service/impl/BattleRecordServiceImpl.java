@@ -17,16 +17,18 @@ public class BattleRecordServiceImpl implements BattleRecordService{
 		return battleRecordDao.insRecord(roomid,playA, status);
 	}
 
-	@Override
-	public int updRecord(int playB, int status, int id) {
-		// TODO Auto-generated method stub
-		return battleRecordDao.updRecord(playB, status, id);
-	}
 
 	@Override
 	public int selId(int playA, int status) {
 		// TODO Auto-generated method stub
 		return battleRecordDao.selId(playA, status);
+	}
+
+
+	@Override
+	public int updRecord(int playB, int roomid) {
+		// TODO Auto-generated method stub
+		return battleRecordDao.updRecord(playB, roomid);
 	}
 
 }

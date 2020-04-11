@@ -23,10 +23,11 @@ public class BattleRecordController {
 		int result=battleRecordService.insRecord(roomid,playA,status);
 		return result;
 	}
+	
 	@ResponseBody
 	@RequestMapping("/updRecord.do")
-	public int updRecord(int playB,int status,int id,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
-		int result=battleRecordService.updRecord(playB, status, id);
+	public int updRecord(int playB,int roomid,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
+		int result=battleRecordService.updRecord(playB, roomid);
 		return result;
 	}
 }
