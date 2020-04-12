@@ -55,11 +55,22 @@ public class WebSocketServer {
 	@OnMessage
 	public void onMessage(Session session,String roomid) throws IOException {
 		System.out.println("roomid:"+roomid);
-		for(String id:webSocketUser.keySet()) {
-			if(webSocketUser.get(id).equals(roomid)) {
-				sendMessage("true",webSocketMap.get(id));
+		System.out.println(roomid.substring(1, roomid.length()));
+		if(roomid.charAt(0)!='0') {
+			for(String id:webSocketUser.keySet()) {
+				if(webSocketUser.get(id).equals(roomid)) {
+					sendMessage("true",webSocketMap.get(id));
+				}
+			}
+		}else {
+			roomid=roomid.substring(1, roomid.length());
+			for(String id:webSocketUser.keySet()) {
+				if(webSocketUser.get(id).equals(roomid)) {
+					sendMessage("start",webSocketMap.get(id));
+				}
 			}
 		}
+
 	}
 	public void sendMessage(String message,Session session) throws IOException {
 		System.out.println(session);
