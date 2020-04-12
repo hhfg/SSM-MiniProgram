@@ -80,6 +80,8 @@ public class WebSocketServer {
 		webSocketUser.remove(map.get("uid"));
 		webSocketNum.remove(map.get("roomid"));
 		System.out.println(webSocketMap);
+		System.out.println(webSocketUser);
+		System.out.println(webSocketNum);
 	}
 	public static synchronized int getOnlineCount() {
 		return onlineCount;

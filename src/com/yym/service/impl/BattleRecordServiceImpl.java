@@ -39,4 +39,10 @@ public class BattleRecordServiceImpl implements BattleRecordService{
 		return battleRecordDao.selId(battleRecord);
 	}
 
+	@Override
+	public BattleRecord selUid(int id) {
+		// TODO Auto-generated method stub
+		return battleRecordDao.selUid(id);
+	}
+
 }

@@ -26,7 +26,11 @@
 	<update id="updRecord">
 		update battle_record set playB=#{playB},status=#{status} where roomid=#{roomid} and status=-1
 	</update>
+	<select id="selUid" parameterType="int" resultType="com.yym.entity.BattleRecord">
+		select * from battle_record where id=#{id}
+	</select>
 	<select id="selUser" resultType="com.yym.entity.User">
 		select * from user where id=#{id}
 	</select>
+	
 </mapper>

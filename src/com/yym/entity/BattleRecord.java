@@ -12,7 +12,6 @@ public class BattleRecord {
 	public void setId(int id) {
 		this.id = id;
 	}
-	
 	public int getRoomid() {
 		return roomid;
 	}
@@ -37,11 +36,5 @@ public class BattleRecord {
 	public void setStatus(int status) {
 		this.status = status;
 	}
-	@Override
-	public String toString() {
-		return "BattleRecord [id=" + id + ", roomid=" + roomid + ", playA=" + playA + ", playB=" + playB + ", status="
-				+ status + "]";
-	}
-	
 	
 }
