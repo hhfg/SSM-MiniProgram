@@ -31,6 +31,7 @@ public class WebSocketServer {
 	//每个用户所对应的房间
 	private static ConcurrentHashMap<String,String> webSocketUser=new ConcurrentHashMap<String,String>();
 	private static ConcurrentHashMap<String,Integer> webSocketNum=new ConcurrentHashMap<String,Integer>();
+	private BattleRecordController battleRecordController;
 	@OnOpen
 	public void onOpen(Session session,@PathParam("roomid")String roomid,@PathParam("uid")String uid) throws IOException {
 		//将用户存进map
@@ -43,11 +44,6 @@ public class WebSocketServer {
 				System.out.println("已满");
 			}else {
 				webSocketNum.put(roomid, webSocketNum.get(roomid)+1);
-				for(String id:webSocketUser.keySet()) {
-					if(webSocketUser.get(id).equals(roomid)) {
-						sendMessage("true",webSocketMap.get(id));
-					}
-				}
 			}
 		}
 		System.out.println("Map:"+webSocketMap);
@@ -57,8 +53,13 @@ public class WebSocketServer {
 
 	/* 收到客户端消息时触发 */
 	@OnMessage
-	public void onMessage(Session session,String message) throws IOException {
-		System.out.println("收到客户端消息:"+message);
+	public void onMessage(Session session,String roomid) throws IOException {
+		System.out.println("roomid:"+roomid);
+		for(String id:webSocketUser.keySet()) {
+			if(webSocketUser.get(id).equals(roomid)) {
+				sendMessage("true",webSocketMap.get(id));
+			}
+		}
 	}
 	public void sendMessage(String message,Session session) throws IOException {
 		System.out.println(session);
