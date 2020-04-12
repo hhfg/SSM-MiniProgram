@@ -6,10 +6,27 @@
 	<insert id="insRecord">
 		insert into battle_record(roomid,playA,status) values(#{roomid},#{playA},#{status})
 	</insert>
-	<select id="selId" resultType="int">
-		select id from battle_record where playA=#{playA} and status=#{status}
+	<select id="selId" resultType="int" parameterType="com.yym.entity.BattleRecord">
+		select id from battle_record
+		<where>
+			<if test="roomid!=null and roomid!=''">
+				and roomid=#{roomid}
+			</if>
+			<if test="playA!=null and playA!=''">
+				and playA=#{playA}
+			</if>
+			<if test="playB!=null and playB!=''">
+				and playB=#{playB}
+			</if>
+			<if test="status!=null">
+				and status=#{status}
+			</if>
+		</where>
 	</select>
 	<update id="updRecord">
-		update battle_record set playB=#{playB},status=0 where roomid=#{roomid} and status=-1
+		update battle_record set playB=#{playB},status=#{status} where roomid=#{roomid} and status=-1
 	</update>
+	<select id="selUser" resultType="com.yym.entity.User">
+		select * from user where id=#{id}
+	</select>
 </mapper>

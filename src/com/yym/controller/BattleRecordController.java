@@ -1,6 +1,8 @@
 package com.yym.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.yym.entity.BattleRecord;
+import com.yym.entity.User;
 import com.yym.service.BattleRecordService;
 
 @Controller
@@ -21,13 +25,42 @@ public class BattleRecordController {
 	@RequestMapping("/insRecord.do")
 	public int insRecord(int roomid,int playA,int status,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
 		int result=battleRecordService.insRecord(roomid,playA,status);
-		return result;
+		if(result==1) {
+			BattleRecord battleRecord=new BattleRecord();
+			battleRecord.setRoomid(roomid);
+			battleRecord.setPlayA(playA);
+			battleRecord.setStatus(status);
+			int id=battleRecordService.selId(battleRecord);
+			return id;
+		}else {
+			return result;
+		}
+		
 	}
 	
 	@ResponseBody
 	@RequestMapping("/updRecord.do")
-	public int updRecord(int playB,int roomid,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
-		int result=battleRecordService.updRecord(playB, roomid);
-		return result;
+	public int updRecord(int roomid,int playB,int status,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
+		int result=battleRecordService.updRecord(playB, status,roomid);
+		System.out.println(result);
+		if(result==1) {
+			BattleRecord battleRecord=new BattleRecord();
+			battleRecord.setRoomid(roomid);
+			battleRecord.setPlayB(playB);
+			battleRecord.setStatus(status);
+			int id=battleRecordService.selId(battleRecord);
+			return id;
+		}
+		else {
+			return result;
+		}
+	}
+	@ResponseBody
+	@RequestMapping("/getUserMess.do")
+	public List<User> getUserMess(int id,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
+		List<User> list=new ArrayList<User>();
+		User user=battleRecordService.selUser(id);
+		list.add(user);
+		return null;
 	}
 }
