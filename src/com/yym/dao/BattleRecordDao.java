@@ -16,4 +16,5 @@ public interface BattleRecordDao {
 	BattleRecord selUid(@Param("id")int id);
 	//Í¨¹ıid²éÕÒuser
 	User selUser(@Param("id")int id);
+	int updRoomStatus(@Param("status")int status,@Param("roomid")int roomid,@Param("playA")int playA,@Param("playB")int playB);
 }

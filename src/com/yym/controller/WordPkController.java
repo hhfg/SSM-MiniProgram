@@ -32,4 +32,5 @@ public class WordPkController {
 		Player p=wordPkService.selPlayer(uid);
 		return p;
 	}
+	
 }

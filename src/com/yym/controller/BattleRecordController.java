@@ -67,4 +67,10 @@ public class BattleRecordController {
 		list.add(userB);
 		return list;
 	}
+	@ResponseBody
+	@RequestMapping("/updRoomStatus.do")
+	public int updRoomStatus(int roomid,int playA,int playB,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
+		int result=battleRecordService.updRoomStatus(1, roomid, playA, playB);
+		return result;
+	}
 }
