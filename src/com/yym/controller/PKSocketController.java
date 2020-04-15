@@ -27,8 +27,9 @@ import com.yym.entity.Player;
 import com.yym.entity.Words;
 import com.yym.service.PKSocketService;
 import com.yym.service.impl.PKSocketServiceImpl;
+import com.yym.util.EncoderClassVo;
 @Controller
-@ServerEndpoint("/getServer/{roomid}/{uid}")
+@ServerEndpoint(value="/getServer/{roomid}/{uid}",encoders= {EncoderClassVo.class})
 public class PKSocketController {
 	
 	private PKSocketController webSocketServer;
@@ -48,8 +49,10 @@ public class PKSocketController {
 	}
 
 	@OnOpen
-	public void onOpen(Session session,@PathParam("roomid")String roomid,@PathParam("uid")String uid) throws IOException {
+	public void onOpen(Session session,@PathParam("roomid")String roomid,@PathParam("uid")String uid) throws IOException, EncodeException {
 		//将用户存进map
+		List<PKWords> list=this.getPKWords(36);	
+		this.sendData(list, session);
 		webSocketMap.put(uid, session);
 		webSocketUser.put(uid,roomid);
 		if(webSocketNum.get(roomid)==null) {
@@ -100,6 +103,7 @@ public class PKSocketController {
 	}
 	private void sendData(List<PKWords> list, Session session) throws IOException, EncodeException {
 		// TODO Auto-generated method stub
+		
 		if(session.isOpen()) {
 			synchronized(session) {
 				session.getBasicRemote().sendObject(list);
