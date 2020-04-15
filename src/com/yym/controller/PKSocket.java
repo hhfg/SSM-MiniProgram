@@ -19,9 +19,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.demo.WebSocketDemo;
 
 @ServerEndpoint("/getServer/{roomid}/{uid}")
-public class WebSocketServer {
+public class PKSocket {
 	@Autowired
-	private WebSocketServer webSocketServer;
+	private PKSocket webSocketServer;
 	//静态变量，用来记录当前在线连接数，应该把它设计成线程安全的。
 	private static int onlineCount=0;
 	//concurrent包的线程安全set，用来存放每个客户端对应的MyWebSocket对象，若要实现服务端与单一客户端通信的话，可以使用Map来存放，其中key可以为用户标识
@@ -99,10 +99,10 @@ public class WebSocketServer {
 		return onlineCount;
 	}
 	public static synchronized void addOnlineCount() {
-		WebSocketServer.onlineCount++;
+		PKSocket.onlineCount++;
 	}
 	public static synchronized void subOnlineCount() {
-		WebSocketServer.onlineCount--;
+		PKSocket.onlineCount--;
 	}
 	
 }
