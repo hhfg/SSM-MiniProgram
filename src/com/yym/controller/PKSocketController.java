@@ -1,10 +1,14 @@
 package com.yym.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArraySet;
 
+import javax.websocket.EncodeException;
 import javax.websocket.OnClose;
 import javax.websocket.OnError;
 import javax.websocket.OnMessage;
@@ -18,6 +22,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import com.demo.WebSocketDemo;
+import com.yym.entity.PKWords;
+import com.yym.entity.Player;
+import com.yym.entity.Words;
 import com.yym.service.PKSocketService;
 import com.yym.service.impl.PKSocketServiceImpl;
 @Controller
@@ -43,7 +50,6 @@ public class PKSocketController {
 	@OnOpen
 	public void onOpen(Session session,@PathParam("roomid")String roomid,@PathParam("uid")String uid) throws IOException {
 		//将用户存进map
-		System.out.println(pkSocketService);
 		webSocketMap.put(uid, session);
 		webSocketUser.put(uid,roomid);
 		if(webSocketNum.get(roomid)==null) {
@@ -62,16 +68,10 @@ public class PKSocketController {
 
 	/* 收到客户端消息时触发 */
 	@OnMessage
-	public void onMessage(Session session,String roomid) throws IOException {
+	public void onMessage(Session session,String roomid) throws IOException, EncodeException {
 		System.out.println("roomid:"+roomid);
 		System.out.println(roomid.substring(1, roomid.length()));
-		if(roomid.charAt(0)!='0') {
-			for(String id:webSocketUser.keySet()) {
-				if(webSocketUser.get(id).equals(roomid)) {
-					sendMessage("true",webSocketMap.get(id));
-				}
-			}
-		}else {
+		if(roomid.charAt(0)=='0') {
 			roomid=roomid.substring(1, roomid.length());
 			for(String id:webSocketUser.keySet()) {
 				if(webSocketUser.get(id).equals(roomid)) {
@@ -79,8 +79,34 @@ public class PKSocketController {
 				}
 			}
 		}
+		else  if(roomid.charAt(0)=='p') {
+			roomid=roomid.substring(1,roomid.length());
+			List<PKWords> list=this.getPKWords(36);		
+			System.out.println(list);
+			for(String id:webSocketUser.keySet()) {
+				if(webSocketUser.get(id).equals(roomid)) {
+					sendData(list,webSocketMap.get(id));
+				}
+			}
+		}
+		else {
+			for(String id:webSocketUser.keySet()) {
+				if(webSocketUser.get(id).equals(roomid)) {
+					sendMessage("true",webSocketMap.get(id));
+				}
+			}
+		}
 
 	}
+	private void sendData(List<PKWords> list, Session session) throws IOException, EncodeException {
+		// TODO Auto-generated method stub
+		if(session.isOpen()) {
+			synchronized(session) {
+				session.getBasicRemote().sendObject(list);
+			}	
+		}
+	}
+
 	public void sendMessage(String message,Session session) throws IOException {
 		System.out.println(session);
 		if(session.isOpen()) {
@@ -88,6 +114,36 @@ public class PKSocketController {
 				session.getBasicRemote().sendText(message);
 			}	
 		}
+	}
+	public List<PKWords> getPKWords(int uid){
+		Player p=pkSocketService.selPlayer(uid);
+		List<PKWords> words=new ArrayList<PKWords>();
+		String table_name="";
+		if(p.getBank()=="高中题库") {
+			table_name="highword";
+		}else if(p.getBank()=="四级题库") {
+			table_name="cet4word";
+		}else if(p.getBank()=="六级题库") {
+			table_name="cet6word";
+		}else {
+			table_name="postgraduateword";
+		}	
+		List<Words> list=pkSocketService.selPKWords(table_name);
+		int index=0;
+		for(Words w:list) {
+			PKWords pk=new PKWords();
+			pk.setId(index);
+			pk.setWord(w.getWord());
+			pk.setUs_pron(w.getUs_pron());
+			pk.setUs_mp3(w.getUs_mp3());
+			pk.setExplanation(w.getExplanation());
+			Set<String> s=pkSocketService.selChoose(table_name);
+			s.add(w.getExplanation());
+			pk.setChoose(s);
+			words.add(pk);
+			index++;
+		}
+		return words;
 	}
 	@OnError
 	public void onError(Throwable error,Session session) {
