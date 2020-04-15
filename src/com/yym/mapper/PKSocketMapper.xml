@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yym.dao.PKSocketDao">
+	<select id="selPlayer" parameterType="int" resultType="com.yym.entity.Player" >
+		select * from player where uid=#{uid}
+	</select>
+	<select id="selPKWords" parameterType="string" resultType="com.yym.entity.Words">
+		SELECT * FROM ${table_name}  WHERE wid >= ((SELECT MAX(wid) FROM ${table_name} )-(SELECT MIN(wid) FROM user )) * RAND() + (SELECT MIN(wid) FROM ${table_name} )  LIMIT 7
+	</select>
+	<select id="selChoose" parameterType="string" resultType="string">
+		SELECT explanation FROM ${table_name}  WHERE wid >= ((SELECT MAX(wid) FROM ${table_name} )-(SELECT MIN(wid) FROM user )) * RAND() + (SELECT MIN(wid) FROM ${table_name} )  LIMIT 3
+	</select>
+</mapper>

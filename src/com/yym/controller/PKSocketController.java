@@ -15,13 +15,16 @@ import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
 import com.demo.WebSocketDemo;
-
+import com.yym.service.PKSocketService;
+import com.yym.service.impl.PKSocketServiceImpl;
+@Controller
 @ServerEndpoint("/getServer/{roomid}/{uid}")
-public class PKSocket {
-	@Autowired
-	private PKSocket webSocketServer;
+public class PKSocketController {
+	
+	private PKSocketController webSocketServer;
 	//静态变量，用来记录当前在线连接数，应该把它设计成线程安全的。
 	private static int onlineCount=0;
 	//concurrent包的线程安全set，用来存放每个客户端对应的MyWebSocket对象，若要实现服务端与单一客户端通信的话，可以使用Map来存放，其中key可以为用户标识
@@ -31,10 +34,16 @@ public class PKSocket {
 	//每个用户所对应的房间
 	private static ConcurrentHashMap<String,String> webSocketUser=new ConcurrentHashMap<String,String>();
 	private static ConcurrentHashMap<String,Integer> webSocketNum=new ConcurrentHashMap<String,Integer>();
-	private BattleRecordController battleRecordController;
+	private static PKSocketService pkSocketService;
+	@Autowired
+	public void setPkSocketService(PKSocketService pkSocketService) {
+		PKSocketController.pkSocketService = pkSocketService;
+	}
+
 	@OnOpen
 	public void onOpen(Session session,@PathParam("roomid")String roomid,@PathParam("uid")String uid) throws IOException {
 		//将用户存进map
+		System.out.println(pkSocketService);
 		webSocketMap.put(uid, session);
 		webSocketUser.put(uid,roomid);
 		if(webSocketNum.get(roomid)==null) {
@@ -99,10 +108,10 @@ public class PKSocket {
 		return onlineCount;
 	}
 	public static synchronized void addOnlineCount() {
-		PKSocket.onlineCount++;
+		PKSocketController.onlineCount++;
 	}
 	public static synchronized void subOnlineCount() {
-		PKSocket.onlineCount--;
+		PKSocketController.onlineCount--;
 	}
 	
 }
