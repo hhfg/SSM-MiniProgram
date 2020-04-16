@@ -95,38 +95,13 @@ public class PKSocketController {
 					sendData(list,webSocketMap.get(id));
 				}
 			}
+		}else {
+			for(String id:webSocketUser.keySet()) {
+				if(webSocketUser.get(id).equals(roomid)&&Integer.parseInt(id)!=uid) {
+					sendMessage(code,webSocketMap.get(id));
+				}
+			}
 		}
-//		if(roomid.charAt(0)=='0') {
-//			roomid=roomid.substring(1, roomid.length());
-//			for(String id:webSocketUser.keySet()) {
-//				if(webSocketUser.get(id).equals(roomid)) {
-//					sendMessage("start",webSocketMap.get(id));
-//				}
-//			}
-//		}
-//		else  if(roomid.charAt(0)=='p') {
-//			roomid=roomid.split(";")[0];
-//			roomid=roomid.substring(1,roomid.length());
-//			List<PKWords> list=this.getPKWords(uid);		
-//			System.out.println(list);
-//			for(String id:webSocketUser.keySet()) {
-//				if(webSocketUser.get(id).equals(roomid)) {
-//					sendData(list,webSocketMap.get(id));
-//				}
-//			}
-//		}
-//		else if(roomid.charAt(0)=='s') {
-//			int score=Integer.parseInt(roomid.split(";")[1]);
-//			roomid=roomid.split(";")[0];
-//		}
-//		else {
-//			for(String id:webSocketUser.keySet()) {
-//				if(webSocketUser.get(id).equals(roomid)) {
-//					sendMessage("true",webSocketMap.get(id));
-//				}
-//			}
-//		}
-
 	}
 	private void sendData(List<PKWords> list, Session session) throws IOException, EncodeException {
 		// TODO Auto-generated method stub
