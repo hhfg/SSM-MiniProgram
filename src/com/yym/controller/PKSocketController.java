@@ -51,8 +51,6 @@ public class PKSocketController {
 	@OnOpen
 	public void onOpen(Session session,@PathParam("roomid")String roomid,@PathParam("uid")String uid) throws IOException, EncodeException {
 		//将用户存进map
-		List<PKWords> list=this.getPKWords(36);	
-		this.sendData(list, session);
 		webSocketMap.put(uid, session);
 		webSocketUser.put(uid,roomid);
 		if(webSocketNum.get(roomid)==null) {
@@ -71,20 +69,26 @@ public class PKSocketController {
 
 	/* 收到客户端消息时触发 */
 	@OnMessage
-	public void onMessage(Session session,String roomid) throws IOException, EncodeException {
-		System.out.println("roomid:"+roomid);
-		System.out.println(roomid.substring(1, roomid.length()));
-		if(roomid.charAt(0)=='0') {
-			roomid=roomid.substring(1, roomid.length());
+	public void onMessage(Session session,String code) throws IOException, EncodeException {
+		System.out.println(code);
+		Map<String,String> map=session.getPathParameters();
+		System.out.println("session.getPathParameters:"+map);
+		int uid=Integer.parseInt(map.get("uid"));//获取用户的id
+		String roomid=map.get("roomid");//获取用户的房间号
+		if(code.equals("0")) {
+			for(String id:webSocketUser.keySet()) {
+				if(webSocketUser.get(id).equals(roomid)) {
+					sendMessage("true",webSocketMap.get(id));
+				}
+			}
+		}else if(code.equals("1")) {
 			for(String id:webSocketUser.keySet()) {
 				if(webSocketUser.get(id).equals(roomid)) {
 					sendMessage("start",webSocketMap.get(id));
 				}
 			}
-		}
-		else  if(roomid.charAt(0)=='p') {
-			roomid=roomid.substring(1,roomid.length());
-			List<PKWords> list=this.getPKWords(36);		
+		}else if(code.equals("2")) {
+			List<PKWords> list=this.getPKWords(uid);		
 			System.out.println(list);
 			for(String id:webSocketUser.keySet()) {
 				if(webSocketUser.get(id).equals(roomid)) {
@@ -92,13 +96,36 @@ public class PKSocketController {
 				}
 			}
 		}
-		else {
-			for(String id:webSocketUser.keySet()) {
-				if(webSocketUser.get(id).equals(roomid)) {
-					sendMessage("true",webSocketMap.get(id));
-				}
-			}
-		}
+//		if(roomid.charAt(0)=='0') {
+//			roomid=roomid.substring(1, roomid.length());
+//			for(String id:webSocketUser.keySet()) {
+//				if(webSocketUser.get(id).equals(roomid)) {
+//					sendMessage("start",webSocketMap.get(id));
+//				}
+//			}
+//		}
+//		else  if(roomid.charAt(0)=='p') {
+//			roomid=roomid.split(";")[0];
+//			roomid=roomid.substring(1,roomid.length());
+//			List<PKWords> list=this.getPKWords(uid);		
+//			System.out.println(list);
+//			for(String id:webSocketUser.keySet()) {
+//				if(webSocketUser.get(id).equals(roomid)) {
+//					sendData(list,webSocketMap.get(id));
+//				}
+//			}
+//		}
+//		else if(roomid.charAt(0)=='s') {
+//			int score=Integer.parseInt(roomid.split(";")[1]);
+//			roomid=roomid.split(";")[0];
+//		}
+//		else {
+//			for(String id:webSocketUser.keySet()) {
+//				if(webSocketUser.get(id).equals(roomid)) {
+//					sendMessage("true",webSocketMap.get(id));
+//				}
+//			}
+//		}
 
 	}
 	private void sendData(List<PKWords> list, Session session) throws IOException, EncodeException {
