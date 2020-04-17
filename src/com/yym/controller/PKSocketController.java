@@ -96,8 +96,9 @@ public class PKSocketController {
 				}
 			}
 		}else if(code.equals("3")) {
-			for(String id:webSocketUser.keySet()) {
-				if(webSocketUser.get(id).equals(roomid)) {
+			for(String id:webSocketUser.keySet()) {//发送给对手可以进行下一道题
+				if(webSocketUser.get(id).equals(roomid)&&Integer.parseInt(id)!=uid) {
+					System.out.println(id);
 					sendMessage("next",webSocketMap.get(id));
 				}
 			}
