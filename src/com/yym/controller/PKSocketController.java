@@ -95,7 +95,14 @@ public class PKSocketController {
 					sendData(list,webSocketMap.get(id));
 				}
 			}
-		}else {
+		}else if(code.equals("3")) {
+			for(String id:webSocketUser.keySet()) {
+				if(webSocketUser.get(id).equals(roomid)) {
+					sendMessage("next",webSocketMap.get(id));
+				}
+			}
+		}
+		else {
 			for(String id:webSocketUser.keySet()) {
 				if(webSocketUser.get(id).equals(roomid)&&Integer.parseInt(id)!=uid) {
 					sendMessage(code,webSocketMap.get(id));
