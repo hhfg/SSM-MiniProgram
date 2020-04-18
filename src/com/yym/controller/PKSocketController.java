@@ -75,19 +75,20 @@ public class PKSocketController {
 		System.out.println("session.getPathParameters:"+map);
 		int uid=Integer.parseInt(map.get("uid"));//获取用户的id
 		String roomid=map.get("roomid");//获取用户的房间号
-		if(code.equals("0")) {
+		//收到00的消息，表示要发送true给客户端，让客户端知道用户已经进来 
+		if(code.equals("t")) {
 			for(String id:webSocketUser.keySet()) {
 				if(webSocketUser.get(id).equals(roomid)) {
 					sendMessage("true",webSocketMap.get(id));
 				}
 			}
-		}else if(code.equals("1")) {
+		}else if(code.equals("s")) {//收到s的消息，表示要发送start给客户端，让客户端知道可以开始了
 			for(String id:webSocketUser.keySet()) {
 				if(webSocketUser.get(id).equals(roomid)) {
 					sendMessage("start",webSocketMap.get(id));
 				}
 			}
-		}else if(code.equals("2")) {
+		}else if(code.equals("p")) {//收到p的消息，表示用户已经开始对战，要发送pk的单词给客户端
 			List<PKWords> list=this.getPKWords(uid);		
 			System.out.println(list);
 			for(String id:webSocketUser.keySet()) {
@@ -95,7 +96,7 @@ public class PKSocketController {
 					sendData(list,webSocketMap.get(id));
 				}
 			}
-		}else if(code.equals("3")) {
+		}else if(code.equals("n")) {//收到n的消息，表示用户双方都已答题完，可以进行下一道题
 			for(String id:webSocketUser.keySet()) {//发送给对手可以进行下一道题
 				if(webSocketUser.get(id).equals(roomid)&&Integer.parseInt(id)!=uid) {
 					System.out.println(id);
@@ -103,7 +104,7 @@ public class PKSocketController {
 				}
 			}
 		}
-		else {
+		else {//否则，收到的是用户的成绩，将其发送给对手
 			for(String id:webSocketUser.keySet()) {
 				if(webSocketUser.get(id).equals(roomid)&&Integer.parseInt(id)!=uid) {
 					sendMessage(code,webSocketMap.get(id));
