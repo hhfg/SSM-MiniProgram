@@ -170,7 +170,12 @@ public class PKSocketController {
 		Map<String,String> map=session.getPathParameters();
 		webSocketMap.remove(map.get("uid"));
 		webSocketUser.remove(map.get("uid"));
-		webSocketNum.remove(map.get("roomid"));
+		if(webSocketNum.get(map.get("roomid"))>1) {
+			int num=webSocketNum.get(map.get("roomid"))-1;
+			webSocketNum.put(map.get("roomid"), num);
+		}else {
+			webSocketNum.remove(map.get("roomid"));
+		}
 		System.out.println(webSocketMap);
 		System.out.println(webSocketUser);
 		System.out.println(webSocketNum);
