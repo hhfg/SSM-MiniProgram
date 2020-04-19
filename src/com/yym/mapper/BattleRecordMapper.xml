@@ -9,6 +9,7 @@
 	<select id="selId" resultType="int" parameterType="com.yym.entity.BattleRecord">
 		select id from battle_record
 		<where>
+
 			<if test="roomid!=null and roomid!=''">
 				and roomid=#{roomid}
 			</if>
@@ -23,6 +24,7 @@
 			</if>
 		</where>
 	</select>
+	<!-- 更改房间状态 -->
 	<update id="updRecord">
 		update battle_record set playB=#{playB},status=#{status} where roomid=#{roomid} and status=-1
 	</update>
@@ -33,7 +35,7 @@
 		select * from user where id=#{id}
 	</select>
 	<update id="updRoomStatus">
-		update battle_record set status=#{status} where roomid=#{roomid} and playA=#{playA} and playB=#{playB}
+		update battle_record set status=#{status} where id=#{id}
 	</update>
 	
 </mapper>

@@ -9,5 +9,5 @@ public interface BattleRecordService {
 	int updRecord(int playB,int status,int roomid);
 	BattleRecord selUid(int id);
 	User selUser(int id);
-	int updRoomStatus(int status,int roomid,int playA,int playB);
+	int updRoomStatus(int status,int id);
 }
