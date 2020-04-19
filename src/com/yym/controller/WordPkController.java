@@ -27,6 +27,7 @@ public class WordPkController {
 	@ResponseBody
 	@RequestMapping("/updBank.do")
 	public int updBankId(int uid,String bank,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
+		System.out.println(uid+":"+bank);
 		int result=wordPkService.updBank(bank, uid);
 		return result;
 	}

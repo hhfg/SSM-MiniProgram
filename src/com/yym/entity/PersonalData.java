@@ -18,6 +18,7 @@ public class PersonalData {
 	private int dayNum;         //定制的计划 每天需要学习的单词量
 	private int continue_sign;  //连续签到天数
 	private int haveLearned;    //总的学习的词汇数
+	private String bank;        //选择的题库
 	public int getId() {
 		return id;
 	}
@@ -109,13 +110,20 @@ public class PersonalData {
 	public void setHaveLearned(int haveLearned) {
 		this.haveLearned = haveLearned;
 	}
+	public String getBank() {
+		return bank;
+	}
+	public void setBank(String bank) {
+		this.bank = bank;
+	}
 	@Override
 	public String toString() {
 		return "PersonalData [id=" + id + ", uid=" + uid + ", bookid=" + bookid + ", clockInDay=" + clockInDay
 				+ ", completedNum=" + completedNum + ", haveToLearn=" + haveToLearn + ", haveToReview=" + haveToReview
 				+ ", startUseDate=" + startUseDate + ", endTime=" + endTime + ", startTime=" + startTime
 				+ ", learningDay=" + learningDay + ", lastWordId=" + lastWordId + ", dayNum=" + dayNum
-				+ ", continue_sign=" + continue_sign + ", haveLearned=" + haveLearned + "]";
+				+ ", continue_sign=" + continue_sign + ", haveLearned=" + haveLearned + ", bank=" + bank + "]";
 	}
+	
 	
 }

@@ -4,7 +4,7 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yym.dao.WordPkDao">
 	<update id="updBank">
-		update player set bank=#{bank} where uid=#{uid}
+		update personal_data set bank=#{bank} where uid=#{uid}
 	</update>
 	<select id="selPlayer" parameterType="int" resultType="com.yym.entity.Player" >
 		select * from player where uid=#{uid}

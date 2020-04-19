@@ -17,7 +17,7 @@
 	</select> 
 	<!-- 在personal_data表中新增用户  -->
 	<insert id="insPersonalData">
-		insert into personal_data(uid,clockInDay,startUseDate) values (#{uid},#{clockInDay},#{startUseDate})
+		insert into personal_data(uid,clockInDay,startUseDate,bank) values (#{uid},#{clockInDay},#{startUseDate},#{bank})
 	</insert>
 	<!-- 在player中新增用户 -->
 	<insert id="insPlayer">

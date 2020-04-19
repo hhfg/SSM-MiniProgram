@@ -37,9 +37,9 @@ public class UserServiceImpl implements UserService{
 		return id;
 	}
 	@Override
-	public int insPersonalData(int uid,int clockInDay,Date startUseDate) {
+	public int insPersonalData(int uid,int clockInDay,Date startUseDate,String bank) {
 		// TODO Auto-generated method stub
-		int result=userDao.insPersonalData(uid,clockInDay,startUseDate);
+		int result=userDao.insPersonalData(uid,clockInDay,startUseDate,bank);
 		return result;
 	}
 	@Override

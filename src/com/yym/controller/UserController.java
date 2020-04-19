@@ -66,7 +66,9 @@ public class UserController {
         response.setHeader("Access-Control-Allow-Origin", "*");  
         response.setHeader("Access-Control-Allow-Methods", "GET,POST"); 
 		int result=userService.createUserWordTable(nickName+"_word");
-		return "redirect:/getUserIdByName.do?nickName="+ URLEncoder.encode(nickName,"UTF-8");
+		int uid=userService.getUserIdByName(nickName);
+		return "redirect:/insPersonalData.do?id="+uid;
+		//return "redirect:/getUserIdByName.do?nickName="+ URLEncoder.encode(nickName,"UTF-8");
 	}
 	//通过nickName查询id
 	@RequestMapping("/getUserIdByName.do")
@@ -83,7 +85,8 @@ public class UserController {
 		int clockInDay=0;
 		SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
 		Date startUseDate=new Date(System.currentTimeMillis());
-		int result=userService.insPersonalData(id,clockInDay,startUseDate);
+		String bank="高中题库";
+		int result=userService.insPersonalData(id,clockInDay,startUseDate,bank);
 		return result;
 	}
 	public SignRecord ifTheDayBeforSign(int uid) throws ParseException {

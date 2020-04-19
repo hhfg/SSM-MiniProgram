@@ -23,7 +23,7 @@ public interface UserDao {
 	
 	//在personal_data表中新增用户
 	int insPersonalData(@Param("uid")int uid,@Param("clockInDay")int clockInDay,
-			@Param("startUseDate")Date startUseDate);
+			@Param("startUseDate")Date startUseDate,@Param("bank")String bank);
 	//在player中新增用户
 	int insPlayer(@Param("uid")int uid,@Param("nickName")String nickName,@Param("bank")String bank);
 	//  通过用户名查找用户在表中的id
