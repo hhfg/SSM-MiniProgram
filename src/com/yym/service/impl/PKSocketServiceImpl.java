@@ -33,4 +33,10 @@ public class PKSocketServiceImpl implements PKSocketService{
 		return pkSocketDao.selChoose(table_name);
 	}
 
+	@Override
+	public String selBank(int uid) {
+		// TODO Auto-generated method stub
+		return pkSocketDao.selBank(uid);
+	}
+
 }

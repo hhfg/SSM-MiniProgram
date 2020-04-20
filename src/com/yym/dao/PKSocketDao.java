@@ -12,4 +12,5 @@ public interface PKSocketDao {
 	Player selPlayer(@Param("uid")int uid);
 	List<Words> selPKWords(@Param("table_name")String table_name);
 	Set<String> selChoose(@Param("table_name")String table_name);
+	String selBank(@Param("uid")int uid);
 }

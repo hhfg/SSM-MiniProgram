@@ -2,6 +2,7 @@ package com.yym.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -131,14 +132,14 @@ public class PKSocketController {
 		}
 	}
 	public List<PKWords> getPKWords(int uid){
-		Player p=pkSocketService.selPlayer(uid);
+		String bank=pkSocketService.selBank(uid);
 		List<PKWords> words=new ArrayList<PKWords>();
 		String table_name="";
-		if(p.getBank()=="高中题库") {
+		if(bank=="高中题库") {
 			table_name="highword";
-		}else if(p.getBank()=="四级题库") {
+		}else if(bank=="四级题库") {
 			table_name="cet4word";
-		}else if(p.getBank()=="六级题库") {
+		}else if(bank=="六级题库") {
 			table_name="cet6word";
 		}else {
 			table_name="postgraduateword";
@@ -151,10 +152,16 @@ public class PKSocketController {
 			pk.setWord(w.getWord());
 			pk.setUs_pron(w.getUs_pron());
 			pk.setUs_mp3(w.getUs_mp3());
-			pk.setExplanation(w.getExplanation());
+			pk.setExplanation(w.getExplanation().split(";")[0]);
 			Set<String> s=pkSocketService.selChoose(table_name);
-			s.add(w.getExplanation());
-			pk.setChoose(s);
+			Set<String> choose=new HashSet<String>();
+			for(String str:s) {
+				String c=str.split(";")[0];
+				choose.add(c);
+			}
+			choose.add(w.getExplanation().split(";")[0]);
+//			s.add(w.getExplanation());
+			pk.setChoose(choose);
 			words.add(pk);
 			index++;
 		}
@@ -179,15 +186,5 @@ public class PKSocketController {
 		System.out.println(webSocketMap);
 		System.out.println(webSocketUser);
 		System.out.println(webSocketNum);
-	}
-	public static synchronized int getOnlineCount() {
-		return onlineCount;
-	}
-	public static synchronized void addOnlineCount() {
-		PKSocketController.onlineCount++;
-	}
-	public static synchronized void subOnlineCount() {
-		PKSocketController.onlineCount--;
-	}
-	
+	}	
 }

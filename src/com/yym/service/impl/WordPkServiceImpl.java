@@ -1,5 +1,6 @@
 package com.yym.service.impl;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -29,5 +30,10 @@ public class WordPkServiceImpl implements WordPkService{
 	public int createUserErrorBook(String table_name) {
 		// TODO Auto-generated method stub
 		return wordPkDao.createUserErrorBook(table_name);
+	}
+	@Override
+	public int insErrorWord(String word, String us_pron, String us_mp3, String explantion, Date dates) {
+		// TODO Auto-generated method stub
+		return wordPkDao.insErrorWord(word, us_pron, us_mp3, explantion, dates);
 	}
 }

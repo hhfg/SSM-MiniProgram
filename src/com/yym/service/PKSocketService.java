@@ -10,4 +10,5 @@ public interface PKSocketService {
 	Player selPlayer(int uid);
 	List<Words> selPKWords(String table_name);
 	Set<String> selChoose(String table_name);
+	String selBank(int uid);
 }

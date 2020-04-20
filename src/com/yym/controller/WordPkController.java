@@ -8,7 +8,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +17,9 @@ import com.yym.entity.PKWords;
 import com.yym.entity.Player;
 import com.yym.entity.Words;
 import com.yym.service.WordPkService;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 @Controller
 public class WordPkController {
@@ -49,6 +51,12 @@ public class WordPkController {
 		String table_name=nickName+"_eBook";
 		int result=wordPkService.createUserErrorBook(table_name);
 		return result;
+	}
+	@ResponseBody
+	@RequestMapping("/insPkWords.do")
+	public void insErrorBook(String nickName,String pkwords,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
+		JSONArray array=JSONArray.fromObject(pkwords);
+		System.out.println(array);
 	}
 	
 }

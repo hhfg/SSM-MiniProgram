@@ -12,4 +12,7 @@
 	<select id="selChoose" parameterType="string" resultType="string">
 		SELECT explanation FROM ${table_name}  WHERE wid >= ((SELECT MAX(wid) FROM ${table_name} )-(SELECT MIN(wid) FROM user )) * RAND() + (SELECT MIN(wid) FROM ${table_name} )  LIMIT 3
 	</select>
+	<select id="selBank" parameterType="int" resultType="string">
+		select bank from personal_data where uid=#{uid}
+	</select>
 </mapper>
