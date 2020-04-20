@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.yym.entity.ErrorWords;
 import com.yym.entity.PKWords;
 import com.yym.entity.Player;
 import com.yym.entity.Words;
@@ -62,6 +63,15 @@ public class WordPkController {
 			PKWords pk=list.get(i);
 			wordPkService.insErrorWord(table_name,pk.getWord(), pk.getUs_pron(), pk.getUs_mp3(), 
 					pk.getExplanation(), dates);
+		}
+	}
+	@ResponseBody
+	@RequestMapping("/selErrorWords.do")
+	public void selErrorWords(String nickName,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
+		String table_name=nickName+"_eBook";
+		List<ErrorWords> list=wordPkService.selErrorWords(table_name);
+		for(ErrorWords e:list) {
+			System.out.println(e);
 		}
 	}
 	

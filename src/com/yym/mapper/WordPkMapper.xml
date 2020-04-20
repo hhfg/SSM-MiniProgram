@@ -24,4 +24,7 @@
 		insert into ${table_name}(word,us_pron,us_mp3,explanation,dates) 
 		values(#{word},#{us_pron},#{us_mp3},#{explanation},#{dates})
 	</insert>
+	<select id="selErrorWords" parameterType="String" resultType="com.yym.entity.ErrorWords">
+		select * from ${table_name}
+	</select>
 </mapper>

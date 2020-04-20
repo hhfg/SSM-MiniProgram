@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.yym.dao.WordPkDao;
+import com.yym.entity.ErrorWords;
 import com.yym.entity.Player;
 import com.yym.entity.Words;
 import com.yym.service.WordPkService;
@@ -35,5 +36,10 @@ public class WordPkServiceImpl implements WordPkService{
 	public int insErrorWord(String table_name,String word, String us_pron, String us_mp3, String explantion, Date dates) {
 		// TODO Auto-generated method stub
 		return wordPkDao.insErrorWord(table_name,word, us_pron, us_mp3, explantion, dates);
+	}
+	@Override
+	public List<ErrorWords> selErrorWords(String table_name) {
+		// TODO Auto-generated method stub
+		return wordPkDao.selErrorWords(table_name);
 	}
 }
