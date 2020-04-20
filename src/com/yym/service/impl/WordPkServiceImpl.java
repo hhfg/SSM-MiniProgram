@@ -32,8 +32,8 @@ public class WordPkServiceImpl implements WordPkService{
 		return wordPkDao.createUserErrorBook(table_name);
 	}
 	@Override
-	public int insErrorWord(String word, String us_pron, String us_mp3, String explantion, Date dates) {
+	public int insErrorWord(String table_name,String word, String us_pron, String us_mp3, String explantion, Date dates) {
 		// TODO Auto-generated method stub
-		return wordPkDao.insErrorWord(word, us_pron, us_mp3, explantion, dates);
+		return wordPkDao.insErrorWord(table_name,word, us_pron, us_mp3, explantion, dates);
 	}
 }

@@ -13,6 +13,6 @@ public interface WordPkDao {
 	int updBank(@Param("bank")String bank,@Param("uid")int uid);
 	String selTable(@Param("table_name")String table_name);
 	int createUserErrorBook(@Param("table_name")String table_name);
-	int insErrorWord(@Param("word")String word,@Param("us_pron")String us_pron,@Param("us_mp3")String us_mp3,
+	int insErrorWord(@Param("table_name")String table_name,@Param("word")String word,@Param("us_pron")String us_pron,@Param("us_mp3")String us_mp3,
 			@Param("explanation")String explanation,@Param("dates")Date dates);
 }

@@ -2,6 +2,7 @@ package com.yym.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import javax.servlet.ServletException;
@@ -56,7 +57,15 @@ public class WordPkController {
 	@RequestMapping("/insPkWords.do")
 	public void insErrorBook(String nickName,String pkwords,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
 		JSONArray array=JSONArray.fromObject(pkwords);
-		System.out.println(array);
+		List<PKWords> list = (List<PKWords>)JSONArray.toCollection(array, PKWords.class);
+		System.out.println(list);
+		String table_name=nickName+"_eBook";
+		Date dates=new Date(System.currentTimeMillis());
+		for(int i=0;i<list.size();i++) {
+			PKWords pk=list.get(i);
+			wordPkService.insErrorWord(table_name,pk.getWord(), pk.getUs_pron(), pk.getUs_mp3(), 
+					pk.getExplanation(), dates);
+		}
 	}
 	
 }

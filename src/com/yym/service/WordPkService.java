@@ -11,5 +11,5 @@ public interface WordPkService {
 	int updBank(String bank,int uid);
 	String selTable(String table_name);
 	int createUserErrorBook(String table_name);
-	int insErrorWord(String word,String us_pron,String us_mp3,String explantion,Date dates);
+	int insErrorWord(String table_name,String word,String us_pron,String us_mp3,String explantion,Date dates);
 }

@@ -22,6 +22,6 @@
 	</update>
 	<insert id="insErrorWord" parameterType="map">
 		insert into ${table_name}(word,us_pron,us_mp3,explanation,dates) 
-		values(#{word},#{us_pron},#{us_mp3},#{explanation},#{date})
+		values(#{word},#{us_pron},#{us_mp3},#{explanation},#{dates})
 	</insert>
 </mapper>
