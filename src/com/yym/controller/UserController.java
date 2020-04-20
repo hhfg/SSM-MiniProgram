@@ -70,14 +70,7 @@ public class UserController {
 		return "redirect:/insPersonalData.do?id="+uid;
 		//return "redirect:/getUserIdByName.do?nickName="+ URLEncoder.encode(nickName,"UTF-8");
 	}
-	//通过nickName查询id
-	@RequestMapping("/getUserIdByName.do")
-	public String getUserId(String nickName,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
-		int uid=userService.getUserIdByName(nickName);
-		String bank="高中题库";
-		int result=userService.insPlayer(uid, nickName,bank);
-		return "redirect:/insPersonalData.do?id="+uid;
-	}
+
     //personal_data表中新增用户信息 
 	@ResponseBody
 	@RequestMapping("/insPersonalData.do")

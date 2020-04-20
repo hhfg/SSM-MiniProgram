@@ -7,7 +7,6 @@ import java.util.Set;
 import org.apache.ibatis.annotations.Param;
 
 import com.yym.entity.ErrorWords;
-import com.yym.entity.Player;
 import com.yym.entity.Words;
 
 public interface WordPkDao {

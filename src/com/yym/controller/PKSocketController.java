@@ -24,7 +24,6 @@ import org.springframework.stereotype.Controller;
 
 import com.demo.WebSocketDemo;
 import com.yym.entity.PKWords;
-import com.yym.entity.Player;
 import com.yym.entity.Words;
 import com.yym.service.PKSocketService;
 import com.yym.service.impl.PKSocketServiceImpl;

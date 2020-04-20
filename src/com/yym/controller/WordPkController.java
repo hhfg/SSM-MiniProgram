@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -19,7 +20,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yym.entity.ErrorWords;
 import com.yym.entity.PKWords;
-import com.yym.entity.Player;
 import com.yym.entity.Words;
 import com.yym.service.WordPkService;
 
@@ -73,7 +73,7 @@ public class WordPkController {
 	public Map<String,List<ErrorWords>> selErrorWords(String nickName,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
 		String table_name=nickName+"_eBook";
 		List<ErrorWords> list=wordPkService.selErrorWords(table_name);
-		Map<String,List<ErrorWords>> words=new HashMap<String,List<ErrorWords>>();
+		Map<String,List<ErrorWords>> words=new LinkedHashMap<String,List<ErrorWords>>();
 		SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
 		for(ErrorWords e:list) {
 			String date=formatter.format(e.getDates());//×ª»»³É×Ö·û´®

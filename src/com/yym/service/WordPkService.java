@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Set;
 
 import com.yym.entity.ErrorWords;
-import com.yym.entity.Player;
 import com.yym.entity.Words;
 
 public interface WordPkService {
