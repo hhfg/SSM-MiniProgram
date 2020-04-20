@@ -10,7 +10,6 @@ import com.yym.entity.Words;
 
 public interface WordPkDao {
 	int updBank(@Param("bank")String bank,@Param("uid")int uid);
-	Player selPlayer(@Param("uid")int uid);
-	List<Words> selPKWords(@Param("table_name")String table_name);
-	Set<String> selChoose(@Param("table_name")String table_name);
+	String selTable(@Param("table_name")String table_name);
+	int createUserErrorBook(@Param("table_name")String table_name);
 }

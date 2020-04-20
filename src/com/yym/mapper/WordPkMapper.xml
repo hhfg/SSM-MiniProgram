@@ -6,13 +6,18 @@
 	<update id="updBank">
 		update personal_data set bank=#{bank} where uid=#{uid}
 	</update>
-	<select id="selPlayer" parameterType="int" resultType="com.yym.entity.Player" >
-		select * from player where uid=#{uid}
+	<select id="selTable" resultType="String" parameterType="String">
+		show tables like #{table_name}
 	</select>
-	<select id="selPKWords" parameterType="string" resultType="com.yym.entity.Words">
-		SELECT * FROM ${table_name}  WHERE wid >= ((SELECT MAX(wid) FROM ${table_name} )-(SELECT MIN(wid) FROM user )) * RAND() + (SELECT MIN(wid) FROM ${table_name} )  LIMIT 7
-	</select>
-	<select id="selChoose" parameterType="string" resultType="string">
-		SELECT explanation FROM ${table_name}  WHERE wid >= ((SELECT MAX(wid) FROM ${table_name} )-(SELECT MIN(wid) FROM user )) * RAND() + (SELECT MIN(wid) FROM ${table_name} )  LIMIT 3
-	</select>
+	<update id="createUserErrorBook" parameterType="string">
+		create table ${table_name} (
+			id int(11) not null auto_increment,
+			word varchar(255) not null,
+			us_pron varchar(255) default null,
+			us_mp3 varchar(255) default null,
+			explanation varchar(255) default null,
+			dates date default null,
+			primary key(id)
+		)engine=InnoDB default charset=utf8
+	</update>
 </mapper>

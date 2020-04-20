@@ -21,19 +21,13 @@ public class WordPkServiceImpl implements WordPkService{
 		return wordPkDao.updBank(bank, uid);
 	}
 	@Override
-	public Player selPlayer(int uid) {
+	public String selTable(String table_name) {
 		// TODO Auto-generated method stub
-		return wordPkDao.selPlayer(uid);
+		return wordPkDao.selTable(table_name);
 	}
 	@Override
-	public List<Words> selPKWords(String table_name) {
+	public int createUserErrorBook(String table_name) {
 		// TODO Auto-generated method stub
-		return wordPkDao.selPKWords(table_name);
+		return wordPkDao.createUserErrorBook(table_name);
 	}
-	@Override
-	public Set<String> selChoose(String table_name) {
-		// TODO Auto-generated method stub
-		return wordPkDao.selChoose(table_name);
-	}
-	
 }

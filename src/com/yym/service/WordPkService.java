@@ -8,7 +8,6 @@ import com.yym.entity.Words;
 
 public interface WordPkService {
 	int updBank(String bank,int uid);
-	Player selPlayer(int uid);
-	List<Words> selPKWords(String table_name);
-	Set<String> selChoose(String table_name);
+	String selTable(String table_name);
+	int createUserErrorBook(String table_name);
 }
