@@ -34,10 +34,7 @@ public class WordPkController {
 		return result;
 	}
 	//判断表是否存在
-	@ResponseBody
-	@RequestMapping("/selTable.do")
-	public boolean selTable(String nickName,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
-		String table_name=nickName+"_eBook";
+	public boolean selTable(String table_name,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
 		String str=wordPkService.selTable(table_name);
 		if(str!=null) {
 			return true;
@@ -45,21 +42,22 @@ public class WordPkController {
 			return false;
 		}
 	}
-	@ResponseBody
-	@RequestMapping("/createUserErrorBook.do")
-	public int createUserErrorBook(String nickName,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
-		System.out.println(nickName);
-		String table_name=nickName+"_eBook";
+
+	public int createUserErrorBook(String table_name,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
 		int result=wordPkService.createUserErrorBook(table_name);
 		return result;
 	}
 	@ResponseBody
 	@RequestMapping("/insPkWords.do")
 	public void insErrorBook(String nickName,String pkwords,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
+		String table_name=nickName+"_eBook";
+		boolean flag=this.selTable(table_name, request, response);//判断表是否存在
+		if(flag==false) {//如果不存在，则创建表
+			this.createUserErrorBook(table_name, request, response);
+		}
 		JSONArray array=JSONArray.fromObject(pkwords);
 		List<PKWords> list = (List<PKWords>)JSONArray.toCollection(array, PKWords.class);
-		System.out.println(list);
-		String table_name=nickName+"_eBook";
+		System.out.println(list);		
 		Date dates=new Date(System.currentTimeMillis());
 		for(int i=0;i<list.size();i++) {
 			PKWords pk=list.get(i);
