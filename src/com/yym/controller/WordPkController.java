@@ -1,9 +1,12 @@
 package com.yym.controller;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -67,12 +70,24 @@ public class WordPkController {
 	}
 	@ResponseBody
 	@RequestMapping("/selErrorWords.do")
-	public void selErrorWords(String nickName,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
+	public Map<String,List<ErrorWords>> selErrorWords(String nickName,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
 		String table_name=nickName+"_eBook";
 		List<ErrorWords> list=wordPkService.selErrorWords(table_name);
+		Map<String,List<ErrorWords>> words=new HashMap<String,List<ErrorWords>>();
+		SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
 		for(ErrorWords e:list) {
-			System.out.println(e);
+			String date=formatter.format(e.getDates());//转换成字符串
+			List<ErrorWords> word=new ArrayList<ErrorWords>();
+			word.add(e);
+			if(words.get(date)!=null) {                //如果key已经存在，则加入到其value值中
+				List<ErrorWords> w=words.get(date);
+				w.add(e);
+				words.put(date, w);
+			}else {                                    //否则直接加入到map中
+				words.put(date, word);
+			}
 		}
+		return words;
 	}
 	
 }
