@@ -48,7 +48,7 @@ public class WordPkController {
 		return result;
 	}
 	@ResponseBody
-	@RequestMapping("/insPkWords.do")
+	@RequestMapping("/insErrorWords.do")
 	public void insErrorBook(String nickName,String pkwords,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
 		String table_name=nickName+"_eBook";
 		boolean flag=this.selTable(table_name, request, response);//≈–∂œ±Ì «∑Ò¥Ê‘⁄
@@ -57,7 +57,6 @@ public class WordPkController {
 		}
 		JSONArray array=JSONArray.fromObject(pkwords);
 		List<PKWords> list = (List<PKWords>)JSONArray.toCollection(array, PKWords.class);
-		System.out.println(list);		
 		Date dates=new Date(System.currentTimeMillis());
 		for(int i=0;i<list.size();i++) {
 			PKWords pk=list.get(i);
