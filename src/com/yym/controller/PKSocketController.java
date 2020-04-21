@@ -51,13 +51,25 @@ public class PKSocketController {
 	@OnOpen
 	public void onOpen(Session session,@PathParam("roomid")String roomid,@PathParam("uid")String uid) throws IOException, EncodeException {
 		//将用户存进map
-		webSocketMap.put(uid, session);
-		webSocketUser.put(uid,roomid);
-		if(webSocketNum.get(roomid)==null) {
-			webSocketNum.put(roomid, 1);
+//		webSocketMap.put(uid, session);
+//		webSocketUser.put(uid,roomid);
+//		if(webSocketNum.get(roomid)==null) {
+//			webSocketNum.put(roomid, 1);
+//		}else {
+//			if(webSocketNum.get(roomid)==2) {
+//				sendMessage("已满",session);
+//			}else {
+//				webSocketNum.put(roomid, webSocketNum.get(roomid)+1);
+//			}
+//		}
+		//如果房间已满，发送消息给用户
+		if(webSocketNum.get(roomid)!=null&&webSocketNum.get(roomid)==2) {
+			sendMessage("已满",session);
 		}else {
-			if(webSocketNum.get(roomid)==2) {
-				System.out.println("已满");
+			webSocketMap.put(uid, session);
+			webSocketUser.put(uid,roomid);
+			if(webSocketNum.get(roomid)==null) {
+				webSocketNum.put(roomid, 1);
 			}else {
 				webSocketNum.put(roomid, webSocketNum.get(roomid)+1);
 			}

@@ -3,12 +3,15 @@ package com.yym.controller;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -73,7 +76,11 @@ public class WordPkController {
 	public Map<String,List<ErrorWords>> selErrorWords(String nickName,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
 		String table_name=nickName+"_eBook";
 		List<ErrorWords> list=wordPkService.selErrorWords(table_name);
-		Map<String,List<ErrorWords>> words=new LinkedHashMap<String,List<ErrorWords>>();
+		Map<String,List<ErrorWords>> words=new TreeMap<String,List<ErrorWords>>(new Comparator<String>() {
+			public int compare(String str1,String str2) {
+				return str2.compareTo(str1);
+			}
+		});
 		SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
 		for(ErrorWords e:list) {
 			String date=formatter.format(e.getDates());//×ª»»³É×Ö·û´®
@@ -89,5 +96,5 @@ public class WordPkController {
 		}
 		return words;
 	}
-	
+
 }
