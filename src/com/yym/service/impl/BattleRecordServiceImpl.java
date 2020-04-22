@@ -51,4 +51,10 @@ public class BattleRecordServiceImpl implements BattleRecordService{
 		return battleRecordDao.updRoomStatus(status, id);
 	}
 
+	@Override
+	public int selStatus(int roomid) {
+		// TODO Auto-generated method stub
+		return battleRecordDao.selStatus(roomid);
+	}
+
 }

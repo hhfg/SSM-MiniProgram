@@ -41,7 +41,8 @@ public class BattleRecordController {
 	@ResponseBody
 	@RequestMapping("/updRecord.do")
 	public int updRecord(int roomid,int playB,int status,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
-		int result=battleRecordService.updRecord(playB, status,roomid);
+		int result=battleRecordService.updRecord(playB, status, roomid);
+		System.out.println(result);
 		if(result==1) {
 			BattleRecord battleRecord=new BattleRecord();
 			battleRecord.setRoomid(roomid);
@@ -49,10 +50,10 @@ public class BattleRecordController {
 			battleRecord.setStatus(status);
 			int id=battleRecordService.selId(battleRecord);
 			return id;
-		}
-		else {
+		}else {
 			return result;
 		}
+
 	}
 	@ResponseBody
 	@RequestMapping("/getUserMess.do")

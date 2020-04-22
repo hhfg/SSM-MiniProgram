@@ -10,7 +10,8 @@ public interface BattleRecordDao {
 	int insRecord(@Param("roomid")int roomid,@Param("playA")int playA,@Param("status")int status);
 	//查找对应的id
 	int selId(BattleRecord battleRecord);
-	//更新
+	int selStatus(@Param("roomid")int roomid);
+	//更新房间状态
 	int updRecord(@Param("playB")int playB,@Param("status")int status,@Param("roomid")int roomid);
 	//通过id查找对应的对战记录
 	BattleRecord selUid(@Param("id")int id);

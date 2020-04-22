@@ -62,18 +62,24 @@ public class PKSocketController {
 //				webSocketNum.put(roomid, webSocketNum.get(roomid)+1);
 //			}
 //		}
+		int result;
 		//如果房间已满，发送消息给用户
 		if(webSocketNum.get(roomid)!=null&&webSocketNum.get(roomid)==2) {
-			sendMessage("已满",session);
+			sendMessage("0",session);
 		}else {
 			webSocketMap.put(uid, session);
 			webSocketUser.put(uid,roomid);
 			if(webSocketNum.get(roomid)==null) {
 				webSocketNum.put(roomid, 1);
+				sendMessage("1",session);
+				System.out.println(1);
 			}else {
 				webSocketNum.put(roomid, webSocketNum.get(roomid)+1);
+				sendMessage("2",session);
+				System.out.println(2);
 			}
 		}
+//		sendMessage("222",session);
 		System.out.println("Map:"+webSocketMap);
 		System.out.println("User:"+webSocketUser);
 		System.out.println("Num:"+webSocketNum);
@@ -184,16 +190,30 @@ public class PKSocketController {
 		error.printStackTrace();
 	}
 	@OnClose
-	public void onClose(Session session) {
+	public void onClose(Session session) throws IOException {
 		Map<String,String> map=session.getPathParameters();
-		webSocketMap.remove(map.get("uid"));
-		webSocketUser.remove(map.get("uid"));
-		if(webSocketNum.get(map.get("roomid"))>1) {
-			int num=webSocketNum.get(map.get("roomid"))-1;
-			webSocketNum.put(map.get("roomid"), num);
-		}else {
-			webSocketNum.remove(map.get("roomid"));
+		String roomid=map.get("roomid");
+		String uid=map.get("uid");
+		System.out.println(roomid);
+		webSocketMap.remove(uid);
+		webSocketUser.remove(uid);
+//		webSocketNum.remove(roomid);
+//		if(webSocketNum.get(map.get("roomid"))>1) {
+//			int num=webSocketNum.get(map.get("roomid"))-1;
+//			webSocketNum.put(map.get("roomid"), num);
+//		}else {
+//			webSocketNum.remove(map.get("roomid"));
+//		}
+		//将在同一个房间的用户删除掉
+		for(String id:webSocketUser.keySet()) {
+			if(webSocketUser.get(id).equals(roomid)) {
+				System.out.println(id);
+				sendMessage("left",webSocketMap.get(id));
+				webSocketUser.remove(id);
+				webSocketMap.remove(id);
+			}
 		}
+		webSocketNum.remove(roomid);
 		System.out.println(webSocketMap);
 		System.out.println(webSocketUser);
 		System.out.println(webSocketNum);

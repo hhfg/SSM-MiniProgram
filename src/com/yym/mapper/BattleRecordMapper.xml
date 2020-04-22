@@ -24,6 +24,9 @@
 			</if>
 		</where>
 	</select>
+	<select id="selStatus" parameterType="int" resultType="int">
+		select status from battle_record where roomid=#{roomid}
+	</select>
 	<!-- 更改房间状态 -->
 	<update id="updRecord">
 		update battle_record set playB=#{playB},status=#{status} where roomid=#{roomid} and status=-1
