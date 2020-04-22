@@ -50,21 +50,9 @@ public class PKSocketController {
 
 	@OnOpen
 	public void onOpen(Session session,@PathParam("roomid")String roomid,@PathParam("uid")String uid) throws IOException, EncodeException {
-		//将用户存进map
-//		webSocketMap.put(uid, session);
-//		webSocketUser.put(uid,roomid);
-//		if(webSocketNum.get(roomid)==null) {
-//			webSocketNum.put(roomid, 1);
-//		}else {
-//			if(webSocketNum.get(roomid)==2) {
-//				sendMessage("已满",session);
-//			}else {
-//				webSocketNum.put(roomid, webSocketNum.get(roomid)+1);
-//			}
-//		}
-		int result;
 		//如果房间已满，发送消息给用户
 		if(webSocketNum.get(roomid)!=null&&webSocketNum.get(roomid)==2) {
+			System.out.println("已满");
 			sendMessage("0",session);
 		}else {
 			webSocketMap.put(uid, session);
@@ -79,7 +67,6 @@ public class PKSocketController {
 				System.out.println(2);
 			}
 		}
-//		sendMessage("222",session);
 		System.out.println("Map:"+webSocketMap);
 		System.out.println("User:"+webSocketUser);
 		System.out.println("Num:"+webSocketNum);
@@ -197,13 +184,6 @@ public class PKSocketController {
 		System.out.println(roomid);
 		webSocketMap.remove(uid);
 		webSocketUser.remove(uid);
-//		webSocketNum.remove(roomid);
-//		if(webSocketNum.get(map.get("roomid"))>1) {
-//			int num=webSocketNum.get(map.get("roomid"))-1;
-//			webSocketNum.put(map.get("roomid"), num);
-//		}else {
-//			webSocketNum.remove(map.get("roomid"));
-//		}
 		//将在同一个房间的用户删除掉
 		for(String id:webSocketUser.keySet()) {
 			if(webSocketUser.get(id).equals(roomid)) {
