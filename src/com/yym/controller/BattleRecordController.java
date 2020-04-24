@@ -81,5 +81,11 @@ public class BattleRecordController {
 		int result=battleRecordService.updateRecord(ascore, bscore, status, Integer.parseInt(id));
 		return result;
 	}
-	
+	@ResponseBody
+	@RequestMapping("/selRecord.do")
+	public List<BattleRecord> selRecord(int id,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
+		List<BattleRecord> list=battleRecordService.selRecord(id);
+		
+		return list;
+	}
 }

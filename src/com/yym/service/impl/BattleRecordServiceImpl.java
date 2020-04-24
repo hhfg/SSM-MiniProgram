@@ -1,5 +1,7 @@
 package com.yym.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -61,6 +63,12 @@ public class BattleRecordServiceImpl implements BattleRecordService{
 	public int updateRecord(int ascore, int bscore, int status, int id) {
 		// TODO Auto-generated method stub
 		return battleRecordDao.updateRecord(ascore, bscore, status, id);
+	}
+
+	@Override
+	public List<BattleRecord> selRecord(int id) {
+		// TODO Auto-generated method stub
+		return battleRecordDao.selRecord(id);
 	}
 
 }

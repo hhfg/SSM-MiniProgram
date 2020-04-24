@@ -1,5 +1,7 @@
 package com.yym.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 import com.yym.entity.BattleRecord;
@@ -19,4 +21,5 @@ public interface BattleRecordDao {
 	User selUser(@Param("id")int id);
 	int updRoomStatus(@Param("status")int status,@Param("id")int id);
 	int updateRecord(@Param("ascore")int ascore,@Param("bscore")int bscore,@Param("status")int status,@Param("id")int id);
+	List<BattleRecord> selRecord(@Param("id")int id);
 }

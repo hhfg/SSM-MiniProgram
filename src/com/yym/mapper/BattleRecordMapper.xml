@@ -43,4 +43,7 @@
 	<update id="updateRecord">
 		update battle_record set ascore=#{ascore},bscore=#{bscore},status=#{status} where id=#{id}
 	</update>
+	<select id="selRecord" resultType="com.yym.entity.BattleRecord">
+		select * from battle_record where playA=#{id} or playB=#{id}
+	</select>
 </mapper>
