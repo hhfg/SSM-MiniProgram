@@ -13,8 +13,11 @@ import javax.websocket.EndpointConfig;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.json.JSONObject;
 
+import com.qiniu.util.Json;
 import com.yym.entity.PKWords;
+import com.yym.entity.User;
 
+import net.sf.json.JSON;
 import net.sf.json.JSONArray;
 
 public class EncoderClassVo implements Encoder.Text<List<PKWords>>{
@@ -30,13 +33,16 @@ public class EncoderClassVo implements Encoder.Text<List<PKWords>>{
         // TODO Auto-generated method stub
 
     }
-
-	@Override
+    @Override
 	public String encode(List<PKWords> list) throws EncodeException {
 		// TODO Auto-generated method stub
 		JSONArray jsonObject=JSONArray.fromObject(list);
 		return jsonObject.toString();
 	}
 
+//	public String encode(User u) throws EncodeException {
+//		// TODO Auto-generated method stub
+//		return Json.encode(u);
+//	}
 }
 

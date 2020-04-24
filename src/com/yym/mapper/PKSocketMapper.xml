@@ -12,4 +12,7 @@
 	<select id="selBank" parameterType="int" resultType="string">
 		select bank from personal_data where uid=#{uid}
 	</select>
+	<select id="selUser" parameterType="int" resultType="com.yym.entity.User">
+		select * from user where id=#{id}
+	</select>
 </mapper>

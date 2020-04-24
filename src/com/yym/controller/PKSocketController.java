@@ -24,6 +24,7 @@ import org.springframework.stereotype.Controller;
 
 import com.demo.WebSocketDemo;
 import com.yym.entity.PKWords;
+import com.yym.entity.User;
 import com.yym.entity.Words;
 import com.yym.service.PKSocketService;
 import com.yym.service.impl.PKSocketServiceImpl;
@@ -80,7 +81,7 @@ public class PKSocketController {
 		System.out.println("session.getPathParameters:"+map);
 		int uid=Integer.parseInt(map.get("uid"));//获取用户的id
 		String roomid=map.get("roomid");//获取用户的房间号
-		//收到00的消息，表示要发送true给客户端，让客户端知道用户已经进来 
+		//收到t的消息，表示要发送true给客户端，让客户端知道用户已经进来 
 		if(code.equals("t")) {
 			for(String id:webSocketUser.keySet()) {
 				if(webSocketUser.get(id).equals(roomid)) {
@@ -108,6 +109,12 @@ public class PKSocketController {
 					sendMessage("next",webSocketMap.get(id));
 				}
 			}
+		}else if(code.equals("l")) {
+			for(String id:webSocketUser.keySet()) {
+				if(webSocketUser.get(id).equals(roomid)&&Integer.parseInt(id)!=uid) {
+					sendMessage("left",webSocketMap.get(id));
+				}
+			}
 		}
 		else {//否则，收到的是用户的成绩，将其发送给对手
 			for(String id:webSocketUser.keySet()) {
@@ -117,6 +124,15 @@ public class PKSocketController {
 			}
 		}
 	}
+	private void sendUser(User u, Session session) throws IOException, EncodeException {
+		// TODO Auto-generated method stub
+		if(session.isOpen()) {
+			synchronized(session) {
+				session.getBasicRemote().sendObject(u);
+			}
+		}
+	}
+
 	private void sendData(List<PKWords> list, Session session) throws IOException, EncodeException {
 		// TODO Auto-generated method stub
 		
@@ -184,16 +200,13 @@ public class PKSocketController {
 		System.out.println(roomid);
 		webSocketMap.remove(uid);
 		webSocketUser.remove(uid);
-		//将在同一个房间的用户删除掉
-		for(String id:webSocketUser.keySet()) {
-			if(webSocketUser.get(id).equals(roomid)) {
-				System.out.println(id);
-				sendMessage("left",webSocketMap.get(id));
-				webSocketUser.remove(id);
-				webSocketMap.remove(id);
-			}
+		if(webSocketNum.get(roomid)>1) {
+			int num=webSocketNum.get(roomid)-1;
+			webSocketNum.put(roomid, num);
+		}else {
+			webSocketNum.remove(roomid);
 		}
-		webSocketNum.remove(roomid);
+		//将在同一个房间的用户删除掉
 		System.out.println(webSocketMap);
 		System.out.println(webSocketUser);
 		System.out.println(webSocketNum);

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.yym.dao.PKSocketDao;
+import com.yym.entity.User;
 import com.yym.entity.Words;
 import com.yym.service.PKSocketService;
 
@@ -31,6 +32,12 @@ public class PKSocketServiceImpl implements PKSocketService{
 	public String selBank(int uid) {
 		// TODO Auto-generated method stub
 		return pkSocketDao.selBank(uid);
+	}
+
+	@Override
+	public User selUser(int id) {
+		// TODO Auto-generated method stub
+		return pkSocketDao.selUser(id);
 	}
 
 }
