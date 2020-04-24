@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yym.entity.BattleRecord;
+import com.yym.entity.Records;
 import com.yym.entity.User;
 import com.yym.service.BattleRecordService;
 
@@ -83,9 +84,27 @@ public class BattleRecordController {
 	}
 	@ResponseBody
 	@RequestMapping("/selRecord.do")
-	public List<BattleRecord> selRecord(int id,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
+	public List<Records> selRecord(int id,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
 		List<BattleRecord> list=battleRecordService.selRecord(id);
-		
-		return list;
+		List<Records> records=new ArrayList<Records>();
+		for(BattleRecord b:list) {
+			Records r=new Records();
+			r.setPlayA(b.getPlayA());
+			r.setPlayB(b.getPlayB());
+			r.setAscore(b.getAscore());
+			r.setBscore(b.getBscore());
+			String aurl=(battleRecordService.selUser(b.getPlayA())).getAvatarUrl();
+			r.setApic(aurl);
+			String burl=(battleRecordService.selUser(b.getPlayB())).getAvatarUrl();
+			r.setBpic(burl);
+			records.add(r);
+		}
+		return records;
+	}
+	@ResponseBody
+	@RequestMapping("/selUser.do")
+	public User selUser(int id,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
+		User u=battleRecordService.selUser(id);
+		return u;
 	}
 }
