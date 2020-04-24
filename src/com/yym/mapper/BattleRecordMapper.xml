@@ -40,5 +40,7 @@
 	<update id="updRoomStatus">
 		update battle_record set status=#{status} where id=#{id}
 	</update>
-	
+	<update id="updateRecord">
+		update battle_record set ascore=#{ascore},bscore=#{bscore},status=#{status} where id=#{id}
+	</update>
 </mapper>

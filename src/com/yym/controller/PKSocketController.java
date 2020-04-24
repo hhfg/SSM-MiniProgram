@@ -29,8 +29,9 @@ import com.yym.entity.Words;
 import com.yym.service.PKSocketService;
 import com.yym.service.impl.PKSocketServiceImpl;
 import com.yym.util.EncoderClassVo;
+import com.yym.util.EncoderUser;
 @Controller
-@ServerEndpoint(value="/getServer/{roomid}/{uid}",encoders= {EncoderClassVo.class})
+@ServerEndpoint(value="/getServer/{roomid}/{uid}",encoders= {EncoderClassVo.class,EncoderUser.class})
 public class PKSocketController {
 	
 	private PKSocketController webSocketServer;

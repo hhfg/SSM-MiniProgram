@@ -18,4 +18,5 @@ public interface BattleRecordDao {
 	//Í¨¹ıid²éÕÒuser
 	User selUser(@Param("id")int id);
 	int updRoomStatus(@Param("status")int status,@Param("id")int id);
+	int updateRecord(@Param("ascore")int ascore,@Param("bscore")int bscore,@Param("status")int status,@Param("id")int id);
 }

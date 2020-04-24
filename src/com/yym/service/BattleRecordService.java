@@ -11,4 +11,5 @@ public interface BattleRecordService {
 	BattleRecord selUid(int id);
 	User selUser(int id);
 	int updRoomStatus(int status,int id);
+	int updateRecord(int ascore,int bscore,int status,int id);
 }

@@ -5,6 +5,8 @@ public class BattleRecord {
 	private int roomid;
 	private int playA;
 	private int playB;
+	private int ascore;
+	private int bscore;
 	private int status;
 	public int getId() {
 		return id;
@@ -29,6 +31,19 @@ public class BattleRecord {
 	}
 	public void setPlayB(int playB) {
 		this.playB = playB;
+	}
+	
+	public int getAscore() {
+		return ascore;
+	}
+	public void setAscore(int ascore) {
+		this.ascore = ascore;
+	}
+	public int getBscore() {
+		return bscore;
+	}
+	public void setBscore(int bscore) {
+		this.bscore = bscore;
 	}
 	public int getStatus() {
 		return status;

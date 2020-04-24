@@ -74,5 +74,12 @@ public class BattleRecordController {
 		int result=battleRecordService.updRoomStatus(status,Integer.parseInt(id));
 		return result;
 	}
+	@ResponseBody
+	@RequestMapping("/updateRecord.do")
+	public int updateRecord(String id,int ascore,int bscore,int status,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
+		System.out.println("id:"+id+",ascore:"+ascore+",bscore:"+bscore+",status:"+status);
+		int result=battleRecordService.updateRecord(ascore, bscore, status, Integer.parseInt(id));
+		return result;
+	}
 	
 }

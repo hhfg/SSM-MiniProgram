@@ -40,9 +40,9 @@ public class EncoderClassVo implements Encoder.Text<List<PKWords>>{
 		return jsonObject.toString();
 	}
 
-//	public String encode(User u) throws EncodeException {
-//		// TODO Auto-generated method stub
-//		return Json.encode(u);
-//	}
+	public String encode(User u) throws EncodeException {
+		// TODO Auto-generated method stub
+		return Json.encode(u);
+	}
 }
 
