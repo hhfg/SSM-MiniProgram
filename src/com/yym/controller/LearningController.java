@@ -44,6 +44,9 @@ public class LearningController {
 		//System.out.println(list);
 		return list;
 	}
+	/*
+	 * 获取需要学习的单词
+	 */
 	@ResponseBody
 	@RequestMapping("/selLearningWords.do")
 	public List<UserWords> selWords(String nickName,int num,int start,int bookid,int uid,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
@@ -70,6 +73,9 @@ public class LearningController {
 		}
 		//return list;
 	}
+	/*
+	 * 更新单词的状态
+	 */
 	@ResponseBody
 	@RequestMapping("/updStatus.do")
 	public int updStatus(String nickName,int status,int id,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
@@ -77,6 +83,9 @@ public class LearningController {
 		int result=learningService.updStatus(userTableName,status,id);
 		return result;
 	}
+	/*
+	 * 获取需要复习的单词
+	 */
 	@ResponseBody
 	@RequestMapping("/selReviewWords.do")
 	public List<UserWords> selReviewWords(String nickName,int review,int bookid,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
@@ -102,6 +111,9 @@ public class LearningController {
 		}
 		return list;
 	}
+	/*
+	 * 单词设置是否收藏
+	 */
 	@ResponseBody
 	@RequestMapping("/setCollect.do")
 	public int setCollect(String nickName,int collect,int id,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{

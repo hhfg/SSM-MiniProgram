@@ -60,5 +60,6 @@ public interface UserService {
 	//查看今日是否已打卡
 	SignRecord selTodaySign(int uid,Date sign_date);
 	int updSignRecord(int learned_num,int uid,Date sign_date);
+	int selWordNum(int id);
 
 }

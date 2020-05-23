@@ -92,6 +92,9 @@ public class UserController {
 		SignRecord s=userService.selSignRecord(uid, sign_date);
 		return s;
 	}
+	/*
+	 * 用户打开首页时 获取用户的数据
+	 */
 	@ResponseBody
 	@RequestMapping("/selPersonalData.do")
 	public PersonalData selPersonalData(String nickName,HttpServletRequest request,HttpServletResponse response) throws ServletException,IOException, ParseException {
@@ -164,7 +167,9 @@ public class UserController {
 			return p;
 		}
 	}
-	
+	/*
+	 * 设置选择的单词书
+	 */
 	@ResponseBody
 	@RequestMapping("/setMyBook.do")
 	public int setMyBook(String nickName,int bookid,HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
@@ -180,7 +185,9 @@ public class UserController {
         int result=userService.updPersonalData(p);
 		return result;
 	}
-
+	/*
+	 * 更新用户学习计划
+	 */
 	@ResponseBody
 	@RequestMapping("/updLearningPlan.do")
 	public int updPersonalData(String nickName,int dayNum,String endTime,int learningDay,int bookid,int lastWordId,HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ParseException{
@@ -207,6 +214,9 @@ public class UserController {
 		int result=userService.updPersonalData(p);
 		return result;
 	}
+	/*
+	 * 增加学习记录
+	 */
 	@ResponseBody
 	@RequestMapping("/insSignRecord.do")
 	public int insSignRecord(String nickName,String date,int learned_num,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException, ParseException {
@@ -218,6 +228,16 @@ public class UserController {
 		PersonalData p=new PersonalData();
 		int completedNum=user.getCompletedNum()+user.getDayNum();
 		int lastWordId=user.getLastWordId()+user.getDayNum();
+		System.out.println("lastWordId:"+lastWordId);
+		int bid=user.getBookid();
+		int wordNum=userService.selWordNum(bid);
+		System.out.println("wordNum:"+wordNum);
+		System.out.println("dayNum:"+user.getDayNum());
+		if(lastWordId+user.getDayNum()>wordNum) {
+			int dayNum=wordNum-lastWordId;
+			System.out.println(dayNum);
+			p.setDayNum(dayNum);
+		}
 		int result;
 		//如果今天还未打卡
 		if(today==null) {
@@ -258,21 +278,5 @@ public class UserController {
 		}
 		return result;
 	}
-	@ResponseBody
-	@RequestMapping("/updateClock.do")
-	public int updateClock(String nickName,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
-		int uid=userService.getUserIdByName(nickName);
-		PersonalData user=userService.selPersonalData(uid);
-		PersonalData p=new PersonalData();
-		int completedNum=user.getCompletedNum()+user.getDayNum();
-		int lastWordId=user.getLastWordId()+user.getDayNum();
-		p.setUid(uid);
-		p.setClockInDay(user.getClockInDay()+1);
-		p.setHaveToLearn(0);
-		p.setHaveToReview(0);
-		p.setCompletedNum(completedNum);
-		p.setLastWordId(lastWordId);
-		int result=userService.updPersonalData(p);
-		return result;		
-	}
+	
 }

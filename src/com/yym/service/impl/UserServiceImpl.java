@@ -136,5 +136,10 @@ public class UserServiceImpl implements UserService{
 		// TODO Auto-generated method stub
 		return userDao.insPlayer(uid, nickName,bank);
 	}
+	@Override
+	public int selWordNum(int id) {
+		// TODO Auto-generated method stub
+		return userDao.selWordNum(id);
+	}
 	
 }

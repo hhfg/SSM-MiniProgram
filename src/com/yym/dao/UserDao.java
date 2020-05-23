@@ -65,5 +65,5 @@ public interface UserDao {
 	//查看今日是否已打卡
 	SignRecord selTodaySign(@Param("uid")int uid,@Param("sign_date")Date sign_date);
 	int updSignRecord(@Param("learned_num")int learned_num,@Param("uid")int uid,@Param("sign_date")Date sign_date);
-
+	int selWordNum(@Param("id")int id);
 }
