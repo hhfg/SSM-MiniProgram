@@ -233,11 +233,11 @@ public class UserController {
 		int wordNum=userService.selWordNum(bid);
 		System.out.println("wordNum:"+wordNum);
 		System.out.println("dayNum:"+user.getDayNum());
-		if(lastWordId+user.getDayNum()>wordNum) {
-			int dayNum=wordNum-lastWordId;
-			System.out.println(dayNum);
-			p.setDayNum(dayNum);
+		int dayNum=user.getDayNum();
+		if(lastWordId+user.getDayNum()>=wordNum) {
+			dayNum=wordNum-lastWordId;
 		}
+		System.out.println("day:"+dayNum);
 		int result;
 		//如果今天还未打卡
 		if(today==null) {
@@ -254,6 +254,9 @@ public class UserController {
 			s.setSign_date(sign_date);
 			s.setLearned_num(learned_num);
 			userService.insSignRecord(s);
+			if(lastWordId==wordNum) {
+				p.setDayNum(-1);
+			}
 			p.setUid(uid);
 			p.setClockInDay(user.getClockInDay()+1);
 			p.setHaveToLearn(0);
@@ -273,6 +276,9 @@ public class UserController {
 		else{
 			//更新sign_record记录
 			int learnedNum=today.getLearned_num()+learned_num;
+			if(lastWordId==wordNum) {
+				p.setDayNum(-1);
+			}
 			userService.updSignRecord(learnedNum, uid,sign_date);
 			p.setUid(uid);
 			p.setHaveToLearn(0);
@@ -282,7 +288,7 @@ public class UserController {
 			p.setHaveLearned(user.getHaveLearned()+learned_num);
 			result=userService.updPersonalData(p);
 			if(lastWordId==wordNum) {
-				System.out.println("已学习完");
+				
 				return 10;
 			}else {
 				return result;
