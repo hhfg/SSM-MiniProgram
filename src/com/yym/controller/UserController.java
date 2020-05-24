@@ -262,6 +262,12 @@ public class UserController {
 			p.setLastWordId(lastWordId);
 			p.setHaveLearned(user.getHaveLearned()+learned_num);
 			result=userService.updPersonalData(p);
+			if(lastWordId==wordNum) {
+				System.out.println("已学习完");
+				return 10;
+			}else {
+				return result;
+			}
 		}
 		//否则 如果今天已经打过卡
 		else{
@@ -275,8 +281,14 @@ public class UserController {
 			p.setLastWordId(lastWordId);
 			p.setHaveLearned(user.getHaveLearned()+learned_num);
 			result=userService.updPersonalData(p);
+			if(lastWordId==wordNum) {
+				System.out.println("已学习完");
+				return 10;
+			}else {
+				return result;
+			}
 		}
-		return result;
+		
 	}
 	
 }
