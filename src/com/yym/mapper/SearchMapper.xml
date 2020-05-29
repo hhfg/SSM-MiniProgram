@@ -4,6 +4,8 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yym.dao.SearchDao">
 	<select id="searchWord" parameterType="string" resultType="com.yym.entity.Words">
+		select * from highword where word=#{word}
+		union
 		select * from cet4word where word=#{word}
 		union
 		select * from cet6word where word=#{word}

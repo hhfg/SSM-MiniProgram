@@ -60,6 +60,7 @@ public class WordPkController {
 		String table_name=nickName+"_eBook";
 		boolean flag=this.selTable(table_name, request, response);//判断表是否存在
 		if(flag==false) {//如果不存在，则创建表
+			System.out.println("表不存在,创建");
 			this.createUserErrorBook(table_name, request, response);
 		}
 		JSONArray array=JSONArray.fromObject(pkwords);
